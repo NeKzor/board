@@ -97,8 +97,11 @@ Used to fetch Steam profile data via [Steam's Web API].
 
 ## TODO
 
+- Check dependencies
+- Fix inline scripts/styles for CSP
 - Look at older pull requests
 - Fix small HTTP security bug with avatars
+- Remove YouTube inline player (or make it a setting)
 - Unify secret files into a single file
 - Unify global hard-coded values into a single file
 - Fix typos like Requirments etc.
@@ -109,10 +112,14 @@ Used to fetch Steam profile data via [Steam's Web API].
 
 ## Done
 
-- Remove tracking
+- Improve privacy by removing tracking
+- Improve privacy by setting a referrer policy
 - Fix insecure project structure which allowed file leaks
 - Fix insecure cookies which allowed account takeover via XSS
 - Fix insecure demo folder configuration which allowed XSS
+- Fix missing integrity checks for CDN links
+- Fix potential mime sniffing attacks
+- Fix potential click-jacking attacks
 - Fix sending user to "null" profile when login fails
 - Allow @ usernames for YouTube channels
 - Clean up .htaccess/.gitignore
