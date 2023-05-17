@@ -13,3 +13,5 @@ RewriteRule ^(api|api/)$ - [R=404,L,NC]
 <FilesMatch "\.(|jpg|jpeg|png|ico|eot|svg|ttf|wolf)$">
   Header set Cache-Control "max-age=86400"
 </FilesMatch>
+
+Header edit Set-Cookie ^(.*)$  $1;SameSite=Lax;Secure;HttpOnly
