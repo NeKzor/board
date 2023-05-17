@@ -15,3 +15,5 @@ RewriteRule ^(api|api/)$ - [R=404,L,NC]
 </FilesMatch>
 
 Header edit Set-Cookie ^(.*)$  $1;SameSite=Lax;Secure;HttpOnly
+
+Header always set X-Content-Type-Options nosniff
