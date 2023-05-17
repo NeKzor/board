@@ -1,39 +1,133 @@
-Originally developed and designed by Nuclear: https://github.com/ncla/Portal-2-Leaderboard
+# board.portal2.sr
 
+The community driven leaderboard for Portal 2 speedrunners.
 
-Server requirements:
+## Requirements
 
-1. Basic LAMP/XAMPP webserver. Note that for MySQL, MariaDB is known to cause issues when using query variables.
-2. Google account.
+- PHP 8.0+
+- composer
+- apache2
+- mysql-server
 
+## Setup
 
-Server configuration:
+- Install dependencies `composer install`
+- Create folders `mkdir cache demos secret`
+- Configure `VirtualHost` [conf file](#example---apache2-vhost--https)
+- Enable a2enmod `rewrite`, `expires`, `headers`.
+- Connect to the mysql instance and create the database once `create database iverborg_leaderboard;`
+- Import the database `sudo mysql -u root -p iverborg_leaderboard < data/leaderboard.sql`
+- Run all migrations in `migrations/`
+- Create [secret files](#secret)
+- Update cache once with `php api/refreshCache.php`
+- Schedule a cronjob for `api/refreshCache.php` to run every minute
+- Schedule a cronjob for `api/fetchNewScores.php` to run every 15 minutes
+- Configure apache2 permissions with `chown -R ...` etc.
 
-1. Set the 'public' folder as the server's document root.
-2. For Apache, enable 'mod_rewrite' and 'mod_expires' for image caching and beautiful URLs.
-3. For PHP, enable the cURL extension for scraping the Steam leaderboards.
-4. Import database dump data/leaderboard.sql into phpMyAdmin.
-5. Configure database authorization settings in secret/database.json.
-6. Set database timezone to UTC by executing data/setDatabaseTimeZoneUTC.php
+### Example - Apache2 VHost + HTTPS
 
+Create a new file `/etc/apache2/sites-enabled/board.portal2.local.conf`.
 
-Configuring Google Drive for storing demos
+Set the document root to the `public` folder and alias `demos` path for demo downloads.
 
-5. Go to 
-https://console.developers.google.com
-6. Create a project and activate the Google Drive API 
-7. Create an OAuth client ID. Download and copy the client secret file associated with this ID, and paste it in secret/client_secret.json. 
-8. Execute 'php util/authorizeGoogleDrive.php' from the command line to provide the project access to Google Drive.
-9. Configure the demos folder in classes/demoManager.php.
+SSL certs go into `/etc/apache2/ssl/`.
 
+```conf
+<VirtualHost board.portal2.local:443>
+    DocumentRoot "/var/www/board.portal2.local/public"
+    ServerName board.portal2.local
 
-Fetching data:
+    SSLEngine on
+    SSLCertificateFile "ssl/server.crt" 
+    SSLCertificateKeyFile "ssl/server.key"
 
-1. Updating scores and refreshing the server cache accordingly is performed by running data/fetchNewScores.php. 
-2. Updating user data is done by running data/fetchNewProfileData.php. This requires a Steam API developer key which has 
-to be placed in secret/steam_api_key.json. For obtaining an API key, go to 
-https://steamcommunity.com/dev
+    <Directory "/var/www/board.portal2.local/public">
+        AllowOverride all
+        Require all granted
+    </Directory>
 
+    Alias "/demos" "/var/www/board.portal2.local/demos"
+
+    <Directory "/var/www/board.portal2.local/demos">
+        AllowOverride None
+        Require all granted
+        AddType application/octect-stream .dem
+    </Directory>
+</VirtualHost>
+```
+
+### Secret
+
+#### database.json
+
+Used to connect to the database instance.
+
+```.json
+{
+    "host": "127.0.0.1",
+    "user": "root",
+    "password": "root",
+    "database": "iverborg_leaderboard"
+}
+```
+
+#### discord.json
+
+Used to send Discord webhook messages for world record updates.
+
+```.json
+{
+    "id": "",
+    "token": "",
+    "mdp": ""
+}
+```
+
+#### steam_api_key.json
+
+Used to fetch Steam profile data via [Steam's Web API].
+
+[Steam's Web API]: https://steamcommunity.com/dev/apikey
+
+```.json
+{
+    "key": ""
+}
+```
+
+## TODO
+
+- Look at older pull requests
+- Fix small HTTP security bug with avatars
+- Unify secret files into a single file
+- Unify global hard-coded values into a single file
+- Fix typos like Requirments etc.
+- Remove old and useless TODOS/comments/unused code
+- Fix license?
+- Add docker image?
+- Fix mdp source code
+
+## Done
+
+- Remove tracking
+- Fix insecure project structure which allowed file leaks
+- Fix insecure cookies which allowed account takeover via XSS
+- Fix insecure demo folder configuration which allowed XSS
+- Fix sending user to "null" profile when login fails
+- Allow @ usernames for YouTube channels
+- Clean up .htaccess/.gitignore
+- Remove committed vendor files
+- Remove unused composer dependencies
+- Render page as HTML 5
+- Rewrite README.md
+
+## Credits
+
+Originally developed and designed by [ncla].
+
+[ncla]: https://github.com/ncla/Portal-2-Leaderboard
+
+## License
 
 Software licensed under CC Attribution - Non-commercial license.
 https://creativecommons.org/licenses/by-nc/4.0/legalcode
