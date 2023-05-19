@@ -18,18 +18,18 @@
                 <div class="changelog-filter-options-wrapper">
                     <div class="changelog-filter-options-name changelog-filter-options-group">
                         <div style="float: left;" class="input">
-                            <label for="nickname">Nickname</label>
-                            <input type="text" name="boardName" value="<?=$param['boardName'];?>">
+                            <label for="boardName">Nickname</label>
+                            <input type="text" id="boardName" name="boardName" value="<?=$param['boardName'];?>">
                         </div>
                         <div style="float: left;" class="input">
-                            <label for="profilenumber">Steam profile number</label>
-                            <input type="text" name="profileNumber" value="<?=$param['profileNumber'];?>">
+                            <label for="profileNumber">Steam profile number</label>
+                            <input type="text" id="profileNumber" name="profileNumber" value="<?=$param['profileNumber'];?>">
                         </div>
                     </div>
                     <div class="changelog-filter-options-chamber changelog-filter-options-group">
                         <div style="float: left;" class="input">
-                            <label for="profilenumber">Chapter name</label>
-                            <select style="width: 100%;" name="chapter">
+                            <label for="chapter">Chapter name</label>
+                            <select style="width: 100%;" id="chapter" name="chapter">
                                 <option value="">No chapter</option>
                                 <?php foreach(array("sp" => "Single Player", "coop" => "Cooperative") as $modeId => $mode): ?>
                                     <option disabled><?=$mode?></option>
@@ -41,8 +41,8 @@
                             </select>
                         </div>
                         <div style="float: left;" class="input">
-                            <label for="profilenumber">Chamber name</label>
-                            <select style="width: 100%;" name="chamber">
+                            <label for="chamber-name">Chamber name</label>
+                            <select style="width: 100%;" id="chamber-name" name="chamber">
                                 <option value="">No chamber</option>
                                 <?php foreach(array("sp" => "Single Player", "coop" => "Cooperative") as $modeId => $mode): ?>
                                     <option disabled><?=$mode?></option>
@@ -60,21 +60,21 @@
                     <div class="changelog-filter-options-date changelog-filter-options-group">
                         <div style="float: left;" class="input">
                             <label for="startDate">Start Date</label>
-                            <input type="date" name="startDate" value="<?=$param['startDate'];?>">
+                            <input type="date" id="startDate" name="startDate" value="<?=$param['startDate'];?>">
                         </div>
                         <div style="float: left;" class="input">
                             <label for="endDate">End Date</label>
-                            <input type="date" name="endDate" value="<?=$param['endDate'];?>">
+                            <input type="date" id="endDate" name="endDate" value="<?=$param['endDate'];?>">
                         </div>
                     </div>
                     <div class="changelog-filter-options-rank changelog-filter-options-group">
                         <div style="float: left;" class="input">
                             <label for="startRank">Start Rank</label>
-                            <input type="number" min="0" name="startRank" value="<?=$param['startRank'];?>">
+                            <input type="number" min="0" id="startRank" name="startRank" value="<?=$param['startRank'];?>">
                         </div>
                         <div style="float: left;" class="input">
                             <label for="endRank">End Rank</label>
-                            <input type="number" min="1" name="endRank" value="<?=$param['endRank'];?>">
+                            <input type="number" min="1" id="endRank" name="endRank" value="<?=$param['endRank'];?>">
                         </div>
                     </div>
                     <div style="float: left;" class="check">
