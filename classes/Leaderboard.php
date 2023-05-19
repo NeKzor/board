@@ -704,6 +704,7 @@ class Leaderboard
             "demo" => "",
             "yt" => "",
             "maxDaysAgo" => "",
+            "hasDate" => "",
             "startDate" => "",
             "endDate" => "",
             "startRank" => "",
