@@ -96,24 +96,32 @@ Used to fetch Steam profile data via [Steam's Web API].
 ```
 
 ## TODO
-
-- Check dependencies
-- Fix inline scripts/styles for CSP
-- Look at older pull requests
-- Fix small HTTP security bug with avatars
-- Remove YouTube inline player (or make it a setting)
-- Unify secret files into a single file
-- Unify global hard-coded values into a single file
-- Fix typos like Requirments etc.
-- Remove old and useless TODOS/comments/unused code
+- Look at old pull requests
+  - Prevent potential attacks
+    - Fix potential XSS attack and limit comment length
+    - Escape all input forms
+    - Prevent users deleting their Steam scores
+    - Escape YouTube id
+    - Look at older pull requests
+    - Use https instead of http for external links
+    - Prevent self ban and check if ban status is numeric
+    - hasDate
+  - World record submission warning and other fixes
+    - Warn user when submitting a world record
+    - Capitalized notes
+  - New changelog parameters
+    - Expose/implement `hasDate`, `id`, `wos`, `top`
+    - Remove empty parameters from URL
+    - Changelog id tooltip?
+    - Tooltip for lost x points?
 - Fix license?
 - Add docker image?
-- Fix mdp source code
 
 ## Done
 
 - Improve privacy by removing tracking
 - Improve privacy by setting a referrer policy
+- Improve security by introducing Content-Security-Policy
 - Fix insecure project structure which allowed file leaks
 - Fix insecure cookies which allowed account takeover via XSS
 - Fix insecure demo folder configuration which allowed XSS
@@ -121,12 +129,43 @@ Used to fetch Steam profile data via [Steam's Web API].
 - Fix potential mime sniffing attacks
 - Fix potential click-jacking attacks
 - Fix sending user to "null" profile when login fails
+- Fix announcement not disappearing
+- Fix resolving usernames which do not exist
+- Fix resolving chambers which do not exist
+- Fix invalid date warning in activity chart
 - Allow @ usernames for YouTube channels
 - Clean up .htaccess/.gitignore
 - Remove committed vendor files
 - Remove unused composer dependencies
-- Render page as HTML 5
+- Remove broken call to old Twitch API
+- Switch to HTML 5
+- Audit dependencies
+- Audit recent code changes
 - Rewrite README.md
+
+## Out of scope
+
+- Simplify code
+- Optimize code
+- Fix typos like "Requirments" etc.
+- Remove old and useless TODOS, comments and unused code like least portals
+- Unify secret files into a single file
+- Unify global hard-coded values into a single file
+- Rewrite queries to eliminate any potential SQL injections
+- Respect ratelimit of Steam API
+- Validation for correct Steam IDs
+- Fix inline scripts/styles for CSP
+- Improve and optimize routing
+- Set `Content-Type` to `application/javascript` for `/json` endpoints
+- Set status code to `404` for "not found" cases
+- Changelog needs a maximum limit and pagination
+- Remove YouTube inline player for better creditability and privacy (or make it a setting)
+- Fix all PHP 8.0 warnings
+- Fix potential issues in mdp
+
+## Regression
+
+- Small HTMl5 rendering issues with slider animations
 
 ## Credits
 
