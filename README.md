@@ -95,40 +95,21 @@ Used to fetch Steam profile data via [Steam's Web API].
 }
 ```
 
-## TODO
-- Look at old pull requests
-  - Prevent potential attacks
-    - Fix potential XSS attack and limit comment length
-    - Escape all input forms
-    - Prevent users deleting their Steam scores
-    - Escape YouTube id
-    - Look at older pull requests
-    - Use https instead of http for external links
-    - Prevent self ban and check if ban status is numeric
-    - hasDate
-  - World record submission warning and other fixes
-    - Warn user when submitting a world record
-    - Capitalized notes
-  - New changelog parameters
-    - Expose/implement `hasDate`, `id`, `wos`, `top`
-    - Remove empty parameters from URL
-    - Changelog id tooltip?
-    - Tooltip for lost x points?
-- Fix license?
-- Add docker image?
-
-## Done
+## Improvements
 
 - Improve privacy by removing tracking
 - Improve privacy by setting a referrer policy
 - Improve security by introducing Content-Security-Policy
+- Fix insecure embedding of changelog filter values
+- Fix insecure embedding of usernames on several pages
+- Fix insecure HTTP links
 - Fix insecure project structure which allowed file leaks
 - Fix insecure cookies which allowed account takeover via XSS
 - Fix insecure demo folder configuration which allowed XSS
 - Fix missing integrity checks for CDN links
 - Fix potential mime sniffing attacks
 - Fix potential click-jacking attacks
-- Fix sending user to "null" profile when login fails
+- Fix sending user to null-profile when login fails
 - Fix announcement not disappearing
 - Fix resolving usernames which do not exist
 - Fix resolving chambers which do not exist
@@ -143,10 +124,9 @@ Used to fetch Steam profile data via [Steam's Web API].
 - Audit recent code changes
 - Rewrite README.md
 
-## Out of scope
+## Out of scope (for now)
 
-- Simplify code
-- Optimize code
+- Simplify and optimize code
 - Fix typos like "Requirments" etc.
 - Remove old and useless TODOS, comments and unused code like least portals
 - Unify secret files into a single file
@@ -160,8 +140,15 @@ Used to fetch Steam profile data via [Steam's Web API].
 - Set status code to `404` for "not found" cases
 - Changelog needs a maximum limit and pagination
 - Remove YouTube inline player for better creditability and privacy (or make it a setting)
-- Fix all PHP 8.0 warnings
+- Limit comment length
+- Prevent users deleting their Steam scores
+- Fix all PHP 8.0+ warnings
 - Fix potential issues in mdp
+- Remove unnecessary synchronization between `changelog` and `scores` tables
+- Remove redundant `wr_gain` column in changelog
+- Fix UI in changelog showing point loss in rare cases
+- Add ability to filter banned times
+- Fix pending filter
 
 ## Regression
 
