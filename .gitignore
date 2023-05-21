@@ -1,7 +1,9 @@
 .idea/
 cache/
-debug.txt
 demos/
 secret/
 sessions/
 vendor/
+
+.config.json
+debug.txt
