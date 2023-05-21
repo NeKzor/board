@@ -1,0 +1,24 @@
+.git/
+docker/
+
+.dockerignore
+.config.example.json
+.env
+.env.example
+.gitignore
+Dockerfile
+README.md
+
+# from .gitignore
+
+.idea/
+cache/
+demos/
+logs/
+secret/
+sessions/
+vendor/
+
+.config.json
+.env
+debug.txt

@@ -1,9 +1,11 @@
 .idea/
 cache/
 demos/
+logs/
 secret/
 sessions/
 vendor/
 
 .config.json
+.env
 debug.txt

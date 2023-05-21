@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  server:
+    image: board-portal2:latest
+    build:
+      context: .
+      args:
+        SERVER_NAME: ${SERVER_NAME}
+    container_name: "${PROJECT_NAME}-${PHP_VERSION}"
+    stdin_open: true
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - database:database
+    volumes:
+      - ${PWD}:/var/www/html:rw
+      - ${PWD}/docker/apache/${SERVER_NAME}.conf:/etc/apache2/sites-available/${SERVER_NAME}.conf
+      - ${PWD}/docker/ssl/${SERVER_NAME}.key:/etc/apache2/ssl/${SERVER_NAME}.key
+      - ${PWD}/docker/ssl/${SERVER_NAME}.crt:/etc/apache2/ssl/${SERVER_NAME}.crt
+      - ${PWD}/logs/error.log:/var/log/apache2/error.log
+  database:
+    image: mysql:8
+    container_name: "${PROJECT_NAME}-${DATABASE_VERSION}"
+    ports:
+      - "127.0.0.1:3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ${PWD}/docker/initdb:/docker-entrypoint-initdb.d
