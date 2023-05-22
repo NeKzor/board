@@ -8,7 +8,7 @@ The community driven leaderboard for Portal 2 speedrunners.
 - [Local development](#local-development)
   - [With Docker](#with-docker)
   - [Without Docker](#without-docker)
-  - [Example - Apache2 VHost + HTTPS](#example---apache2-vhost--https)
+    - [Example - Apache2 VHost + HTTPS](#example---apache2-vhost--https)
 - [Credits](#credits)
 - [License](#license)
 
@@ -59,7 +59,7 @@ The community driven leaderboard for Portal 2 speedrunners.
   - ~~Unify secret files into a single file~~
   - Unify global hard-coded values into a single file
   - Fix typos like "Requirments" etc.
-  - Remove old and useless TODOS, comments and unused code like least portals
+  - Remove old and useless TODOs, comments and unused code like least portals
   - Fix all PHP 8.0+ warnings
   - Remove redundant `wr_gain` column in changelog
   - Remove unnecessary synchronization between `changelog` and `scores` tables
@@ -106,15 +106,15 @@ cp .config.example.json .config.json
 cp .example.env .env
 ```
 
-Create self-signed certificates with `mkcert`:
+Create self-signed certificates with mkcert:
 
 ```bash
 site=board.portal2.local mkcert -cert-file docker/ssl/$site.crt -key-file docker/ssl/$site.key $site
 ```
 
-Start the containers with `docker-compose up`.
+Start the containers with `docker compose up`.
 
-Stop the containers with `docker-compose down`.
+Stop the containers with `docker compose down`.
 
 ### Without Docker
 
@@ -143,9 +143,9 @@ Setup:
 - Schedule a cronjob for `api/fetchNewScores.php` to run every 15 minutes
 - Configure apache2 permissions with `chown -R ...` etc.
 
-### Example - Apache2 VHost + HTTPS
+#### Example - Apache2 VHost + HTTPS
 
-Create a new file `/etc/apache2/sites-enabled/board.portal2.local.conf`.
+Create a `/etc/apache2/sites-available/board.portal2.local.conf` file and enable it `a2ensite board.portal2.local`.
 
 Set the document root to the `public` folder and alias `demos` path for demo downloads.
 
