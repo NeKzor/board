@@ -22,13 +22,13 @@ class SteamSignIn
 	*/
 	public static function genUrl($returnTo = false, $useAmp = true)
 	{
-		$returnTo = (!$returnTo) ? (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] : $returnTo;
+		$returnTo = (!$returnTo) ? 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'] : $returnTo;
 		
 		$params = array(
 			'openid.ns'			=> 'http://specs.openid.net/auth/2.0',
 			'openid.mode'		=> 'checkid_setup',
 			'openid.return_to'	=> $returnTo,
-			'openid.realm'		=> (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'],
+			'openid.realm'		=> 'https://' . $_SERVER['HTTP_HOST'],
 			'openid.identity'	=> 'http://specs.openid.net/auth/2.0/identifier_select',
 			'openid.claimed_id'	=> 'http://specs.openid.net/auth/2.0/identifier_select',
 		);
