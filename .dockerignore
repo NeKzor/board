@@ -1,11 +1,16 @@
 .git/
+data/
 docker/
+migrations/
+util/
 
-.dockerignore
 .config.example.json
+.dockerignore
 .env
 .env.example
 .gitignore
+docker-compose.prod.yml
+docker-compose.yml
 Dockerfile
 README.md
 
@@ -14,7 +19,7 @@ README.md
 .idea/
 cache/
 demos/
-logs/
+docker/volumes/
 secret/
 sessions/
 vendor/

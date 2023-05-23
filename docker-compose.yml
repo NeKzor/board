@@ -7,25 +7,38 @@ services:
       args:
         SERVER_NAME: ${SERVER_NAME}
     container_name: "${PROJECT_NAME}-${PHP_VERSION}"
+    restart: always
     stdin_open: true
     tty: true
     ports:
-      - "80:80"
-      - "443:443"
+      - "${HTTP_PORT}:80"
+      - "${HTTPS_PORT}:443"
     links:
       - database:database
     volumes:
-      - ${PWD}:/var/www/html:rw
-      - ${PWD}/docker/apache/${SERVER_NAME}.conf:/etc/apache2/sites-available/${SERVER_NAME}.conf
-      - ${PWD}/docker/ssl/${SERVER_NAME}.key:/etc/apache2/ssl/${SERVER_NAME}.key
-      - ${PWD}/docker/ssl/${SERVER_NAME}.crt:/etc/apache2/ssl/${SERVER_NAME}.crt
-      - ${PWD}/logs/error.log:/var/log/apache2/error.log
+      - ./api:/var/www/html/api:rw
+      - ./classes:/var/www/html/classes:rw
+      - ./public:/var/www/html/public:rw
+      - ./views:/var/www/html/views:rw
+      - ./loader.php:/var/www/html/loader.php:rw
+      - .config.json:/var/www/html/.config.json
+      - ./docker/apache/${SERVER_NAME}.conf:/etc/apache2/sites-available/${SERVER_NAME}.conf
+      - ./docker/ssl/${SERVER_NAME}.key:/etc/apache2/ssl/${SERVER_NAME}.key
+      - ./docker/ssl/${SERVER_NAME}.crt:/etc/apache2/ssl/${SERVER_NAME}.crt
+      - ./docker/logs/error.log:/var/log/apache2/error.log
+      - ./docker/logs/access.log:/var/log/apache2/other_vhosts_access.log
+      - ./docker/logs/debug.txt:/var/www/html/debug.txt
+      - ./docker/volumes/cache:/var/www/html/cache
+      - ./docker/volumes/demos:/var/www/html/demos
+      - ./docker/volumes/sessions:/var/www/html/sessions
   database:
     image: mysql:8
     container_name: "${PROJECT_NAME}-${DATABASE_VERSION}"
+    restart: unless-stopped
     ports:
       - "127.0.0.1:3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ${PWD}/docker/initdb:/docker-entrypoint-initdb.d
+      - ./docker/initdb:/docker-entrypoint-initdb.d
+      - ./docker/volumes/mysql:/var/lib/mysql
