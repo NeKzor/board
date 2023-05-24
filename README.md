@@ -9,6 +9,7 @@ The community driven leaderboard for Portal 2 speedrunners.
   - [With Docker](#with-docker)
   - [Without Docker](#without-docker)
     - [Example - Apache2 VHost + HTTPS](#example---apache2-vhost--https)
+- [Production](#production)
 - [Credits](#credits)
 - [License](#license)
 
@@ -46,9 +47,6 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Audited recent code changes
   - Updated README.md
   - Added support for Docker
-    - TODO: production
-    - TODO: crontab
-    - TODO: backups
 
 ## Out of scope (for now)
 
@@ -106,6 +104,12 @@ cp .config.example.json .config.json
 cp .example.env .env
 ```
 
+Create log files.
+
+```bash
+touch docker/logs/access.log docker/logs/error.log docker/logs/debug.txt
+```
+
 Create self-signed certificates with mkcert:
 
 ```bash
@@ -115,6 +119,14 @@ site=board.portal2.local mkcert -cert-file docker/ssl/$site.crt -key-file docker
 Start the containers with `docker compose up`.
 
 Stop the containers with `docker compose down`.
+
+Folders `cache`, `demos` and `sessions` require group `www-data`.
+
+```bash
+chown -R www-data:www-data docker/volumes/cache
+chown -R www-data:www-data docker/volumes/demos
+chown -R www-data:www-data docker/volumes/sessions
+```
 
 ### Without Docker
 
@@ -173,6 +185,58 @@ SSL certs go into `/etc/apache2/ssl`.
         AddType application/octect-stream .dem
     </Directory>
 </VirtualHost>
+```
+
+## Production
+
+Same as in [local development](#local-development) except `docker-compose.prod.yml` is used:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up
+```
+
+Example with Nginx + letsencrypt + proxy pass:
+
+```bash
+~/$ cat .env
+PROJECT_NAME=board
+SERVER_NAME=board.portal2.sr
+
+HTTP_PORT=8880
+HTTPS_PORT=8443
+
+PHP_VERSION=php81
+DATABASE_VERSION=mysql8
+
+MYSQL_ROOT_PASSWORD=root
+```
+
+```bash
+~/$ cat /etc/nginx/sites-available/board.portal2.sr
+server {
+    listen 80;
+    server_name board.portal2.sr;
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name board.portal2.sr;
+
+    ssl_certificate /etc/letsencrypt/live/board.portal2.sr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/board.portal2.sr/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
+
+    location / {
+        proxy_pass http://127.0.0.1:8443$request_uri;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+    }
+}
 ```
 
 ## Credits
