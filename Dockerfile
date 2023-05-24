@@ -21,8 +21,7 @@ RUN ln -s /etc/apache2/sites-available/${SERVER_NAME}.conf /etc/apache2/sites-en
 RUN echo 'ServerName localhost' >> /etc/apache2/apache2.conf
 
 RUN echo '*/1 * * * * www-data php /var/www/html/api/refreshCache.php > /dev/null 2>&1' > /etc/cron.d/board
-RUN service cron start
 
 EXPOSE 80 443
 
-CMD ["apachectl", "-D", "FOREGROUND"]
+CMD service cron start && apachectl -D FOREGROUND
