@@ -1,7 +1,6 @@
 .idea/
 cache/
 demos/
-docker/volumes/
 secret/
 sessions/
 vendor/

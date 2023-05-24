@@ -19,7 +19,6 @@ README.md
 .idea/
 cache/
 demos/
-docker/volumes/
 secret/
 sessions/
 vendor/
