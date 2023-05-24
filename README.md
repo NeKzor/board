@@ -91,8 +91,8 @@ The community driven leaderboard for Portal 2 speedrunners.
 
 Requirements:
 
-- [Docker Engine]
-- [mkcert] (recommended)
+- [Docker Engine] | [Reference](https://docs.docker.com/compose/reference/)
+- [mkcert]
 
 [Docker Engine]: https://docs.docker.com/engine/install
 [mkcert]: https://github.com/FiloSottile/mkcert
@@ -104,11 +104,10 @@ cp .config.example.json .config.json
 cp .example.env .env
 ```
 
-Create log files.
+Create log files:
 
 ```bash
 touch docker/logs/access.log docker/logs/error.log docker/logs/debug.txt
-chown -R www-data:www-data docker/logs
 ```
 
 Create self-signed certificates with mkcert:
@@ -117,13 +116,19 @@ Create self-signed certificates with mkcert:
 site=board.portal2.local mkcert -cert-file docker/ssl/$site.crt -key-file docker/ssl/$site.key $site
 ```
 
+Extract the database dump:
+
+```bash
+gunzip -c data/leaderboard.gz > docker/initdb/_init.sql
+```
+
 Build the image once with `docker compose build` and then start the containers with `docker compose up`.
 
 Volumes should automatically mount to `docker/volumes`.
 Only the folders `cache`, `demos` and `sessions` require group `www-data`.
 
 ```bash
-chown -R www-data:www-data docker/volumes/cache docker/volumes/demos docker/volumes/sessions
+chown -R www-data:www-data docker/volumes/cache docker/volumes/demos docker/volumes/sessions docker/logs
 ```
 
 Containers can be stopped with `docker compose down`.
