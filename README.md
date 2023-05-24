@@ -119,7 +119,8 @@ site=board.portal2.local mkcert -cert-file docker/ssl/$site.crt -key-file docker
 Extract the database dump:
 
 ```bash
-gunzip -c data/leaderboard.gz > docker/initdb/_init.sql
+echo 'USE iverborg_leaderboard;' > docker/initdb/_init.sql
+gunzip -c data/leaderboard.gz >> docker/initdb/_init.sql
 ```
 
 Build the image once with `docker compose build` and then start the containers with `docker compose up`.
