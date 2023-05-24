@@ -37,6 +37,13 @@ services:
     restart: unless-stopped
     ports:
       - "127.0.0.1:3306:3306"
+    cpus: 0.5
+    cpu_count: 2
+    ulimits:
+      nproc: 65535
+      nofile:
+        soft: 26677
+        hard: 46677
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
