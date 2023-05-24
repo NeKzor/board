@@ -108,6 +108,7 @@ Create log files.
 
 ```bash
 touch docker/logs/access.log docker/logs/error.log docker/logs/debug.txt
+chown -R www-data:www-data docker/logs
 ```
 
 Create self-signed certificates with mkcert:
@@ -116,17 +117,16 @@ Create self-signed certificates with mkcert:
 site=board.portal2.local mkcert -cert-file docker/ssl/$site.crt -key-file docker/ssl/$site.key $site
 ```
 
-Start the containers with `docker compose up`.
+Build the image once with `docker compose build` and then start the containers with `docker compose up`.
 
-Stop the containers with `docker compose down`.
-
-Folders `cache`, `demos` and `sessions` require group `www-data`.
+Volumes should automatically mount to `docker/volumes`.
+Only the folders `cache`, `demos` and `sessions` require group `www-data`.
 
 ```bash
-chown -R www-data:www-data docker/volumes/cache
-chown -R www-data:www-data docker/volumes/demos
-chown -R www-data:www-data docker/volumes/sessions
+chown -R www-data:www-data docker/volumes/cache docker/volumes/demos docker/volumes/sessions
 ```
+
+Containers can be stopped with `docker compose down`.
 
 ### Without Docker
 
