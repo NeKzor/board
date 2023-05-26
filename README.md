@@ -5,11 +5,14 @@ The community driven leaderboard for Portal 2 speedrunners.
 - [What's new](#whats-new)
 - [Out of scope (for now)](#out-of-scope-for-now)
 - [Regression](#regression)
-- [Local development](#local-development)
+- [Local Development](#local-development)
   - [With Docker](#with-docker)
+    - [Overview of .env](#overview-of-env)
+    - [Overview of .config.json](#overview-of-configjson)
   - [Without Docker](#without-docker)
-    - [Example - Apache2 VHost + HTTPS](#example---apache2-vhost--https)
+    - [Example](#example)
 - [Production](#production)
+  - [Reverse Proxy (optional)](#reverse-proxy-optional)
 - [Credits](#credits)
 - [License](#license)
 
@@ -45,12 +48,15 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Cleaned up .htaccess/.gitignore
   - Audited dependencies
   - Audited recent code changes
-  - Updated README.md
+  - Updated README
   - Added support for Docker
 
 ## Out of scope (for now)
 
 - Bug fixes
+  - Manual submission button does not work sometimes
+  - Auto-submission icon is not aligned in many places
+  - Fix hard-coded database port
   - Fix pending filter value switching between 0, 1 and 2
   - Fix UI in changelog showing point loss
 - Clean up
@@ -76,6 +82,7 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Changelog needs a maximum limit and pagination
   - Limit comment length
   - Prevent users deleting their Steam scores
+  - Prevent users changing their comment
   - Fix potential issues in mdp
 - Features
   - Remove YouTube inline player for better creditability and privacy (or make it a setting)
@@ -84,8 +91,10 @@ The community driven leaderboard for Portal 2 speedrunners.
 ## Regression
 
 - Small HTMl5 rendering issues with slider animations
+- Date in changelog is not aligned
+- Profile buttons are not aligned sometimes
 
-## Local development
+## Local Development
 
 ### With Docker
 
@@ -93,46 +102,53 @@ Requirements:
 
 - [Docker Engine] | [Reference](https://docs.docker.com/compose/reference/)
 - [mkcert]
+- [Steam Web API Key]
 
 [Docker Engine]: https://docs.docker.com/engine/install
 [mkcert]: https://github.com/FiloSottile/mkcert
+[Steam Web API Key]: https://steamcommunity.com/dev
 
-Configure `.env` and `.config.json` files:
+Steps:
 
-```bash
-cp .config.example.json .config.json
-cp .example.env .env
-```
+- Project setup with `chmod +x setup && ./setup dev`
+- Build the server image once with `docker compose build`
+- Start the containers with `docker compose up`
+- Add the host entry `127.0.0.1 board.portal2.local` to `/etc/hosts`
 
-Create log files:
+The server should now be available at `https://board.portal2.local`.
 
-```bash
-touch docker/logs/access.log docker/logs/error.log docker/logs/debug.txt
-```
+#### Overview of .env
 
-Create self-signed certificates with mkcert:
+This is used by Dockerfile and docker-compose.yml.
 
-```bash
-site=board.portal2.local mkcert -cert-file docker/ssl/$site.crt -key-file docker/ssl/$site.key $site
-```
+|Variable|Description|
+|---|---|
+|PROJECT_NAME|This name is used as a prefix for the containers.|
+|SERVER_NAME|The domain name which should be set before building the image. Docker will use it to mount the correct apache config file which links to the SSL certificates.|
+|HTTP_PORT|The unsafe HTTP port of the local host. Change it if a different port is needed e.g. Nginx|
+|HTTPS_PORT|The safe HTTPS port of the local host. Change it if a different port is needed e.g. Nginx|
+|DATABASE_PORT|The MySQL database port of the local host. NOTE: Make sure that the docker compose file does not expose the server to an unwanted address. By default it's mapped to `127.0.0.1`.|
+|PHP_VERSION|The name of the server container.|
+|DATABASE_VERSION|The name of the database container.|
+|MYSQL_ROOT_PASSWORD|The root's password of the MySQL database.|
+|APT_PACKAGES|Optional apt-packages to build the server image. The image should be kept as small as possible but sometimes it is useful to install some packages (e.g. `vim`, `htop` etc.) in order to debug problems more quickly.|
 
-Extract the database dump:
+#### Overview of .config.json
 
-```bash
-echo 'USE iverborg_leaderboard;' > docker/initdb/_init.sql
-gunzip -c data/leaderboard.gz >> docker/initdb/_init.sql
-```
+This is used by the server.
 
-Build the image once with `docker compose build` and then start the containers with `docker compose up`.
+|Key|Description|
+|---|---|
+|database_host|Address of the database. Docker creates a link to the container under the `database` alias.|
+|database_user|User login name for database.|
+|database_pass|User password for database access.|
+|database_name|The database name.|
+|discord_webhook_id|The webhook ID for sending wr updates to a Discord channel.|
+|discord_webhook_token|The webhook token for sending wr updates to a Discord channel.|
+|discord_webhook_mdp|Discord webhook URL for sending [mdp] data to a Discord channel.|
+|steam_api_key|The Steam Web API Key for fetching profile data.|
 
-Volumes should automatically mount to `docker/volumes`.
-Only the folders `cache`, `demos` and `sessions` require group `www-data`.
-
-```bash
-chown -R www-data:www-data docker/volumes/cache docker/volumes/demos docker/volumes/sessions docker/logs
-```
-
-Containers can be stopped with `docker compose down`.
+[mdp]: https://github.com/p2sr/mdp
 
 ### Without Docker
 
@@ -146,62 +162,90 @@ Requirements:
 - php-mysql
 - mysql-server
 - composer
+- cron
 
 Setup:
 
 - Enable php mods `a2enmod rewrite expires headers ssl`
 - Install dependencies `composer install`
 - Create folders `mkdir cache demos logs sessions`
+- Link apache log files to `logs`
 - Configure `VirtualHost` [conf file](#example---apache2-vhost--https)
 - Connect to the mysql instance and create the database once `create database iverborg_leaderboard;`
 - Import the database `sudo mysql -u root -p iverborg_leaderboard < data/leaderboard.sql`
 - Run all migrations in `migrations/`
 - Update cache once with `php api/refreshCache.php`
-- Schedule a cronjob for `api/refreshCache.php` to run every minute
-- Schedule a cronjob for `api/fetchNewScores.php` to run every 15 minutes
-- Configure apache2 permissions with `chown -R ...` etc.
+- Schedule a cron job for `api/refreshCache.php` to run every minute
+- Schedule a cron job for `api/fetchNewScores.php` to run every 15 minutes
+- Configure apache permissions with `chown -R ...` etc.
 
-#### Example - Apache2 VHost + HTTPS
+#### Example
 
-Create a `/etc/apache2/sites-available/board.portal2.local.conf` file and enable it `a2ensite board.portal2.local`.
+This mainly explains what the [docker version](/docker/apache/board.portal2.local.conf) does.
+
+Create a `/etc/apache2/sites-available/board.portal2.local.conf` file and enable it with `a2ensite board.portal2.local`.
 
 Set the document root to the `public` folder and alias `demos` path for demo downloads.
 
 SSL certs go into `/etc/apache2/ssl`.
 
 ```conf
-<VirtualHost board.portal2.local:443>
-    DocumentRoot "/var/www/board.portal2.local/public"
+<VirtualHost board.portal2.local:80>
     ServerName board.portal2.local
+    Redirect permanent / https://board.portal2.local/
+</VirtualHost>
+
+<VirtualHost board.portal2.local:443>
+    ServerName board.portal2.local
+    DocumentRoot "/var/www/html/public"
 
     SSLEngine on
     SSLCertificateFile "ssl/board.portal2.local.crt"
     SSLCertificateKeyFile "ssl/board.portal2.local.key"
 
-    <Directory "/var/www/board.portal2.local/public">
+    <Directory "/var/www/html/public">
         AllowOverride all
         Require all granted
     </Directory>
 
-    Alias "/demos" "/var/www/board.portal2.local/demos"
+    Alias "/demos" "/var/www/html/demos"
 
-    <Directory "/var/www/board.portal2.local/demos">
-        AllowOverride None
-        Require all granted
-        AddType application/octect-stream .dem
+    <Directory "/var/www/html/demos">
+        AllowOverride none
+        Require all denied
+
+        <FilesMatch "\.dem$">
+            Require all granted
+            Header set Content-Type application/octect-stream
+        </FilesMatch>
     </Directory>
 </VirtualHost>
 ```
 
 ## Production
 
-Same as in [local development](#local-development) except `docker-compose.prod.yml` is used:
+Mostly the same as in [development](#with-docker#) but use `./setup prod` instead.
 
-```bash
-docker compose -f docker-compose.yml -f docker-compose.prod.yml up
-```
+Open `.env` file and set `SERVER_NAME` to the server domain.
 
-Example with Nginx + letsencrypt + proxy pass:
+Move or link the SSL certificates in `docker/ssl` which should match `SERVER_NAME` in `.env`:
+- `docker/ssl/board.portal2.sr.cert`
+- `docker/ssl/board.portal2.sr.key`
+
+Edit compose file `docker/compose/board.portal2.sr.yml` to match the limitations of the host.
+
+Finally use `docker compose -f docker-compose.yml -f docker/compose/board.portal2.sr.yml up`
+
+### Reverse Proxy (optional)
+
+A host might use a reverse proxy like Nginx for managing other web applications. This makes managing sub-domains and SSL
+certificates much easier. Of course part can also be inside a docker container but it is left out in this example.
+
+Make sure that the docker composer file uses a local address that can only be reached within
+the host's network, or the container ports might get exposed to the public. The example below assumes that nobody
+will call the container from the outside and the inside except Nginx. Otherwise enable apache mod
+`remoteip` and add `RemoteIPHeader` with `RemoteIPTrustedProxy` to the apache config. This
+will verify if the requests are coming from the reverse proxy only.
 
 ```bash
 ~/$ cat .env
@@ -210,11 +254,14 @@ SERVER_NAME=board.portal2.sr
 
 HTTP_PORT=8880
 HTTPS_PORT=8443
+DATABASE_PORT=3306
 
 PHP_VERSION=php81
 DATABASE_VERSION=mysql8
 
 MYSQL_ROOT_PASSWORD=root
+
+APT_PACKAGES=
 ```
 
 ```bash
