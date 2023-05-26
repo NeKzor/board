@@ -16,8 +16,6 @@ services:
       - "127.0.0.1:${HTTPS_PORT}:443"
     links:
       - database:database
-    cpus: 0.5
-    cpu_count: 2
     volumes:
       - ./api:/var/www/html/api:rw
       - ./classes:/var/www/html/classes:rw
@@ -39,16 +37,13 @@ services:
     container_name: "${PROJECT_NAME}-${DATABASE_VERSION}"
     restart: unless-stopped
     ports:
-      - "127.0.0.1:${DATABASE_PORT}:3306"
-    cpus: 0.5
-    cpu_count: 2
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 26677
-        hard: 46677
+      - "127.0.0.1:${DATABASE_PORT}:${DATABASE_PORT}"
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_TCP_PORT: ${DATABASE_PORT}
     volumes:
       - ./docker/initdb:/docker-entrypoint-initdb.d
       - ./docker/volumes/mysql:/var/lib/mysql
