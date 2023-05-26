@@ -5,7 +5,7 @@ services:
       - "${HTTP_PORT}:80"
       - "${HTTPS_PORT}:443"
     cpus: 0.5
-    cpu_count: 2
+    cpu_count: 4
     deploy:
       resources:
         limits:
@@ -21,10 +21,9 @@ services:
       - ./docker/volumes/sessions:/var/www/html/sessions
   database:
     ports:
-      - "127.0.0.1:${HTTP_PORT}:80"
-      - "127.0.0.1:${HTTPS_PORT}:443"
+      - "127.0.0.1:${DATABASE_PORT}:${DATABASE_PORT}"
     cpus: 0.5
-    cpu_count: 2
+    cpu_count: 4
     deploy:
       resources:
         limits:
