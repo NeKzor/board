@@ -7,6 +7,7 @@
  */
 final class Config {
     public readonly string $database_host;
+    public readonly int    $database_port;
     public readonly string $database_user;
     public readonly string $database_pass;
     public readonly string $database_name;
@@ -24,7 +25,7 @@ final class Config {
     private function __construct() {
         foreach (json_decode(file_get_contents(ROOT_PATH . '/.config.json'), true) as $key => $value) {
             if (property_exists($this, $key)) {
-                $this->{$key} = strval($value);
+                $this->{$key} = $value;
             }
         }
     }

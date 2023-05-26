@@ -11,7 +11,7 @@ class Database {
             $config->database_user,
             $config->database_pass,
             $config->database_name,
-            3306,
+            $config->database_port,
         );
 
         if ($db->connect_errno) {

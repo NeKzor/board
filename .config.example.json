@@ -1,5 +1,6 @@
 {
     "database_host": "database",
+    "database_port": 3306,
     "database_user": "root",
     "database_pass": "root",
     "database_name": "iverborg_leaderboard",
