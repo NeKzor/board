@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# File name for generating SSL certificates (dev-only)
+site=board.portal2.local
+
+# File name of gzip'd database dump
 dbname=iverborg_leaderboard
 
 # Configuration files:
@@ -43,6 +47,12 @@ create_volumes()
 
 create_ssl_cert()
 {
+    if [ -f "docker/ssl/$site.crt" ];
+    then
+        echo "[+] skipped generating certificate"
+        return
+    fi
+
     if ! command -v mkcert &> /dev/null ;
     then
         echo "[-] mkcert does not seem to be installed. failed to generate ssl certificates"
@@ -50,8 +60,6 @@ create_ssl_cert()
         echo "[+] generating certificate in docker/ssl"
 
         mkdir -p "docker/ssl"
-
-        site=board.portal2.local
 
         if ! err=$(mkcert -cert-file docker/ssl/$site.crt -key-file docker/ssl/$site.key $site 2>&1) ;
         then
@@ -68,6 +76,29 @@ create_db()
 
     echo "USE $dbname;" > docker/initdb/_init.sql
     gunzip -c data/leaderboard.gz >> docker/initdb/_init.sql
+}
+
+# Set permissions for www-data for all mounted volumes.
+
+set_permissions()
+{
+    echo "[+] setting permissions for all volumes"
+
+    sudo chown -R www-data:www-data  \
+        ./api \
+        ./classes \
+        ./public \
+        ./views \
+        ./loader.php \
+        .config.json \
+        ./docker/apache \
+        ./docker/ssl \
+        ./docker/logs/error.log \
+        ./docker/logs/access.log \
+        ./docker/logs/debug.txt \
+        ./docker/volumes/cache \
+        ./docker/volumes/demos \
+        ./docker/volumes/sessions
 }
 
 # Development server only.
@@ -102,5 +133,6 @@ setup_prod()
 case $1 in
 dev)    setup_dev ;;
 prod)   setup_prod ;;
-* )     echo "usage: ./setup <dev|prod>" ;;
+perm)    set_permissions ;;
+* )     echo "usage: ./setup <dev|prod|perm>" ;;
 esac
