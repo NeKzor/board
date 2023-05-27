@@ -45,6 +45,7 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Fixed profile history loading icon not resetting
   - Fixed invalid CSS syntax
   - Fixed 100% CPU usage when changing changing the zoom level
+  - Fixed autosubmission icon is not being aligned in chamber page
 - Features
   - Allow @ usernames for YouTube channels
   - Render page in HTML5
@@ -60,7 +61,6 @@ The community driven leaderboard for Portal 2 speedrunners.
 ## Out of scope (for now)
 
 - Bug fixes
-  - Auto-submission icon is not aligned in many places
   - Fix pending filter value switching between 0, 1 and 2
   - Fix UI in changelog showing point loss
 - Clean up
