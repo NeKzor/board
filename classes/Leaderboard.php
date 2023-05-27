@@ -423,9 +423,7 @@ class Leaderboard
     {
         $maps = self::getMaps();
         $changes = array();
-        $highestEvidenceRank = count($evidenceRequirments)
-            ? max(array_column($evidenceRequirments, 'rank'))
-            : self::rankForPoints;
+        $highestEvidenceRank = max(array_column($evidenceRequirments, 'rank'));
 
         Debug::log("Saving new leaderboard data");
         $db_data = Database::query("SELECT id, profile_number, score, map_id FROM changelog");
