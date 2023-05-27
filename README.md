@@ -7,6 +7,7 @@ The community driven leaderboard for Portal 2 speedrunners.
 - [Regression](#regression)
 - [Local Development](#local-development)
   - [With Docker](#with-docker)
+    - [Caveats](#caveats)
     - [Overview of .env](#overview-of-env)
     - [Overview of .config.json](#overview-of-configjson)
   - [Without Docker](#without-docker)
@@ -39,6 +40,9 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Fixed resolving chambers which do not exist
   - Fixed invalid date warning in activity chart
   - Removed broken call to old Twitch API
+  - Fixed alignment of usernames for broken avatars
+  - Fixed submission container not working when switching between chambers
+  - Fixed profile history loading icon not resetting
 - Features
   - Allow @ usernames for YouTube channels
   - Render page in HTML 5
@@ -91,8 +95,6 @@ The community driven leaderboard for Portal 2 speedrunners.
 ## Regression
 
 - Small HTMl5 rendering issues with slider animations
-- Date in changelog is not aligned
-- Profile buttons are not aligned sometimes
 
 ## Local Development
 
@@ -116,6 +118,14 @@ Steps:
 - Add the host entry `127.0.0.1 board.portal2.local` to `/etc/hosts`
 
 The server should now be available at: `https://board.portal2.local`
+
+#### Caveats
+
+- Permissions have to be managed manually for mounted volumes, see [moby#2259]
+- MySQL 8 container leaks memory, see [containerd#6707]
+
+[moby#2259]: https://github.com/moby/moby/issues/2259
+[containerd#6707]: https://github.com/containerd/containerd/issues/6707
 
 #### Overview of .env
 
