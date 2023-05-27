@@ -4,7 +4,6 @@ The community driven leaderboard for Portal 2 speedrunners.
 
 - [What's new](#whats-new)
 - [Out of scope (for now)](#out-of-scope-for-now)
-- [Regression](#regression)
 - [Local Development](#local-development)
   - [With Docker](#with-docker)
     - [Caveats](#caveats)
@@ -43,9 +42,10 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Fixed alignment of usernames for broken avatars
   - Fixed submission container not working when switching between chambers
   - Fixed profile history loading icon not resetting
+  - Fixed invalid CSS syntax
 - Features
   - Allow @ usernames for YouTube channels
-  - Render page in HTML 5
+  - Render page in HTML5
 - Meta
   - Removed committed vendor files
   - Removed unused composer dependencies
@@ -91,10 +91,6 @@ The community driven leaderboard for Portal 2 speedrunners.
 - Features
   - Remove YouTube inline player for better creditability and privacy (or make it a setting)
   - Add ability to filter banned times
-
-## Regression
-
-- Small HTMl5 rendering issues with slider animations
 
 ## Local Development
 
