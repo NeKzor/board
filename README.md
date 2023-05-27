@@ -129,8 +129,8 @@ This is used by Dockerfile and docker-compose.yml.
 |---|---|
 |PROJECT_NAME|This name is used as a prefix for the containers.|
 |SERVER_NAME|The domain name which should be set before building the image. Docker will use it to mount the correct apache config file which links to the SSL certificates.|
-|HTTP_PORT|The unsafe HTTP port of the local host. Change it if a different port is needed e.g. [reverse proxy](#reverse-proxy-optional|
-|HTTPS_PORT|The safe HTTPS port of the local host. Change it if a different port is needed e.g. [reverse proxy](#reverse-proxy-optional|
+|HTTP_PORT|The unsafe HTTP port of the local host. Change it if a different port is needed e.g. [reverse proxy](#reverse-proxy-optional)|
+|HTTPS_PORT|The safe HTTPS port of the local host. Change it if a different port is needed e.g. [reverse proxy](#reverse-proxy-optional)|
 |DATABASE_PORT|The MySQL database port of the local host. NOTE: Make sure that the docker compose file does not expose the server to an unwanted address. By default it's mapped to `127.0.0.1`.|
 |PHP_VERSION|The name of the server container.|
 |DATABASE_VERSION|The name of the database container.|
