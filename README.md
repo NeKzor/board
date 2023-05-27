@@ -29,6 +29,7 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Fixed insecure project structure which allowed file leaks
   - Fixed insecure cookies which allowed account takeover via XSS
   - Fixed insecure demo folder configuration which allowed XSS
+  - Fixed insecure embedding of demo filename which allowed XSS
   - Fixed missing integrity checks for CDN links
   - Fixed potential mime sniffing attacks
   - Fixed potential click-jacking attacks
@@ -58,13 +59,10 @@ The community driven leaderboard for Portal 2 speedrunners.
 ## Out of scope (for now)
 
 - Bug fixes
-  - Manual submission button does not work sometimes
   - Auto-submission icon is not aligned in many places
-  - Fix hard-coded database port
   - Fix pending filter value switching between 0, 1 and 2
   - Fix UI in changelog showing point loss
 - Clean up
-  - ~~Unify secret files into a single file~~
   - Unify global hard-coded values into a single file
   - Fix typos like "Requirments" etc.
   - Remove old and useless TODOs, comments and unused code like least portals
