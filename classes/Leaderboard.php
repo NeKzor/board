@@ -1356,8 +1356,6 @@ class Leaderboard
         $result = self::getChange($changeLogId);
         // Getting requirements (Old/inactive as well)
         $requirements = self::getEvidenceRequirments(false);
-        if (!count($requirements)) return 0;
-
         $dateTime = $result['time_gained'];
 
         // if video or demo required
