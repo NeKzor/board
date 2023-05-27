@@ -245,7 +245,7 @@ Finally use `docker compose -f docker-compose.yml -f docker/compose/board.portal
 ### Reverse Proxy (optional)
 
 A host might use a reverse proxy like Nginx for managing other web applications. This makes managing sub-domains and SSL
-certificates much easier. Of course part can also be inside a docker container but it is left out in this example.
+certificates much easier. Of course this part can also be inside a docker container but it is left out in this example.
 
 Make sure that the docker composer file uses a local address that can only be reached within
 the host's network, or the container ports might get exposed to the public. The example below assumes that nobody
