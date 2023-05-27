@@ -44,6 +44,7 @@ The community driven leaderboard for Portal 2 speedrunners.
   - Fixed submission container not working when switching between chambers
   - Fixed profile history loading icon not resetting
   - Fixed invalid CSS syntax
+  - Fixed 100% CPU usage when changing changing the zoom level
 - Features
   - Allow @ usernames for YouTube channels
   - Render page in HTML5
