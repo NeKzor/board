@@ -1166,7 +1166,7 @@
             var fileNameComponents = $(this).val().split("\\");
             var fileName = fileNameComponents[fileNameComponents.length - 1];
             $(this).parent().parent().find(".uploadDemo").show();
-            $(this).parent().parent().find(".fileName").html(fileName);
+            $(this).parent().parent().find(".fileName").text(fileName);
         });
     }
 
@@ -1611,7 +1611,7 @@
                 var fileNameComponents = $(this).val().split("\\");
                 var fileName = fileNameComponents[fileNameComponents.length - 1];
                 $(this).parent().parent().find(".uploadDemo").show();
-                $(this).parent().parent().find(".fileName").html(fileName);
+                $(this).parent().parent().find(".fileName").text(fileName);
             });
 
             $changeMenu.find(".button.uploadDemo").on('click', function(event) {
