@@ -174,7 +174,7 @@ Setup:
 - Install dependencies `composer install`
 - Create folders `mkdir cache demos logs sessions`
 - Link apache log files to `logs`
-- Configure `VirtualHost` [conf file](#example---apache2-vhost--https)
+- Configure `VirtualHost` [conf file](#example)
 - Connect to the mysql instance and create the database once `create database iverborg_leaderboard;`
 - Import the database `sudo mysql -u root -p iverborg_leaderboard < data/leaderboard.sql`
 - Run all migrations in `migrations/`
