@@ -43,8 +43,6 @@ class Leaderboard
         $SPChamberBoard = self::getBoard(array("mode" => "0", "pending" => "0"));
         $COOPChamberBoard = self::getBoard(array("mode" => "1", "pending" => "0"));
 
-        echo json_encode($SPChamberBoard);
-
         Cache::set("SPChamberBoard", $SPChamberBoard);
         Cache::set("COOPChamberBoard", $COOPChamberBoard);
         $fullBoard = $SPChamberBoard + $COOPChamberBoard; //TODO: may cause chapter id collisions if data would be organized by mode
@@ -61,14 +59,14 @@ class Leaderboard
         //Debug::log("Start caching point boards");
         $generalSPPointBoard = self::makePointBoard($SPChamberPointBoard);
         $generalCOOPPointBoard = self::makePointBoard($COOPChamberPointBoard);
-        $SPPointBoard = $generalSPPointBoard["board"];
-        $COOPPointBoard = $generalCOOPPointBoard["board"];
+        $SPPointBoard = $generalSPPointBoard["board"] ?? array();
+        $COOPPointBoard = $generalCOOPPointBoard["board"] ?? array();
         Cache::set("SPPointBoard", $SPPointBoard);
         Cache::set("COOPPointBoard", $COOPPointBoard);
         Cache::set("globalPointBoard", self::makeGlobalPointBoard($SPPointBoard, $COOPPointBoard, false, false));
 
-        $SPchapterPointBoards = $generalSPPointBoard["chapter"];
-        $COOPchapterPointBoards = $generalCOOPPointBoard["chapter"]; //Per chapter caching?
+        $SPchapterPointBoards = $generalSPPointBoard["chapter"] ?? array();
+        $COOPchapterPointBoards = $generalCOOPPointBoard["chapter"] ?? array(); //Per chapter caching?
         Cache::set("chapterPointBoards", $SPchapterPointBoards + $COOPchapterPointBoards);
         foreach (array_keys($maps["chapters"]) as $chapter) {
             if (isset($SPchapterPointBoards[$chapter])) {
@@ -86,15 +84,15 @@ class Leaderboard
         //Debug::log("Start caching time boards");
         $generalSPTimeBoard = self::makeTimeBoard($SPChamberBoard);
         $generalCOOPTimeBoard = self::makeTimeBoard($COOPChamberBoard);
-        $SPTimeBoard = $generalSPTimeBoard["board"];
-        $COOPTimeBoard = $generalCOOPTimeBoard["board"];
+        $SPTimeBoard = $generalSPTimeBoard["board"] ?? array();
+        $COOPTimeBoard = $generalCOOPTimeBoard["board"] ?? array();
         $globalTimeBoard = self::makeGlobalPointBoard($SPTimeBoard, $COOPTimeBoard, true, true);
         Cache::set("SPTimeBoard", $SPTimeBoard);
         Cache::set("COOPTimeBoard", $COOPTimeBoard);
         Cache::set("globalTimeBoard", $globalTimeBoard);
 
-        $SPchapterTimeBoards = $generalSPTimeBoard["chapter"];
-        $COOPchapterTimeBoards = $generalCOOPTimeBoard["chapter"];
+        $SPchapterTimeBoards = $generalSPTimeBoard["chapter"] ?? array();
+        $COOPchapterTimeBoards = $generalCOOPTimeBoard["chapter"] ?? array();
         Cache::set("chapterTimeBoards", $SPchapterTimeBoards + $COOPchapterTimeBoards);
         foreach (array_keys($maps["chapters"]) as $chapter) {
             if (isset($SPchapterTimeBoards[$chapter])) {
@@ -847,6 +845,8 @@ class Leaderboard
 
     public static function makeChamberPointBoard($board)
     {
+        $pointBoard = [];
+
         foreach ($board as $chapter => $chapterData) {
             foreach ($chapterData as $map => $mapData) {
                 foreach ($mapData as $user => $userScoreData) {
@@ -897,6 +897,7 @@ class Leaderboard
 
     public static function makePointBoard($board)
     {
+        $points = [];
         foreach ($board as $chapter => $chapterData) {
             foreach ($chapterData as $map => $mapData) {
                 foreach ($mapData as $player => $playerData) {
@@ -916,16 +917,20 @@ class Leaderboard
             }
         }
 
-        foreach ($points["chapter"] as $chapter => $profileNumber) {
-            uasort($points["chapter"][$chapter], array("Leaderboard", "descScoreSort"));
+
+        foreach ($points["chapter"] ?? array() as $chapter => $profileNumber) {
+            if ($points["chapter"][$chapter]) {
+                uasort($points["chapter"][$chapter], array("Leaderboard", "descScoreSort"));
+            }
             $points["chapter"][$chapter] = self::roundBoardScores($points["chapter"][$chapter]);
             $points["chapter"][$chapter] = self::calculateRanking($points["chapter"][$chapter]);
         }
-        if ($points["board"]) {
+
+        if ($points["board"] ?? null) {
             uasort($points["board"], array("Leaderboard", "descScoreSort"));
+            $points["board"] = self::roundBoardScores($points["board"]);
+            $points["board"] = self::calculateRanking($points["board"]);
         }
-        $points["board"] = self::roundBoardScores($points["board"]);
-        $points["board"] = self::calculateRanking($points["board"]);
 
         return $points;
     }
@@ -1035,14 +1040,15 @@ class Leaderboard
             unset($times["board"][$user]);
         }
 
-        foreach ($times["chapter"] as $chapter => $profileNumber) {
+        foreach ($times["chapter"] ?? array() as $chapter => $profileNumber) {
             uasort($times["chapter"][$chapter], array("Leaderboard", "ascScoreSort"));
             $times["chapter"][$chapter] = self::calculateRanking($times["chapter"][$chapter]);
         }
-        if ($times["board"]) {
+
+        if ($times["board"] ?? null) {
             uasort($times["board"], array("Leaderboard", "ascScoreSort"));
+            $times["board"] = self::calculateRanking($times["board"]);
         }
-        $times["board"] = self::calculateRanking($times["board"]);
 
         return $times;
     }
@@ -1241,7 +1247,7 @@ class Leaderboard
         $chapter = $maps["maps"][$chamber]["chapterId"];
 
         $oldBoards = self::getBoard(array("chamber" => $chamber));
-        $oldChamberBoard = $oldBoards[$chapter][$chamber];
+        $oldChamberBoard = $oldBoards[$chapter][$chamber] ?? array();
 
         Debug::log("Checking if WR");
         $wr = 0;
