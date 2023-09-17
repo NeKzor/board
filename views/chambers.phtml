@@ -1,6 +1,6 @@
 <?php $mapInfo = $GLOBALS["mapInfo"]; ?>
-<?php $mode = Router::$location[2]; ?>
-<?php $youtubeIDs = (($mode == "coop") ? Cache::get("COOPyoutubeIDs") : Cache::get("SPyoutubeIDs")) ?>
+<?php $mode = Router::$location[1]; ?>
+<?php $youtubeIDs = (($mode == "advanced-mode") ? Cache::get("COOPyoutubeIDs") : Cache::get("SPyoutubeIDs")) ?>
 <?php $autoRenderedVideoIds = AutoRenderApiClient::getChambersVideos($view->board)?>
 
 <script>
@@ -24,7 +24,7 @@
                 <?php $mapName = $mapInfo["maps"][$map]["mapName"]?>
                 <?php $isPublic =  $mapInfo["maps"][$map]["isPublic"]?>
                 <div class="chamber">
-                    <div class="chamberimage" onclick="goToChamber(event, <?=$map;?>)" style="background: url('/images/chambers/<?=$map;?>.jpg'); background-size: cover">
+                    <div class="chamberimage" onclick="goToChamber(event, <?=$map;?>)" style="background: url('/images/chambers/1.jpg'); background-size: cover">
                         <div class="chambertitle">
                             <div class="titlebghelper"></div>
                             <div class="titlebg"><a href="/chamber/<?=$map;?>"><?=$mapName?></a></div>
@@ -55,7 +55,14 @@
                         <?php
                             $twoplayer_highlight = false;
                             $skipRank2 = false;
-                            $keys = array_keys($mapData);
+                            $mapData = [
+                                "1" => [
+                                    "userData" => [
+                                        "boardName" => "NeKz"
+                                    ]
+                                ]
+                            ];
+                            $keys = array_keys($mapData ?? array());
                             $rank1String = $mapData[$keys[0]]["userData"]["boardname"];
                             $rank1HTML = "<a href='/profile/" . $keys[0] . "'>" . $rank1String . "</a>";
                             $rank1youtube = $mapData[$keys[0]]["scoreData"]["youtubeID"];

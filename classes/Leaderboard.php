@@ -166,10 +166,10 @@ class Leaderboard
                             ORDER BY  is_coop, maps.id");
         while ($row = $data->fetch_assoc()) {
             if ($row["is_coop"] == 1) {
-                $mode = "coop";
+                $mode = "advanced-mode";
             }
             else {
-                $mode = "sp";
+                $mode = "story-mode";
             }
             $maps["modes"][$mode][$row["chapter_id"]] = $row["chapter_id"];
 
@@ -696,8 +696,8 @@ class Leaderboard
             "boardName" => "",
             "profileNumber" => "",
             "type" => "",
-            "sp" => "1",
-            "coop" => "1",
+            "story-mode" => "1",
+            "advanced-mode" => "1",
             "wr" => "",
             "demo" => "",
             "yt" => "",
@@ -921,7 +921,9 @@ class Leaderboard
             $points["chapter"][$chapter] = self::roundBoardScores($points["chapter"][$chapter]);
             $points["chapter"][$chapter] = self::calculateRanking($points["chapter"][$chapter]);
         }
-        uasort($points["board"], array("Leaderboard", "descScoreSort"));
+        if ($points["board"]) {
+            uasort($points["board"], array("Leaderboard", "descScoreSort"));
+        }
         $points["board"] = self::roundBoardScores($points["board"]);
         $points["board"] = self::calculateRanking($points["board"]);
 
@@ -1037,7 +1039,9 @@ class Leaderboard
             uasort($times["chapter"][$chapter], array("Leaderboard", "ascScoreSort"));
             $times["chapter"][$chapter] = self::calculateRanking($times["chapter"][$chapter]);
         }
-        uasort($times["board"], array("Leaderboard", "ascScoreSort"));
+        if ($times["board"]) {
+            uasort($times["board"], array("Leaderboard", "ascScoreSort"));
+        }
         $times["board"] = self::calculateRanking($times["board"]);
 
         return $times;
@@ -1045,7 +1049,7 @@ class Leaderboard
 
     public static function calculateRanking($sortedBoard) {
         $boardWithNewRanks = array();
-        $keys = array_keys($sortedBoard);
+        $keys = array_keys($sortedBoard ?? array());
         $rank = 1;
         $entryNum = 1;
         $displayRank = 1;

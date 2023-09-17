@@ -3,18 +3,18 @@
     <div id="time_icon" class="nav_icon"></div>
     <div class="btnLabel">Score Updates</div>
 </a>
-<a href="/chambers/sp" class="nav_button">
+<a href="/story-mode" class="nav_button">
     <div id="sp_icon" class="nav_icon"></div>
-    <div class="btnLabel">Single Player</div>
+    <div class="btnLabel">Story Mode</div>
 </a>
-<a href="/chambers/coop" class="nav_button">
+<a href="/advanced-mode" class="nav_button">
     <div id="coop_icon" class="nav_icon"></div>
-    <div class="btnLabel">Cooperative</div>
+    <div class="btnLabel">Advanced Mode</div>
 </a>
 <div class="nav_dropdown">
     <div id="cube_icon" class="nav_icon"></div>
     <div class="btnLabel">Aggregated</div>
-    <ul style="width:140px">
+    <ul style="width:150px">
       <li>
           <a href="/aggregated/overall" style="height: 29px">
             <div class="nav_icon" style="background: url('/images/cup_noborder.jpg'); background-size: 29px 29px;"></div>
@@ -24,16 +24,16 @@
       <li class="nav_dropdown">
           <div style="height: 29px">
               <div class="nav_icon" style="background: url('/images/sp_noborder.jpg'); background-size: 29px 29px;"></div>
-              <div class="btnLabel">Single Player</div>
+              <div class="btnLabel">Story Mode</div>
           </div>
-          <ul style="width:165px">
+          <ul style="width:190px">
               <li>
-                <a href="/aggregated/sp">
+                <a href="/aggregated/story-mode">
                     <div class="nav_icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                     <div class="btnLabel">Total</div>
                 </a>
               </li>
-              <?php $i = 1; foreach ($mapInfo["modes"]["sp"] as $chapter): ?>
+              <?php $i = 1; foreach ($mapInfo["modes"]["story-mode"] as $chapter): ?>
                   <li>
                       <a href="/aggregated/chapter/<?=$chapter?>">
                         <div class="nav_icon"><?=$i?></div>
@@ -46,16 +46,16 @@
       <li class="nav_dropdown">
           <div style="height: 29px">
               <div class="nav_icon" style="background: url('/images/coop_noborder.jpg'); background-size: 29px 29px;"></div>
-              <div class="btnLabel">Cooperative</div>
+              <div class="btnLabel">Advanced Mode</div>
           </div>
-          <ul style="width:185px">
+          <ul style="width:190px">
               <li>
-                  <a href="/aggregated/coop">
+                  <a href="/aggregated/advanced-mode">
                       <div class="nav_icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                       <div class="btnLabel">Total</div>
                   </a>
               </li>
-              <?php $i = 1; foreach ($mapInfo["modes"]["coop"] as $chapter): ?>
+              <?php $i = 1; foreach ($mapInfo["modes"]["advanced-mode"] as $chapter): ?>
                   <li>
                       <a href="/aggregated/chapter/<?=$chapter?>">
                         <div class="nav_icon"><?=$i?></div>
@@ -84,19 +84,19 @@
     <div class="btnLabel">More</div>
     <ul style="width:145px">
       <li class="nav_dropdown">
-          <a href="https://www.speedrun.com/Portal_2" target="_blank" style="height: 29px">
+          <a href="https://www.speedrun.com/mel" target="_blank" style="height: 29px">
               <div class="nav_icon" style="background: url('/images/running.png'); background-size: 29px 29px;"></div>
               <div class="btnLabel">Full Game Runs</div>
           </a>          
       </li>
       <li class="nav_dropdown">
-          <a href="https://discordapp.com/invite/hRwE4Zr" target="_blank" style="height: 29px">
+          <a href="https://discord.gg/p2sr" target="_blank" style="height: 29px">
               <div class="nav_icon" style="background: url('/images/discord_noborder.png'); background-size: 29px 29px;"></div>
               <div class="btnLabel">Discord</div>
           </a>          
       </li>
         <li class="nav_dropdown">
-          <a href="https://github.com/p2sr/Portal2Boards" target="_blank" style="height: 29px">
+          <a href="https://github.com/NeKzor/board" target="_blank" style="height: 29px">
               <div class="nav_icon" style="background: url('/images/github.png'); background-size: 29px 29px;"></div>
               <div class="btnLabel">GitHub</div>
           </a>          
@@ -105,12 +105,6 @@
           <a href="/donators" style="height: 29px">
             <div class="nav_icon donator_icon"></div>
             <div class="btnLabel">Donators</div>
-          </a>
-      </li>
-      <li>
-          <a href="/wallofshame" style="height: 29px">
-            <div class="nav_icon" style="background: url('/images/wallofshame.png'); background-size: 29px 29px;"></div>
-            <div class="btnLabel">Wall of Shame</div>
           </a>
       </li>
       <li>

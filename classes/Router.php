@@ -611,31 +611,28 @@ class Router {
             $view->addCssMultiple(View::$pageData["css"]);
         }
 
-        if ($location[1] == "chambers" && isset($location[2])) {
-            if ($location[2] == "sp") {
-                $view->board = Cache::get("SPChamberBoard");
-                View::$pageData["pageTitle"] = "Chambers - Single Player";
-            }
-            else if ($location[2] == "coop") {
-                $view->board = Cache::get("COOPChamberBoard");
-                View::$pageData["pageTitle"] = "Chambers - Cooperative";
-            }
-            else
-                $this->routeTo404();
+        if ($location[1] == "story-mode") {
+            $view->board = Cache::get("SPChamberBoard");
+            View::$pageData["pageTitle"] = "Story Mode";
+        }
+
+        if ($location[1] == "advanced-mode") {
+            $view->board = Cache::get("COOPChamberBoard");
+            View::$pageData["pageTitle"] = "Advanced Mode";
         }
 
         if ($location[1] == "aggregated" && isset($location[2])) {
-            if ($location[2] == "sp") {
+            if ($location[2] == "story-mode") {
                 $view->points = Cache::get("SPPointBoard");
                 $view->times = Cache::get("SPTimeBoard");
-                View::$pageData["pageTitle"] = "Aggregated - Single Player";
-                $view->mode = "Single Player";
+                View::$pageData["pageTitle"] = "Aggregated - Story Mode";
+                $view->mode = "Story Mode";
             }
-            else if ($location[2] == "coop") {
+            else if ($location[2] == "advanced-mode") {
                 $view->points = Cache::get("COOPPointBoard");
                 $view->times = Cache::get("COOPTimeBoard");
-                View::$pageData["pageTitle"] = "Aggregated - Cooperative";
-                $view->mode = "Cooperative";
+                View::$pageData["pageTitle"] = "Aggregated - Advanced Mode";
+                $view->mode = "Advanced Mode";
             }
             else if ($location[2] == "overall") {
                 View::$pageData["pageTitle"] = "Aggregated - Overall";
@@ -722,13 +719,13 @@ class Router {
         }
 
         if ($location[1] == "lp") {
-            if ($location[2] == "sp") {
+            if ($location[2] == "story-mode") {
                 $view->board = Leaderboard::getLeastPortalsBoard(0);
-                View::$pageData["pageTitle"] = "Least Portals - Single Player";
+                View::$pageData["pageTitle"] = "Least Portals - Story Mode";
             }
-            if ($location[2] == "coop") {
+            if ($location[2] == "advanced-mode") {
                 $view->board = Leaderboard::getLeastPortalsBoard(1);
-                View::$pageData["pageTitle"] = "Least Portals - Cooperative";
+                View::$pageData["pageTitle"] = "Least Portals - Advanced Mode";
             }
         }
 
@@ -877,8 +874,8 @@ class Router {
             , "boardName" => ""
             , "profileNumber" => ""
             , "type" => ""
-            , "sp" => ""
-            , "coop" => ""
+            , "story-mode" => ""
+            , "advanced-mode" => ""
             , "wr" => ""
             , "demo" => ""
             , "yt" => ""
@@ -896,10 +893,10 @@ class Router {
                 $result[$key] = $val;
             }
         }
-        if ($result["sp"] == "1" && $result["coop"] != "1") {
+        if ($result["story-mode"] == "1" && $result["advanced-mode"] != "1") {
             $result["type"] = "0";
         }
-        elseif ($result["sp"] != "1" && $result["coop"] == "1") {
+        elseif ($result["story-mode"] != "1" && $result["advanced-mode"] == "1") {
             $result["type"] = "1";
         }
 
