@@ -132,13 +132,13 @@
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo $user->times->SP["chambers"]["numWRs"]; ?></div>
-                        <div class="title"><span>Single Player <br/>World Record<?php if($user->times->SP["chambers"]["numWRs"] != 1) {?>s<?php } ?></span></div>
+                        <div class="title"><span>Story Mode <br/>World Record<?php if($user->times->SP["chambers"]["numWRs"] != 1) {?>s<?php } ?></span></div>
                     </div>
                 </div>
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo $user->times->COOP["chambers"]["numWRs"]; ?></div>
-                        <div class="title"><span>Cooperative <br/>World Record<?php if($user->times->COOP["chambers"]["numWRs"] != 1) {?>s<?php } ?></span></div>
+                        <div class="title"><span>Advanced Mode <br/>World Record<?php if($user->times->COOP["chambers"]["numWRs"] != 1) {?>s<?php } ?></span></div>
                     </div>
                 </div>
                 <div class="block">
@@ -152,13 +152,13 @@
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo round($user->points->SP["score"]);?></div>
-                        <div class="title"><span>Single Player <br/>Point<?php if($user->points->SP["score"] != 1) {?>s<?php } ?></span></div>
+                        <div class="title"><span>Story Mode <br/>Point<?php if($user->points->SP["score"] != 1) {?>s<?php } ?></span></div>
                     </div>
                 </div>
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo round($user->points->COOP["score"]);  ?></div>
-                        <div class="title"><span>Cooperative <br/>Point<?php if($user->points->COOP["score"] != 1) {?>s<?php } ?></span></div>
+                        <div class="title"><span>Advanced Mode <br/>Point<?php if($user->points->COOP["score"] != 1) {?>s<?php } ?></span></div>
                     </div>
                 </div>
                 <div class="block">
@@ -172,13 +172,13 @@
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo (isset($user->points->SP["playerRank"])) ? Util::number($user->points->SP["playerRank"]) : "NO"; ?></div>
-                        <div class="title"><span>Place in <br/>Single Player</span></div>
+                        <div class="title"><span>Place in <br/>Story Mode</span></div>
                     </div>
                 </div>
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo (isset($user->points->COOP["playerRank"])) ? Util::number($user->points->COOP["playerRank"]) : "NO"; ?></div>
-                        <div class="title"><span>Place in <br/>Cooperative</span></div>
+                        <div class="title"><span>Place in <br/>Advanced Mode</span></div>
                     </div>
                 </div>
                 <div class="block">
@@ -191,7 +191,7 @@
             <div class="block-container average">
                 <div class="block">
                     <?php $place = $user->times->SP["chambers"]["averagePlace"]; ?>
-                    <div class="block-inner" <?php if($place == NULL) : echo "data-toggle=\"tooltip\" title=\"A minimum of 10 scores in single player is required to determine the average place"; endif; ?>">
+                    <div class="block-inner" <?php if($place == NULL) : echo "data-toggle=\"tooltip\" title=\"A minimum of 10 scores in Story Mode is required to determine the average place"; endif; ?>">
                         <div class="number">
                             <?php if ($place != NULL): ?>
                                 <?=$place?>
@@ -201,14 +201,14 @@
                         </div>
                         <div class="title">
                             <span>
-                                Average Place<br/>in Single Player
+                                Average Place<br/>in Story Mode
                             </span>
                         </div>
                     </div>
                 </div>
                 <div class="block">
                     <?php $place = $user->times->COOP["chambers"]["averagePlace"]; ?>
-                    <div class="block-inner" <?php if($place == NULL) : echo "data-toggle=\"tooltip\" title=\"A minimum of 10 scores in cooperative is required to determine the average place"; endif; ?>">
+                    <div class="block-inner" <?php if($place == NULL) : echo "data-toggle=\"tooltip\" title=\"A minimum of 10 scores in Advanced Mode is required to determine the average place"; endif; ?>">
                         <div class="number">
                             <?php if ($place != NULL): ?>
                                 <?=$place?>
@@ -218,7 +218,7 @@
                         </div>
                         <div class="title">
                             <span>
-                                Average Place<br/>in Cooperative
+                                Average Place<br/>in Advanced Mode
                             </span>
                         </div>
                     </div>
@@ -320,7 +320,7 @@
         <div class="column-3">
             <div class="column sp">
                 <div class="profile-title">
-                    <span class="title">Records in single player</span>
+                    <span class="title">Records in Story Mode</span>
                     <div style="float: right">
                         Ordering :
                         <div class="button spChangeOrderingButton" style="padding-bottom: 1px; padding-top: 1px;">Default</div>
@@ -461,7 +461,7 @@
                 </div>
             </div>
             <div class="column mid coop">
-              <div class="profile-title"><span class="title">Records in Cooperative</span>                    
+              <div class="profile-title"><span class="title">Records in Advanced Mode</span>                    
                 <div style="float: right">
                     Ordering :
                     <div class="button coopChangeOrderingButton" style="padding-bottom: 1px; padding-top: 1px;">Default</div>
