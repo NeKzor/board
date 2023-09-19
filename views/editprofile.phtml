@@ -20,8 +20,10 @@
 
     <div class="auth_hash" style="display: flex; gap: 1rem;">
         <p>Auth Hash: <?=$loggedInUser->userData->auth_hash;?></p>
-        <button class="button btn" data-clipboard-text="<?=$loggedInUser->userData->auth_hash;?>" style="margin: 0 0 10px;">Copy</button>
         <button class="button regen-btn" style="margin: 0 0 10px;">Regenerate</button>
+        <?php if ($loggedInUser->userData->auth_hash): ?>
+            <button class="button download-btn" style="margin: 0 0 10px;">Download</button>
+        <?php endif; ?>
     </div>
 </div>
 
@@ -36,5 +38,9 @@
         }).done(function( msg ) {
             location.reload();
         });
+    });
+
+    $('.download-btn').click(function() {
+        window.open('/downloadAutosubmitKey', '_blank');
     });
 </script>

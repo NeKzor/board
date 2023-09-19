@@ -158,7 +158,7 @@ class Leaderboard
     //TODO: generalize map list to id's instead of steam time id's
     public static function getMaps()
     {
-        $data = Database::query("SELECT maps.id, steam_id, is_coop, name, chapter_id, chapters.chapter_name, is_public, lp_id
+        $data = Database::query("SELECT maps.id, steam_id, is_coop, name, chapter_id, chapters.chapter_name, is_public, lp_id, level_name
                             FROM maps
                             INNER JOIN chapters ON maps.chapter_id = chapters.id
                             ORDER BY  is_coop, maps.id");
@@ -176,6 +176,8 @@ class Leaderboard
 
             $maps["maps"][$row["steam_id"]]["isPublic"] = $row["is_public"];
             $maps["maps"][$row["steam_id"]]["mapName"] = $row["name"];
+            $maps["maps"][$row["steam_id"]]["id"] = $row["id"];
+            $maps["maps"][$row["steam_id"]]["level_name"] = $row["level_name"];
             $maps["maps"][$row["steam_id"]]["chapterId"] = $row["chapter_id"];
 
             if ($row["lp_id"] != NULL) {
@@ -1468,7 +1470,7 @@ class Leaderboard
         $maps = Cache::get("maps");
         $chapter = $maps["maps"][$chamber]["chapterId"];
         $oldBoards = self::getBoard(array("chamber" => $chamber));
-        $oldChamberBoard = $oldBoards[$chapter][$chamber];
+        $oldChamberBoard = $oldBoards[$chapter][$chamber] ?? array();
 
         $wr = 0;
         $diff = 0;

@@ -115,6 +115,8 @@ class User {
             $row->displayName = htmlspecialchars($row->displayName);
             $row->steamname = htmlspecialchars($row->steamname);
             $row->boardname = htmlspecialchars($row->boardname);
+            $row->boardname = htmlspecialchars($row->boardname);
+            $row->auth_hash = $row->auth_hash ? substr($row->auth_hash, 0, 5) . '...' : '';
             $this->userData = $row;
             return;
         }

@@ -89,12 +89,6 @@ class Router {
             if ($user = SteamSignIn::validate()) {
                 session_start();                
                 $_SESSION["user"] = $user;
-                if($auth_hash = Auth::get_auth_hash($user)){
-                    if($auth_hash == null){
-                        $auth_hash = Auth::gen_auth_hash($user);
-                    }
-                    $_SESSION["user_auth_hash"] = $auth_hash;
-                }
                 header("Location: /profile/".$user);
             } else {
                 header("Location: /");
@@ -114,6 +108,21 @@ class Router {
 
         if($location[1] == "api-v2"){
             // unauthenticated endpoints first
+            if ($location[2] == "download-maps") {
+                echo json_encode(array(
+                    "maps" => array_values(array_map(
+                        function($map) {
+                            return [
+                                "id" => $map["id"],
+                                "level_name" => $map["level_name"],
+                            ];
+                        },
+                        $GLOBALS["mapInfo"]["maps"],
+                    )),
+                ));
+                exit;
+            }
+
             if ($location[2] == "active-profiles") {
                 if (!$_POST || !isset($_POST["months"]) || !is_numeric($_POST["months"])) {
                     echo "Missing or invalid paramters";
@@ -832,6 +841,25 @@ class Router {
                 if ($_POST) {
                     Auth::gen_auth_hash(SteamSignIn::$loggedInUser->profileNumber);
                 }
+                exit;
+            }
+            else {
+                $this->routeToDefault();
+            }
+        }
+
+        if ($location[1] == "downloadAutosubmitKey"){
+            if (isset(SteamSignIn::$loggedInUser)){
+                $auth_hash = Auth::get_auth_hash(SteamSignIn::$loggedInUser->profileNumber);
+                if (!$auth_hash) {
+                    $this->routeToDefault();    
+                }
+
+                header('Content-Type: application/octet-stream');
+                header("Content-Transfer-Encoding: Binary"); 
+                header("Content-disposition: attachment; filename=\"autosubmit.key\""); 
+                printf("%s\n", $_SERVER['SERVER_NAME']);
+                printf("%s\n", $auth_hash);
                 exit;
             }
             else {
