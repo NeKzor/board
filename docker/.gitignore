@@ -1,4 +1,3 @@
-initdb/_init.sql
 logs/
 ssl/
 volumes/
