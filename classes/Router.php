@@ -877,15 +877,15 @@ class Router {
             $data = file_get_contents($file["tmp_name"]);
             $demoPath = $demoManager->uploadDemo($data, $id);
             Leaderboard::setDemo($id, 1);
-            try {
-                //Debug::log("Attempting to run execute mdp for $demoPath");
-                $demoDetails = $demoManager->getDemoDetails($id);
-                MdpManager::Execute($demoPath, $demoDetails);
-            } catch (\Throwable $th) {
-                //throw $th;
-                Debug::log("FAILED to Execute mdp");
-                Debug::log($th->__toString());
-            }
+            // try {
+            //     //Debug::log("Attempting to run execute mdp for $demoPath");
+            //     $demoDetails = $demoManager->getDemoDetails($id);
+            //     MdpManager::Execute($demoPath, $demoDetails);
+            // } catch (\Throwable $th) {
+            //     //throw $th;
+            //     Debug::log("FAILED to Execute mdp");
+            //     Debug::log($th->__toString());
+            // }
             return true;
         }
         else {
