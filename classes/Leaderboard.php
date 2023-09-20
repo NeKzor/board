@@ -624,7 +624,7 @@ class Leaderboard
 
         $query = Database::query("SELECT ranks.profile_number, u.avatar, IFNULL(u.boardname, u.steamname) as boardname,
                 chapters.id as chapterid, maps.steam_id as mapid,
-                ranks.profile_number, ranks.changelog_id, ranks.score, ranks.player_rank, ranks.score_rank, ranks.time_gained as date, has_demo, youtube_id, ranks.note,
+                ranks.profile_number, ranks.changelog_id, ranks.score, ranks.player_rank, ranks.score_rank, DATE_FORMAT(ranks.time_gained, '%Y-%m-%dT%TZ') as date, has_demo, youtube_id, ranks.note,
                 ranks.submission, ranks.pending
             FROM usersnew as u
             JOIN (
@@ -771,7 +771,7 @@ class Leaderboard
         }
 
         $changelog_data = Database::query("SELECT IFNULL(usersnew.boardname, usersnew.steamname) AS player_name, usersnew.avatar, ch.profile_number,
-                                            ch.score, ch.id, ch.pre_rank, ch.post_rank, ch.wr_gain, ch.time_gained, ch.has_demo as hasDemo, ch.youtube_id as youtubeID, ch.note,
+                                            ch.score, ch.id, ch.pre_rank, ch.post_rank, ch.wr_gain, DATE_FORMAT(ch.time_gained, '%Y-%m-%dT%TZ') as time_gained, ch.has_demo as hasDemo, ch.youtube_id as youtubeID, ch.note,
                                             ch.banned, ch.submission, ch.pending,
                                             ch_previous.score as previous_score,
                                             maps.name as chamberName, chapters.id as chapterId, maps.steam_id AS mapid
