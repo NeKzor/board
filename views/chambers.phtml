@@ -24,7 +24,7 @@
                 <?php $mapName = $mapInfo["maps"][$map]["mapName"]?>
                 <?php $isPublic =  $mapInfo["maps"][$map]["isPublic"]?>
                 <div class="chamber">
-                    <div class="chamberimage" onclick="goToChamber(event, <?=$map;?>)" style="background: url('/images/chambers/1.jpg'); background-size: cover">
+                    <div class="chamberimage" onclick="goToChamber(event, <?=$map;?>)" style="background: url('/images/chambers/<?=$map;?>.jpg'); background-size: cover">
                         <div class="chambertitle">
                             <div class="titlebghelper"></div>
                             <div class="titlebg"><a href="/chamber/<?=$map;?>"><?=$mapName?></a></div>
