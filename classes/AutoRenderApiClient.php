@@ -21,7 +21,7 @@ class AutoRenderApiClient
         //Debug::log(json_encode($ids));
         $result = AutoRenderApiClient::getIfVideosExists($ids);
         //Debug::log(json_encode($result->ids));
-        return $result->ids;
+        return $result->ids ?? [];
     }
 
     public static function getBoardVideos($board){
@@ -42,7 +42,7 @@ class AutoRenderApiClient
         //Debug::log(json_encode($ids));
         $result = AutoRenderApiClient::getIfVideosExists($ids);
         //Debug::log(json_encode($result->ids));
-        return $result->ids;
+        return $result->ids ?? [];
     }
 
     public static function getChambersVideos($board){
@@ -60,7 +60,7 @@ class AutoRenderApiClient
         //Debug::log(json_encode($ids));
         $result = AutoRenderApiClient::getIfVideosExists($ids);
         //Debug::log(json_encode($result->ids));
-        return $result->ids;
+        return $result->ids ?? [];
     }
 
     public static function getIfVideosExists($ids = array()) {
