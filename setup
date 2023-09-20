@@ -4,7 +4,7 @@
 site=board.portal2.local
 
 # File name of gzip'd database dump
-dbname=iverborg_leaderboard
+dbname=board
 
 # Configuration files:
 #   .env          > used by docker

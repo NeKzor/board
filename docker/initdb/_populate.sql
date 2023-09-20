@@ -1,4 +1,4 @@
-USE iverborg_leaderboard;
+USE board;
 
 -- Chapters
 

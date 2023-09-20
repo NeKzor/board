@@ -1,4 +1,4 @@
-use iverborg_leaderboard;
+use board;
 create table evidence_requirements
 (
     id int auto_increment,

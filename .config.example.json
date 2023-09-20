@@ -3,7 +3,7 @@
     "database_port": 3306,
     "database_user": "board",
     "database_pass": "board",
-    "database_name": "iverborg_leaderboard",
+    "database_name": "board",
     "discord_webhook_id": "",
     "discord_webhook_token": "",
     "discord_webhook_mdp": "",

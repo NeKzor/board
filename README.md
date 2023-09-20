@@ -176,8 +176,8 @@ Setup:
 - Create folders `mkdir cache demos logs sessions`
 - Link apache log files to `logs`
 - Configure `VirtualHost` [conf file](#example)
-- Connect to the mysql instance and create the database once `create database iverborg_leaderboard;`
-- Import the database `sudo mysql -u root -p iverborg_leaderboard < data/leaderboard.sql`
+- Connect to the mysql instance and create the database once `create database board;`
+- Import the database `sudo mysql -u root -p board < data/leaderboard.sql`
 - Run all migrations in `migrations/`
 - Update cache once with `php api/refreshCache.php`
 - Schedule a cron job for `api/refreshCache.php` to run every minute
