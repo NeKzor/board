@@ -64,39 +64,39 @@ class AutoRenderApiClient
     }
 
     public static function getIfVideosExists($ids = array()) {
-        $post = [
-            'ids' => $ids
-        ];
-        //Debug::log(json_encode($post));
+        // $post = [
+        //     'ids' => $ids
+        // ];
+        // //Debug::log(json_encode($post));
 
-        $curl = curl_init();
+        // $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://autorender.portal2.sr/api/v1/check-videos-exist',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($post),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
+        // curl_setopt_array($curl, array(
+        //     CURLOPT_URL => 'https://autorender.portal2.sr/api/v1/check-videos-exist',
+        //     CURLOPT_RETURNTRANSFER => true,
+        //     CURLOPT_FOLLOWLOCATION => true,
+        //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        //     CURLOPT_CUSTOMREQUEST => 'POST',
+        //     CURLOPT_POSTFIELDS => json_encode($post),
+        //     CURLOPT_HTTPHEADER => array(
+        //         'Content-Type: application/json'
+        //     ),
+        // ));
 
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 
-        $response = curl_exec($curl);
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        // $response = curl_exec($curl);
+        // $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        curl_close($curl);
-        if($http_code == 200) {
-            return json_decode($response);
-        }
-        else{
-            Debug::log("Failed to get auto render details");
-            Debug::log($response);
-            Debug::log($http_code);
-        }
+        // curl_close($curl);
+        // if($http_code == 200) {
+        //     return json_decode($response);
+        // }
+        // else{
+        //     Debug::log("Failed to get auto render details");
+        //     Debug::log($response);
+        //     Debug::log($http_code);
+        // }
 
         return [];
     }
