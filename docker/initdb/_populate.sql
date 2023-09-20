@@ -62,7 +62,7 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (41, 41, 41, "Destroyed", "sp_a4_destroyed", "time", 4 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (42, 42, 42, "Factory", "sp_a4_factory", "time", 4 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (43, 43, 43, "Core Access", "sp_a4_core_access", "time", 5 + 5, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (44, 44, 44, "Finale", "sp_a4_finale", "time", 4, 5, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (44, 44, 44, "Finale", "sp_a4_finale", "time", 5 + 5, 1, 0);
 
 DELETE FROM evidence_requirements;
 
