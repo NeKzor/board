@@ -17,7 +17,7 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (2, 2, 2, 'Blue Only', 'gg_blue_only', 'time', 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (3, 3, 3, 'Blue Only 2', 'gg_blue_only_2', 'time', 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (4, 4, 4, 'Blue Only 3', 'gg_blue_only_3', 'time', 1, 0, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (5, 5, 5, 'Blue Only 4', 'gg_blue_only_2_pt2', 1, 0, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (5, 5, 5, 'Blue Only 4', 'gg_blue_only_2_pt2', 'time', 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (6, 6, 6, 'Smooth Jazz', 'gg_a1_intro4', 'time', 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (7, 7, 7, 'Blue Upplatform', 'gg_blue_upplatform', 'time', 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (8, 8, 8, 'Red Only', 'gg_red_only', 'time', 2, 0, 0);
