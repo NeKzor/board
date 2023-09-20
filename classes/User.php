@@ -235,7 +235,7 @@ class User {
         $coopOrderedByDate = array();
 
         $i = 0;
-        foreach ($GLOBALS["mapInfo"]["modes"]["story-mode"] as $chapterId) {
+        foreach ($GLOBALS["mapInfo"]["modes"]["campaign"] as $chapterId) {
             foreach ($GLOBALS["mapInfo"]["chapters"][$chapterId]["maps"] as $mapId) {
                 $index = $i++;
                 $spOrderedByDate[$mapId] = $times->SP["chambers"]["chamber"][$chapterId][$mapId];

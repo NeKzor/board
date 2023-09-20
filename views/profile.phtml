@@ -132,7 +132,7 @@
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo $user->times->SP["chambers"]["numWRs"]; ?></div>
-                        <div class="title"><span>Story Mode <br/>World Record<?php if($user->times->SP["chambers"]["numWRs"] != 1) {?>s<?php } ?></span></div>
+                        <div class="title"><span>Campaign <br/>World Record<?php if($user->times->SP["chambers"]["numWRs"] != 1) {?>s<?php } ?></span></div>
                     </div>
                 </div>
                 <div class="block">
@@ -152,7 +152,7 @@
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo round($user->points->SP["score"]);?></div>
-                        <div class="title"><span>Story Mode <br/>Point<?php if($user->points->SP["score"] != 1) {?>s<?php } ?></span></div>
+                        <div class="title"><span>Campaign <br/>Point<?php if($user->points->SP["score"] != 1) {?>s<?php } ?></span></div>
                     </div>
                 </div>
                 <div class="block">
@@ -172,7 +172,7 @@
                 <div class="block">
                     <div class="block-inner">
                         <div class="number"><?php echo (isset($user->points->SP["playerRank"])) ? Util::number($user->points->SP["playerRank"]) : "NO"; ?></div>
-                        <div class="title"><span>Place in <br/>Story Mode</span></div>
+                        <div class="title"><span>Place in <br/>Campaign</span></div>
                     </div>
                 </div>
                 <div class="block">
@@ -191,7 +191,7 @@
             <div class="block-container average">
                 <div class="block">
                     <?php $place = $user->times->SP["chambers"]["averagePlace"]; ?>
-                    <div class="block-inner" <?php if($place == NULL) : echo "data-toggle=\"tooltip\" title=\"A minimum of 10 scores in Story Mode is required to determine the average place"; endif; ?>">
+                    <div class="block-inner" <?php if($place == NULL) : echo "data-toggle=\"tooltip\" title=\"A minimum of 10 scores in Campaign is required to determine the average place"; endif; ?>">
                         <div class="number">
                             <?php if ($place != NULL): ?>
                                 <?=$place?>
@@ -201,7 +201,7 @@
                         </div>
                         <div class="title">
                             <span>
-                                Average Place<br/>in Story Mode
+                                Average Place<br/>in Campaign
                             </span>
                         </div>
                     </div>
@@ -320,7 +320,7 @@
         <div class="column-3">
             <div class="column sp">
                 <div class="profile-title">
-                    <span class="title">Records in Story Mode</span>
+                    <span class="title">Records in Campaign</span>
                     <div style="float: right">
                         Ordering :
                         <div class="button spChangeOrderingButton" style="padding-bottom: 1px; padding-top: 1px;">Default</div>
@@ -328,8 +328,8 @@
                 </div>
                 <div class="block-content all-records">
                     <div id="spUnordered">
-                        <?php foreach($mapInfo["modes"]["story-mode"] as $chapterId): ?>
-                            <?php $keys = array_keys($mapInfo["modes"]["story-mode"]); ?>
+                        <?php foreach($mapInfo["modes"]["campaign"] as $chapterId): ?>
+                            <?php $keys = array_keys($mapInfo["modes"]["campaign"]); ?>
                             <div class="column-title">
                                 <?=$mapInfo["chapters"][$chapterId]["chapterName"];?>
                                 <?php if($chapterId == $keys[0]): ?>
@@ -460,144 +460,6 @@
                     </div>
                 </div>
             </div>
-            <div class="column mid coop">
-              <div class="profile-title"><span class="title">Records in Advanced Mode</span>                    
-                <div style="float: right">
-                    Ordering :
-                    <div class="button coopChangeOrderingButton" style="padding-bottom: 1px; padding-top: 1px;">Default</div>
-                </div>
-              </div>
-              <div class="block-content all-records">
-                <div id="coopUnordered">
-                    <?php foreach($mapInfo["modes"]["advanced-mode"] as $chapterId): ?>
-                    <?php $keys = array_keys($mapInfo["modes"]["advanced-mode"]); ?>
-                      <div class="column-title">
-                          <?=$mapInfo["chapters"][$chapterId]["chapterName"];?>
-                          <?php if($chapterId == $keys[0]): ?>
-                              <div style="float: right">
-                                  <div class="cell rank" align="right" data-toggle="tooltip" title="Current rank">#</div>
-                                  <div class="cell score" align="right">Time</div>
-                                  <div class="cell nr-diff" align="right" data-toggle="tooltip" title="Time difference to next rank">&#916;Next</div>
-                                  <div class="cell wr-diff" align="right" data-toggle="tooltip" title="Time difference to world record">&#916;WR</div>
-                              </div>
-                          <?php endif;?>
-                      </div>
-                      <div class="column-content">
-                          <div class="scoretable">
-                              <?php foreach($mapInfo["chapters"][$chapterId]["maps"] as $mapId): ?>
-                                  <?php if(isset($user->times->COOP["chambers"]["chamber"][$chapterId][$mapId])): ?>
-                                      <?php ProfileView::chamberScoreRow($user, $mapInfo, $mapId, $user->times->COOP["chambers"]["chamber"][$chapterId][$mapId], $autoRenderedIds); ?>
-                                  <?php else: ?>
-                                      <?php ProfileView::emptyChamberScoreRow($mapId, $mapInfo); ?>
-                                  <?php endif;?>
-                              <?php endforeach; ?>
-                          </div>
-                      </div>
-                    <?php endforeach; ?>
-                  </div>
-                  <div id="coopOrderedByRank" style="display: none">
-
-                        <?php $nonEmptyScoreEncountered = false; ?>
-                        <?php $emptyScoresEncountered = false ?>     
-                                
-                        <?php foreach($user->times->COOP["chambers"]["chamberOrderedByRank"] as $mapId => $score): ?>
-
-                            <?php if (!$nonEmptyScoreEncountered && $score["score"] != NULL): ?>
-                                <div class="column-title">
-                                    Ordered by rank
-                                    <div style="float: right">
-                                        <div class="cell rank" align="right" data-toggle="tooltip" title="Current rank">#</div>
-                                        <div class="cell score" align="right">Time</div>
-                                        <div class="cell nr-diff" align="right" data-toggle="tooltip" title="Time difference to next rank">&#916;Next</div>
-                                        <div class="cell wr-diff" align="right" data-toggle="tooltip"title="Time difference to world record">&#916;WR</div>
-                                    </div>
-                                </div>
-                                <div class="column-content">
-                                    <div class="scoretable">
-
-                                <?php $nonEmptyScoreEncountered = true ?>
-
-                            <?php elseif (!$emptyScoresEncountered && $score["score"] == NULL): ?>
-                                <?php if ($nonEmptyScoreEncountered): ?> </div></div> <?php endif; ?>
-                                    <div class="column-title">
-                                        No score
-                                        <div style="float: right">
-                                            <div class="cell rank" align="right" data-toggle="tooltip" title="Current rank">#</div>
-                                            <div class="cell score" align="right">Time</div>
-                                            <div class="cell nr-diff" align="right" data-toggle="tooltip" title="Time difference to next rank">&#916;Next</div>
-                                            <div class="cell wr-diff" align="right" data-toggle="tooltip"title="Time difference to world record">&#916;WR</div>
-                                        </div>
-                                    </div>
-                                    <div class="column-content">
-                                        <div class="scoretable">
-                                    <?php $emptyScoresEncountered = true; ?>
-                            <?php endif; ?>
-                                
-                            <?php ProfileView::chamberScoreRow($user, $mapInfo, $mapId, $score, $autoRenderedIds); ?>
-                            
-                            <?php endforeach; ?>
-                            </div>
-                        </div>                        
-                    </div>
-                    <div id="coopOrderedByDate" style="display: none;">
-                                <?php $knownDatesEncountered = false; ?>
-                                <?php $unknownDateEncountered = false; ?>
-                                <?php $emptyScoresEncountered = false; ?>
-
-                                
-                                <?php foreach($user->times->COOP["chambers"]["chamberOrderedByDate"] as $mapId => $score): ?>
-
-                                    <?php if (!$knownDatesEncountered && $score["score"] != NULL && $score["date"] != NULL): ?>
-                                        <div class="column-title">
-                                            Ordered by date
-                                            <div style="float: right">
-                                                <div class="cell rank" align="right" data-toggle="tooltip" title="Current rank">#</div>
-                                                <div class="cell score" align="right">Time</div>
-                                                <div class="cell nr-diff" align="right" data-toggle="tooltip" title="Time difference to next rank">&#916;Next</div>
-                                                <div class="cell wr-diff" align="right" data-toggle="tooltip"title="Time difference to world record">&#916;WR</div>
-                                            </div>
-                                        </div>
-                                        <div class="column-content">
-                                            <div class="scoretable">
-                                        <?php $knownDatesEncountered = true; ?>
-                                    
-                                    <?php elseif (!$unknownDateEncountered && $score["score"] != NULL && $score["date"] == NULL): ?>
-                                        <?php if ($knownDatesEncountered): ?> </div></div> <?php endif; ?>
-                                        <div class="column-title">
-                                            Unknown date
-                                            <div style="float: right">
-                                                <div class="cell rank" align="right" data-toggle="tooltip" title="Current rank">#</div>
-                                                <div class="cell score" align="right">Time</div>
-                                                <div class="cell nr-diff" align="right" data-toggle="tooltip" title="Time difference to next rank">&#916;Next</div>
-                                                <div class="cell wr-diff" align="right" data-toggle="tooltip"title="Time difference to world record">&#916;WR</div>
-                                            </div>
-                                        </div>
-                                        <div class="column-content">
-                                            <div class="scoretable">
-                                        <?php $unknownDateEncountered = true; ?>
-                                    
-                                    <?php elseif (!$emptyScoresEncountered && $score["score"] == NULL): ?>
-                                            <?php if ($knownDatesEncountered || $unknownDateEncountered): ?> </div></div> <?php endif; ?>
-                                            <div class="column-title">
-                                                No score
-                                                <div style="float: right">
-                                                    <div class="cell rank" align="right" data-toggle="tooltip" title="Current rank">#</div>
-                                                    <div class="cell score" align="right">Time</div>
-                                                    <div class="cell nr-diff" align="right" data-toggle="tooltip" title="Time difference to next rank">&#916;Next</div>
-                                                    <div class="cell wr-diff" align="right" data-toggle="tooltip"title="Time difference to world record">&#916;WR</div>
-                                                </div>
-                                            </div>
-                                            <div class="column-content">
-                                                <div class="scoretable">
-                                        <?php $emptyScoresEncountered = true; ?>
-                                    <?php endif; ?>
-                                    <?php ProfileView::chamberScoreRow($user, $mapInfo, $mapId, $score, $autoRenderedIds); ?>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>                        
-                    </div>
-                </div>
-            </div>
             <div class="column right timespoints">
                 <div class="profile-title"><span class="title">Aggregated times and points</span></div>
                 <div class="block-content all-records">
@@ -612,16 +474,11 @@
                     </div>
                     <div class="column-content" style="margin-bottom: 5px; margin-left: 7px">
                         <div class="scoretable">
-                            <?php foreach($mapInfo["modes"]["story-mode"] as $chapter): ?>
+                            <?php foreach($mapInfo["modes"]["campaign"] as $chapter): ?>
                                 <?php ProfileView::pointTimeScoreRow($user->points->chapters[$chapter], ProfileView::getChapterHyperlink($chapter, $mapInfo), false);?>
                             <?php endforeach; ?>
                             <div style="height:15px"></div>
-                            <?php foreach($mapInfo["modes"]["advanced-mode"] as $chapter): ?>
-                                <?php ProfileView::pointTimeScoreRow($user->points->chapters[$chapter], ProfileView::getChapterHyperlink($chapter, $mapInfo), false);?>
-                            <?php endforeach; ?>
-                            <div style="height:15px"></div>
-                            <?php ProfileView::pointTimeScoreRow($user->points->SP, "<a href='/aggregated/story-mode'>Story Mode</a>", false);?>
-                            <?php ProfileView::pointTimeScoreRow($user->points->COOP, "<a href='/aggregated/advanced-mode'>Advanced Mode</a>", false);?>
+                            <?php ProfileView::pointTimeScoreRow($user->points->SP, "<a href='/aggregated/campaign'>Campaign</a>", false);?>
                             <?php ProfileView::pointTimeScoreRow($user->points->global, "<a href='/aggregated/overall'>Overall</a>", false);?>
                         </div>
                     </div>
@@ -636,16 +493,11 @@
                     </div>
                     <div class="column-content" style="margin-left: 7px">
                         <div class="scoretable">
-                            <?php foreach($mapInfo["modes"]["story-mode"] as $chapter): ?>
+                            <?php foreach($mapInfo["modes"]["campaign"] as $chapter): ?>
                                 <?php ProfileView::pointTimeScoreRow($user->times->chapters[$chapter], ProfileView::getChapterHyperlink($chapter, $mapInfo), true);?>
                             <?php endforeach; ?>
                             <div style="height:15px"></div>
-                            <?php foreach($mapInfo["modes"]["advanced-mode"] as $chapter): ?>
-                                <?php ProfileView::pointTimeScoreRow($user->times->chapters[$chapter], ProfileView::getChapterHyperlink($chapter, $mapInfo), true);?>
-                            <?php endforeach; ?>
-                            <div style="height:15px"></div>
-                            <?php ProfileView::pointTimeScoreRow($user->times->SP, "<a href='/aggregated/story-mode'>Story Mode</a>", true);?>
-                            <?php ProfileView::pointTimeScoreRow($user->times->COOP, "<a href='/aggregated/advanced-mode'>Advanced Mode</a>", true);?>
+                            <?php ProfileView::pointTimeScoreRow($user->times->SP, "<a href='/aggregated/campaign'>Campaign</a>", true);?>
                             <?php ProfileView::pointTimeScoreRow($user->times->global, "<a href='/aggregated/overall'>Overall</a>", true);?>
                         </div>
                     </div>

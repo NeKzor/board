@@ -2,9 +2,7 @@
 <?php include("util/AggregatedView.php")?>
 
 <?php function getImage() {
-    if (Router::$location[2] == "story-mode")
-        return '/images/sp.png';
-    else if (Router::$location[2] == "advanced-mode")
+    if (Router::$location[2] == "campaign")
         return '/images/sp.png';
     else if (Router::$location[2] == "overall")
         return '/images/overall.jpg';

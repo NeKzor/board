@@ -620,28 +620,17 @@ class Router {
             $view->addCssMultiple(View::$pageData["css"]);
         }
 
-        if ($location[1] == "story-mode") {
+        if ($location[1] == "campaign") {
             $view->board = Cache::get("SPChamberBoard");
-            View::$pageData["pageTitle"] = "Story Mode";
-        }
-
-        if ($location[1] == "advanced-mode") {
-            $view->board = Cache::get("COOPChamberBoard");
-            View::$pageData["pageTitle"] = "Advanced Mode";
+            View::$pageData["pageTitle"] = "Campaign";
         }
 
         if ($location[1] == "aggregated" && isset($location[2])) {
-            if ($location[2] == "story-mode") {
+            if ($location[2] == "campaign") {
                 $view->points = Cache::get("SPPointBoard");
                 $view->times = Cache::get("SPTimeBoard");
-                View::$pageData["pageTitle"] = "Aggregated - Story Mode";
-                $view->mode = "Story Mode";
-            }
-            else if ($location[2] == "advanced-mode") {
-                $view->points = Cache::get("COOPPointBoard");
-                $view->times = Cache::get("COOPTimeBoard");
-                View::$pageData["pageTitle"] = "Aggregated - Advanced Mode";
-                $view->mode = "Advanced Mode";
+                View::$pageData["pageTitle"] = "Aggregated - Campaign";
+                $view->mode = "Campaign";
             }
             else if ($location[2] == "overall") {
                 View::$pageData["pageTitle"] = "Aggregated - Overall";
@@ -728,13 +717,9 @@ class Router {
         }
 
         if ($location[1] == "lp") {
-            if ($location[2] == "story-mode") {
+            if ($location[2] == "campaign") {
                 $view->board = Leaderboard::getLeastPortalsBoard(0);
-                View::$pageData["pageTitle"] = "Least Portals - Story Mode";
-            }
-            if ($location[2] == "advanced-mode") {
-                $view->board = Leaderboard::getLeastPortalsBoard(1);
-                View::$pageData["pageTitle"] = "Least Portals - Advanced Mode";
+                View::$pageData["pageTitle"] = "Least Portals - Campaign";
             }
         }
 
@@ -902,8 +887,7 @@ class Router {
             , "boardName" => ""
             , "profileNumber" => ""
             , "type" => ""
-            , "story-mode" => ""
-            , "advanced-mode" => ""
+            , "campaign" => ""
             , "wr" => ""
             , "demo" => ""
             , "yt" => ""
@@ -921,10 +905,10 @@ class Router {
                 $result[$key] = $val;
             }
         }
-        if ($result["story-mode"] == "1" && $result["advanced-mode"] != "1") {
+        if ($result["campaign"] == "1") {
             $result["type"] = "0";
         }
-        elseif ($result["story-mode"] != "1" && $result["advanced-mode"] == "1") {
+        elseif ($result["campaign"] != "1") {
             $result["type"] = "1";
         }
 

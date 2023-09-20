@@ -167,7 +167,7 @@ class Leaderboard
                 $mode = "advanced-mode";
             }
             else {
-                $mode = "story-mode";
+                $mode = "campaign";
             }
             $maps["modes"][$mode][$row["chapter_id"]] = $row["chapter_id"];
 
@@ -696,8 +696,7 @@ class Leaderboard
             "boardName" => "",
             "profileNumber" => "",
             "type" => "",
-            "story-mode" => "1",
-            "advanced-mode" => "1",
+            "campaign" => "1",
             "wr" => "",
             "demo" => "",
             "yt" => "",

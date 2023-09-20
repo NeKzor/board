@@ -31,7 +31,7 @@
                             <label for="chapter">Chapter name</label>
                             <select style="width: 100%;" id="chapter" name="chapter">
                                 <option value="">No chapter</option>
-                                <?php foreach(array("story-mode" => "Story Mode", "advanced-mode" => "Advanced Mode") as $modeId => $mode): ?>
+                                <?php foreach(array("campaign" => "Campaign") as $modeId => $mode): ?>
                                     <option disabled><?=$mode?></option>
                                     <?php foreach($mapInfo["modes"][$modeId] as $chapterId): ?>
                                         <?php $chapterName = $mapInfo["chapters"][$chapterId]["chapterName"]?>
@@ -44,7 +44,7 @@
                             <label for="chamber-name">Chamber name</label>
                             <select style="width: 100%;" id="chamber-name" name="chamber">
                                 <option value="">No chamber</option>
-                                <?php foreach(array("story-mode" => "Story Mode", "advanced-mode" => "Advanced Mode") as $modeId => $mode): ?>
+                                <?php foreach(array("campaign" => "Campaign") as $modeId => $mode): ?>
                                     <option disabled><?=$mode?></option>
                                     <?php foreach($mapInfo["modes"][$modeId] as $chapterId): ?>
                                         <option disabled>&nbsp;&nbsp;<?=$mapInfo["chapters"][$chapterId]["chapterName"]?></option>
@@ -76,16 +76,6 @@
                             <label for="endRank">End Rank</label>
                             <input type="number" min="1" id="endRank" name="endRank" value="<?=htmlspecialchars($param['endRank']);?>">
                         </div>
-                    </div>
-                    <div style="float: left;" class="check">
-                        <div style="position: relative;">Story Mode</div>
-                        <div class="checkbox <?php if($param['story-mode'] == "1"): ?>ticked<?php endif; ?>"></div>
-                        <input type="hidden" value="<?=htmlspecialchars($param['story-mode']);?>" name="story-mode">
-                    </div>
-                    <div style="float: left;" class="check">
-                        <div style="position: relative;">Advanced Mode</div>
-                        <div class="checkbox <?php if($param['advanced-mode'] == "1"): ?>ticked<?php endif; ?>"></div>
-                        <input type="hidden" value="<?=htmlspecialchars($param['advanced-mode']);?>" name="advanced-mode">
                     </div>
                     <div style="float: left;" class="check">
                         <div style="position: relative;">World Record</div>
