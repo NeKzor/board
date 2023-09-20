@@ -467,22 +467,22 @@ class Router {
             exit;
         }
 
-        if ($location[1] == "fetchNewChamberScores") {
-            if (isset($_POST["chamber"])) {
+        // if ($location[1] == "fetchNewChamberScores") {
+        //     if (isset($_POST["chamber"])) {
 
-                if (!is_numeric($_POST["chamber"])) {
-                    exit;
-                }
+        //         if (!is_numeric($_POST["chamber"])) {
+        //             exit;
+        //         }
 
-                Leaderboard::fetchNewData($_POST["chamber"]);
-                $chamberBoard = Leaderboard::getBoard(array("chamber" => $_POST["chamber"]));
-                Leaderboard::cacheChamberBoards($chamberBoard);
-            }
-            else {
-                echo "Missing post data!";
-            }
-            exit;
-        }
+        //         Leaderboard::fetchNewData($_POST["chamber"]);
+        //         $chamberBoard = Leaderboard::getBoard(array("chamber" => $_POST["chamber"]));
+        //         Leaderboard::cacheChamberBoards($chamberBoard);
+        //     }
+        //     else {
+        //         echo "Missing post data!";
+        //     }
+        //     exit;
+        // }
 
         if ($location[1] == "fetchNewUserData") {
             if (isset($_POST["profileNumber"])) {
