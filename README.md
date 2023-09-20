@@ -5,12 +5,9 @@ The community driven leaderboard for Portal 2 speedrunners.
 - [What's new](#whats-new)
 - [Out of scope (for now)](#out-of-scope-for-now)
 - [Local Development](#local-development)
-  - [With Docker](#with-docker)
-    - [Caveats](#caveats)
-    - [Overview of .env](#overview-of-env)
-    - [Overview of .config.json](#overview-of-configjson)
-  - [Without Docker](#without-docker)
-    - [Example](#example)
+  - [Caveats](#caveats)
+  - [Overview of .env](#overview-of-env)
+  - [Overview of .config.json](#overview-of-configjson)
 - [Production](#production)
   - [Reverse Proxy (optional)](#reverse-proxy-optional)
 - [Credits](#credits)
@@ -93,8 +90,6 @@ The community driven leaderboard for Portal 2 speedrunners.
 
 ## Local Development
 
-### With Docker
-
 Requirements:
 
 - [Docker Engine] | [Reference](https://docs.docker.com/compose/reference/)
@@ -114,7 +109,7 @@ Steps:
 
 The server should now be available at: `https://board.portal2.local`
 
-#### Caveats
+### Caveats
 
 - Permissions have to be managed manually for mounted volumes, see [moby#2259]
 - MySQL 8 container leaks memory, see [containerd#6707]
@@ -122,7 +117,7 @@ The server should now be available at: `https://board.portal2.local`
 [moby#2259]: https://github.com/moby/moby/issues/2259
 [containerd#6707]: https://github.com/containerd/containerd/issues/6707
 
-#### Overview of .env
+### Overview of .env
 
 This is used by Dockerfile and docker-compose.yml.
 
@@ -138,7 +133,7 @@ This is used by Dockerfile and docker-compose.yml.
 |MYSQL_ROOT_PASSWORD|The root's password of the MySQL database.|
 |APT_PACKAGES|Optional apt-packages to build the server image. The image should be kept as small as possible but sometimes it is useful to install some packages (e.g. `vim`, `htop` etc.) in order to debug problems more quickly.|
 
-#### Overview of .config.json
+### Overview of .config.json
 
 This is used by the server.
 
@@ -154,78 +149,6 @@ This is used by the server.
 |steam_api_key|The Steam Web API Key for fetching profile data.|
 
 [mdp]: https://github.com/p2sr/mdp
-
-### Without Docker
-
-Requirements:
-
-- curl
-- php8.1-cli
-- php8.1-curl
-- apache2
-- libapache2-mod-php
-- php-mysql
-- mysql-server
-- composer
-- cron
-
-Setup:
-
-- Enable php mods `a2enmod rewrite expires headers ssl`
-- Install dependencies `composer install`
-- Create folders `mkdir cache demos logs sessions`
-- Link apache log files to `logs`
-- Configure `VirtualHost` [conf file](#example)
-- Connect to the mysql instance and create the database once `create database board;`
-- Import the database `sudo mysql -u root -p board < data/leaderboard.sql`
-- Run all migrations in `migrations/`
-- Update cache once with `php api/refreshCache.php`
-- Schedule a cron job for `api/refreshCache.php` to run every minute
-- Schedule a cron job for `api/fetchNewScores.php` to run every 15 minutes
-- Configure apache permissions with `chown -R ...` etc.
-
-#### Example
-
-This mainly explains what the [docker version](/docker/apache/board.portal2.local.conf) does.
-
-Create a `/etc/apache2/sites-available/board.portal2.local.conf` file and enable it with `a2ensite board.portal2.local`.
-
-Set the document root to the `public` folder and alias `demos` path for demo downloads.
-
-SSL certs go into `/etc/apache2/ssl`.
-
-```conf
-<VirtualHost board.portal2.local:80>
-    ServerName board.portal2.local
-    Redirect permanent / https://board.portal2.local/
-</VirtualHost>
-
-<VirtualHost board.portal2.local:443>
-    ServerName board.portal2.local
-    DocumentRoot "/var/www/html/public"
-
-    SSLEngine on
-    SSLCertificateFile "ssl/board.portal2.local.crt"
-    SSLCertificateKeyFile "ssl/board.portal2.local.key"
-
-    <Directory "/var/www/html/public">
-        AllowOverride all
-        Require all granted
-    </Directory>
-
-    Alias "/demos" "/var/www/html/demos"
-
-    <Directory "/var/www/html/demos">
-        AllowOverride none
-        Require all denied
-
-        <FilesMatch "\.dem$">
-            Require all granted
-            Header set Content-Type application/octect-stream
-        </FilesMatch>
-    </Directory>
-</VirtualHost>
-```
 
 ## Production
 
@@ -269,6 +192,9 @@ MYSQL_ROOT_PASSWORD=root
 APT_PACKAGES=
 ```
 
+<details>
+<summary>View example Nginx config file</summary>
+
 ```bash
 ~/$ cat /etc/nginx/sites-available/board.portal2.sr
 server {
@@ -294,8 +220,29 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_buffering off;
     }
+
+    location /uploadDemo {
+        proxy_pass http://127.0.0.1:8443$request_uri;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+        client_max_body_size 10M;
+    }
+
+    location /api-v2/auto-submit {
+        proxy_pass http://127.0.0.1:8443$request_uri;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_buffering off;
+        client_max_body_size 10M;
+    }
 }
 ```
+</details>
 
 ## Credits
 
