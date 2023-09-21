@@ -23,7 +23,7 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (2, 2, 2, "Mel Intro", "st_a1_mel_intro", "time", 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (3, 3, 3, "Lift", "st_a1_lift", "time", 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (4, 4, 4, "Garden", "st_a1_garden", "time", 1, 0, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (5, 5, 5, "Garden De", "st_a2_garden_de", "time", 2, 0, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (5, 5, 5, "Destroyed Garden", "st_a2_garden_de", "time", 2, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (6, 6, 6, "Underbounce", "st_a2_underbounce", "time", 2, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (7, 7, 7, "Once Upon", "st_a2_once_upon", "time", 2, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (8, 8, 8, "Past Power", "st_a2_past_power", "time", 2, 0, 0);
@@ -35,7 +35,7 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (14, 14, 14, "Faith Plate", "st_a3_faith_plate", "time", 3, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (15, 15, 15, "Transition", "st_a3_transition", "time", 3, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (16, 16, 16, "Overgrown", "st_a4_overgrown", "time", 4, 0, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (17, 17, 17, "Tb Over Goo", "st_a4_tb_over_goo", "time", 4, 0, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (17, 17, 17, "Funnel Over Goo", "st_a4_tb_over_goo", "time", 4, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (18, 18, 18, "Two Of A Kind", "st_a4_two_of_a_kind", "time", 4, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (19, 19, 19, "Destroyed", "st_a4_destroyed", "time", 4, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (20, 20, 20, "Factory", "st_a4_factory", "time", 4, 0, 0);
@@ -45,7 +45,7 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (24, 24, 24, "Mel Intro", "sp_a1_mel_intro", "time", 1 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (25, 25, 25, "Lift", "sp_a1_lift", "time", 1 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (26, 26, 26, "Garden", "sp_a1_garden", "time", 1 + 5, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (27, 27, 27, "Garden De", "sp_a2_garden_de", "time", 2 + 5, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (27, 27, 27, "Destroyed Garden", "sp_a2_garden_de", "time", 2 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (28, 28, 28, "Underbounce", "sp_a2_underbounce", "time", 2 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (29, 29, 29, "Once Upon", "sp_a2_once_upon", "time", 2 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (30, 30, 30, "Past Power", "sp_a2_past_power", "time", 2 + 5, 1, 0);
@@ -57,7 +57,7 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (36, 36, 36, "Faith Plate", "sp_a3_faith_plate", "time", 3 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (37, 37, 37, "Transition", "sp_a3_transition", "time", 3 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (38, 38, 38, "Overgrown", "sp_a4_overgrown", "time", 4 + 5, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (39, 39, 39, "Tb Over Goo", "sp_a4_tb_over_goo", "time", 4 + 5, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (39, 39, 39, "Funnel Over Goo", "sp_a4_tb_over_goo", "time", 4 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (40, 40, 40, "Two Of A Kind", "sp_a4_two_of_a_kind", "time", 4 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (41, 41, 41, "Destroyed", "sp_a4_destroyed", "time", 4 + 5, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (42, 42, 42, "Factory", "sp_a4_factory", "time", 4 + 5, 1, 0);
