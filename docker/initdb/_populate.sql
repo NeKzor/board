@@ -23,19 +23,16 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (10, 10, 10, "Turrets", "sp_a1_pr_map_010", "time", 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (11, 11, 11, "Exursion Funnels", "sp_a1_pr_map_011", "time", 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (12, 12, 12, "Finale", "sp_a1_pr_map_012", "time", 1, 0, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (13, 13, 13, "Start", "mp_coop_start", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (14, 14, 14, "End", "mp_coop_end", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (15, 15, 15, "Lobby", "mp_coop_lobby_3", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (16, 16, 16, "Bridge", "mp_coop_pr_bridge", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (17, 17, 17, "Bts", "mp_coop_pr_bts", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (13, 19, 19, "Cubes", "mp_coop_pr_cubes", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (14, 23, 23, "Portals", "mp_coop_pr_portals", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (15, 25, 25, "Teamwork", "mp_coop_pr_teamwork", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (16, 20, 20, "Fling", "mp_coop_pr_fling", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (17, 22, 22, "Loop", "mp_coop_pr_loop", "time", 2, 1, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (18, 18, 18, "Catapult", "mp_coop_pr_catapult", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (19, 19, 19, "Cubes", "mp_coop_pr_cubes", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (20, 20, 20, "Fling", "mp_coop_pr_fling", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (21, 21, 21, "Laser", "mp_coop_pr_laser", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (22, 22, 22, "Loop", "mp_coop_pr_loop", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (23, 23, 23, "Portals", "mp_coop_pr_portals", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (24, 24, 24, "Tbeam", "mp_coop_pr_tbeam", "time", 2, 1, 0);
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (25, 25, 25, "Teamwork", "mp_coop_pr_teamwork", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (19, 21, 21, "Laser", "mp_coop_pr_laser", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (20, 16, 16, "Bridge", "mp_coop_pr_bridge", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (21, 24, 24, "Tbeam", "mp_coop_pr_tbeam", "time", 2, 1, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (22, 17, 17, "Bts", "mp_coop_pr_bts", "time", 2, 1, 0);
 
 DELETE FROM evidence_requirements;
 
