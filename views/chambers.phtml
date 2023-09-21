@@ -1,6 +1,6 @@
 <?php $mapInfo = $GLOBALS["mapInfo"]; ?>
 <?php $mode = Router::$location[1]; ?>
-<?php $youtubeIDs = (($mode == "advanced-mode") ? Cache::get("COOPyoutubeIDs") : Cache::get("SPyoutubeIDs")) ?>
+<?php $youtubeIDs = (($mode == "cooperative") ? Cache::get("COOPyoutubeIDs") : Cache::get("SPyoutubeIDs")) ?>
 <?php $autoRenderedVideoIds = AutoRenderApiClient::getChambersVideos($view->board)?>
 
 <script>
@@ -14,10 +14,12 @@
 <div id="chambers">
     <?php $i=1; foreach($mapInfo["modes"][$mode] as $chapter): ?>
         <?php $chapterName = $mapInfo["chapters"][$chapter]["chapterName"]?>
+        <?php if (count($mapInfo["modes"][$mode]) > 1): ?>
         <div class="chapterinfo">
             <h1 class="chapternumber"><?= (($mode == "coop") ? "Course " : "Chapter ")."0".$i;?></h1>
             <h1 class="chaptername"><?=$chapterName;?></h1>
         </div>
+        <?php endif; ?>
         <div class="chambers">
             <?php foreach($mapInfo["chapters"][$chapter]["maps"] as $map): ?>
                 <?php $mapData = $view->board[$chapter][$map] ?>

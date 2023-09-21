@@ -2,10 +2,10 @@
 <?php include("util/AggregatedView.php")?>
 
 <?php function getImage() {
-    if (Router::$location[2] == "story-mode")
+    if (Router::$location[2] == "singleplayer")
         return '/images/sp.png';
-    else if (Router::$location[2] == "advanced-mode")
-        return '/images/sp.png';
+    else if (Router::$location[2] == "cooperative")
+        return '/images/coop.png';
     else if (Router::$location[2] == "overall")
         return '/images/overall.jpg';
     else if (Router::$location[2] == "chapter") {

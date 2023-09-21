@@ -164,10 +164,10 @@ class Leaderboard
                             ORDER BY  is_coop, maps.id");
         while ($row = $data->fetch_assoc()) {
             if ($row["is_coop"] == 1) {
-                $mode = "advanced-mode";
+                $mode = "cooperative";
             }
             else {
-                $mode = "story-mode";
+                $mode = "singleplayer";
             }
             $maps["modes"][$mode][$row["chapter_id"]] = $row["chapter_id"];
 
@@ -696,8 +696,8 @@ class Leaderboard
             "boardName" => "",
             "profileNumber" => "",
             "type" => "",
-            "story-mode" => "1",
-            "advanced-mode" => "1",
+            "singleplayer" => "1",
+            "cooperative" => "1",
             "wr" => "",
             "demo" => "",
             "yt" => "",

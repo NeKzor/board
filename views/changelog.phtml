@@ -31,7 +31,7 @@
                             <label for="chapter">Chapter name</label>
                             <select style="width: 100%;" id="chapter" name="chapter">
                                 <option value="">No chapter</option>
-                                <?php foreach(array("story-mode" => "Story Mode", "advanced-mode" => "Advanced Mode") as $modeId => $mode): ?>
+                                <?php foreach(array("singleplayer" => "Single Player", "cooperative" => "Cooperative") as $modeId => $mode): ?>
                                     <option disabled><?=$mode?></option>
                                     <?php foreach($mapInfo["modes"][$modeId] as $chapterId): ?>
                                         <?php $chapterName = $mapInfo["chapters"][$chapterId]["chapterName"]?>
@@ -44,7 +44,7 @@
                             <label for="chamber-name">Chamber name</label>
                             <select style="width: 100%;" id="chamber-name" name="chamber">
                                 <option value="">No chamber</option>
-                                <?php foreach(array("story-mode" => "Story Mode", "advanced-mode" => "Advanced Mode") as $modeId => $mode): ?>
+                                <?php foreach(array("singleplayer" => "Single Player", "cooperative" => "Cooperative") as $modeId => $mode): ?>
                                     <option disabled><?=$mode?></option>
                                     <?php foreach($mapInfo["modes"][$modeId] as $chapterId): ?>
                                         <option disabled>&nbsp;&nbsp;<?=$mapInfo["chapters"][$chapterId]["chapterName"]?></option>
@@ -78,14 +78,14 @@
                         </div>
                     </div>
                     <div style="float: left;" class="check">
-                        <div style="position: relative;">Story Mode</div>
-                        <div class="checkbox <?php if($param['story-mode'] == "1"): ?>ticked<?php endif; ?>"></div>
-                        <input type="hidden" value="<?=htmlspecialchars($param['story-mode']);?>" name="story-mode">
+                        <div style="position: relative;">Single Player</div>
+                        <div class="checkbox <?php if($param['singleplayer'] == "1"): ?>ticked<?php endif; ?>"></div>
+                        <input type="hidden" value="<?=htmlspecialchars($param['singleplayer']);?>" name="singleplayer">
                     </div>
                     <div style="float: left;" class="check">
-                        <div style="position: relative;">Advanced Mode</div>
-                        <div class="checkbox <?php if($param['advanced-mode'] == "1"): ?>ticked<?php endif; ?>"></div>
-                        <input type="hidden" value="<?=htmlspecialchars($param['advanced-mode']);?>" name="advanced-mode">
+                        <div style="position: relative;">Cooperative</div>
+                        <div class="checkbox <?php if($param['cooperative'] == "1"): ?>ticked<?php endif; ?>"></div>
+                        <input type="hidden" value="<?=htmlspecialchars($param['cooperative']);?>" name="cooperative">
                     </div>
                     <div style="float: left;" class="check">
                         <div style="position: relative;">World Record</div>

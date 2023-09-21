@@ -3,13 +3,13 @@
     <div id="time_icon" class="nav_icon"></div>
     <div class="btnLabel">Score Updates</div>
 </a>
-<a href="/story-mode" class="nav_button">
+<a href="/singleplayer" class="nav_button">
     <div id="sp_icon" class="nav_icon"></div>
-    <div class="btnLabel">Story Mode</div>
+    <div class="btnLabel">Single Player</div>
 </a>
-<a href="/advanced-mode" class="nav_button">
+<a href="/cooperative" class="nav_button">
     <div id="coop_icon" class="nav_icon"></div>
-    <div class="btnLabel">Advanced Mode</div>
+    <div class="btnLabel">Cooperative</div>
 </a>
 <div class="nav_dropdown">
     <div id="cube_icon" class="nav_icon"></div>
@@ -24,16 +24,16 @@
       <li class="nav_dropdown">
           <div style="height: 29px">
               <div class="nav_icon" style="background: url('/images/sp_noborder.jpg'); background-size: 29px 29px;"></div>
-              <div class="btnLabel">Story Mode</div>
+              <div class="btnLabel">Single Player</div>
           </div>
           <ul style="width:190px">
               <li>
-                <a href="/aggregated/story-mode">
+                <a href="/aggregated/singleplayer">
                     <div class="nav_icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                     <div class="btnLabel">Total</div>
                 </a>
               </li>
-              <?php $i = 1; foreach ($mapInfo["modes"]["story-mode"] as $chapter): ?>
+              <?php $i = 1; foreach ($mapInfo["modes"]["singleplayer"] as $chapter): ?>
                   <li>
                       <a href="/aggregated/chapter/<?=$chapter?>">
                         <div class="nav_icon"><?=$i?></div>
@@ -45,17 +45,17 @@
       </li>
       <li class="nav_dropdown">
           <div style="height: 29px">
-              <div class="nav_icon" style="background: url('/images/cube_noborder_gradient.jpg'); background-size: 29px 29px;"></div>
-              <div class="btnLabel">Advanced Mode</div>
+              <div class="nav_icon" style="background: url('/images/coop_noborder.jpg'); background-size: 29px 29px;"></div>
+              <div class="btnLabel">Cooperative</div>
           </div>
           <ul style="width:190px">
               <li>
-                  <a href="/aggregated/advanced-mode">
+                  <a href="/aggregated/cooperative">
                       <div class="nav_icon"><i class="fa fa-star" aria-hidden="true"></i></div>
                       <div class="btnLabel">Total</div>
                   </a>
               </li>
-              <?php $i = 1; foreach ($mapInfo["modes"]["advanced-mode"] as $chapter): ?>
+              <?php $i = 1; foreach ($mapInfo["modes"]["cooperative"] as $chapter): ?>
                   <li>
                       <a href="/aggregated/chapter/<?=$chapter?>">
                         <div class="nav_icon"><?=$i?></div>
@@ -84,7 +84,7 @@
     <div class="btnLabel">More</div>
     <ul style="width:145px">
       <li class="nav_dropdown">
-          <a href="https://www.speedrun.com/mel" target="_blank" style="height: 29px">
+          <a href="https://www.speedrun.com/p2reloaded" target="_blank" style="height: 29px">
               <div class="nav_icon" style="background: url('/images/running.png'); background-size: 29px 29px;"></div>
               <div class="btnLabel">Full Game Runs</div>
           </a>          

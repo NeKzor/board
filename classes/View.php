@@ -54,11 +54,11 @@ class View {
     static $page;
     static $pageData;
     static $sitePages = array(
-        "story-mode" => array(
+        "singleplayer" => array(
             "contentTemplate" => "chambers.phtml",
             "js" => array(self::youtubeEmbed, self::d3, self::moment, self::momentTimeZone,self::date),
         ),
-        "advanced-mode" => array(
+        "cooperative" => array(
             "contentTemplate" => "chambers.phtml",
             "js" => array(self::youtubeEmbed, self::d3, self::moment, self::momentTimeZone,self::date),
         ),
