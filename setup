@@ -68,16 +68,6 @@ create_ssl_cert()
     fi
 }
 
-# Database dump.
-
-create_db()
-{
-    echo "[+] extracting database dump to docker/initdb"
-
-    echo "USE $dbname;" > docker/initdb/_init.sql
-    gunzip -c data/leaderboard.gz >> docker/initdb/_init.sql
-}
-
 # Set permissions for www-data for all mounted volumes.
 
 set_permissions()
@@ -111,7 +101,6 @@ setup_dev()
     create_logs
     create_volumes
     create_ssl_cert
-    create_db
 
     echo "[+] done"
 }
@@ -125,7 +114,6 @@ setup_prod()
     create_config_and_env
     create_logs
     create_volumes
-    create_db
 
     echo "[+] done"
 }
