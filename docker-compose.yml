@@ -1,7 +1,6 @@
 version: "3.8"
 services:
   server:
-    image: board-portal2:latest
     build:
       context: .
       args:
