@@ -85,16 +85,6 @@ set_permissions()
     echo "[+] setting permissions for all volumes"
 
     sudo chown -R www-data:www-data  \
-        ./api \
-        ./classes \
-        ./public \
-        ./views \
-        ./loader.php \
-        .config.json \
-        ./docker/apache \
-        ./docker/ssl \
-        ./docker/logs/error.log \
-        ./docker/logs/access.log \
         ./docker/logs/debug.txt \
         ./docker/volumes/cache \
         ./docker/volumes/demos \
