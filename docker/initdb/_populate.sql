@@ -8,6 +8,7 @@ INSERT INTO chapters (`id`, `chapter_name`, `is_multiplayer`) VALUES (1, 'Apertu
 INSERT INTO chapters (`id`, `chapter_name`, `is_multiplayer`) VALUES (2, 'Speed Gel Upgrade', 0);
 INSERT INTO chapters (`id`, `chapter_name`, `is_multiplayer`) VALUES (3, 'No More Test Recycling', 0);
 INSERT INTO chapters (`id`, `chapter_name`, `is_multiplayer`) VALUES (4, 'The Stage', 0);
+INSERT INTO chapters (`id`, `chapter_name`, `is_multiplayer`) VALUES (5, 'Bonus', 0);
 
 -- Maps
 
@@ -40,6 +41,8 @@ INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chap
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (25, 25, 25, 'Roof Bounce', 'gg_stage_roofbounce', 'time', 4, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (26, 26, 26, 'Funnel Drop', 'gg_stage_pickbounce', 'time', 4, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (27, 27, 27, 'Platform Ride', 'gg_stage_theend', 'time', 4, 0, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (28, 28, 28, 'Tag Remix', 'gg_tag_remix', 'time', 5, 0, 0);
+INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (29, 29, 29, 'Trailer', 'gg_trailer_map', 'time', 5, 0, 0);
 
 DELETE FROM evidence_requirements;
 
