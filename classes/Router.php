@@ -905,7 +905,7 @@ class Router {
                 $result[$key] = $val;
             }
         }
-        if ($result["campaign"] == "1") {
+        if ($result["campaign"] == "1" || $result["campaign"] === "") {
             $result["type"] = "0";
         }
         elseif ($result["campaign"] != "1") {
