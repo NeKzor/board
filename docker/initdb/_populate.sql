@@ -11,7 +11,6 @@ INSERT INTO chapters (`id`, `chapter_name`, `is_multiplayer`) VALUES (2, 'Cooper
 
 DELETE FROM maps;
 
-INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (1, 1, 1, "Human Storage Vault", "sp_a1_pr_map_001", "time", 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (2, 2, 2, "Time Travel", "sp_a1_pr_map_002", "time", 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (3, 3, 3, "Cubes And Buttons", "sp_a1_pr_map_003", "time", 1, 0, 0);
 INSERT INTO maps (`id`, `steam_id`, `lp_id`, `name`, `level_name`, `type`, `chapter_id`, `is_coop`, `is_public`) VALUES (4, 4, 4, "Portals", "sp_a1_pr_map_004", "time", 1, 0, 0);
