@@ -7,40 +7,10 @@
     <div id="sp_icon" class="nav_icon"></div>
     <div class="btnLabel">Campaign</div>
 </a>
-<div class="nav_dropdown">
+<a href="/aggregated/overall" class="nav_button">
     <div id="cube_icon" class="nav_icon"></div>
     <div class="btnLabel">Aggregated</div>
-    <ul style="width:150px">
-      <li>
-          <a href="/aggregated/overall" style="height: 29px">
-            <div class="nav_icon" style="background: url('/images/cakeicon.png'); background-size: 29px 29px;"></div>
-            <div class="btnLabel">Overall</div>
-          </a>
-      </li>
-      <li class="nav_dropdown">
-          <div style="height: 29px">
-              <div class="nav_icon" style="background: url('/images/sp_noborder.jpg'); background-size: 29px 29px;"></div>
-              <div class="btnLabel">Campaign</div>
-          </div>
-          <ul style="width:190px">
-              <li>
-                <a href="/aggregated/campaign">
-                    <div class="nav_icon"><i class="fa fa-star" aria-hidden="true"></i></div>
-                    <div class="btnLabel">Total</div>
-                </a>
-              </li>
-              <?php $i = 1; foreach ($mapInfo["modes"]["campaign"] as $chapter): ?>
-                  <li>
-                      <a href="/aggregated/chapter/<?=$chapter?>">
-                        <div class="nav_icon"><?=$i?></div>
-                        <div class="btnLabel"><?=$mapInfo["chapters"][$chapter]["chapterName"]?> </div>
-                      </a>
-                  </li>
-              <?php $i++; endforeach; ?>
-          </ul>
-      </li>
-    </ul>
-</div>
+</a>
 
 <style>
   .donator_icon {
