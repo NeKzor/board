@@ -24,11 +24,12 @@ services:
       - ./loader.php:/var/www/html/loader.php:rw
       - .config.json:/var/www/html/.config.json
       - ./docker/apache/${SERVER_NAME}.conf:/etc/apache2/sites-available/${SERVER_NAME}.conf
-      - ./docker/ssl/${SERVER_NAME}.key:/etc/apache2/ssl/${SERVER_NAME}.key
-      - ./docker/ssl/${SERVER_NAME}.crt:/etc/apache2/ssl/${SERVER_NAME}.crt
       - ./docker/logs/error.log:/var/log/apache2/error.log
       - ./docker/logs/access.log:/var/log/apache2/other_vhosts_access.log
       - ./docker/logs/debug.txt:/var/www/html/debug.txt
+      - ./docker/php/board.ini:/etc/php/8.1/apache2/conf.d/board.ini
+      - ./docker/ssl/${SERVER_NAME}.key:/etc/apache2/ssl/${SERVER_NAME}.key
+      - ./docker/ssl/${SERVER_NAME}.crt:/etc/apache2/ssl/${SERVER_NAME}.crt
       - ./docker/volumes/cache:/var/www/html/cache
       - ./docker/volumes/demos:/var/www/html/demos
       - ./docker/volumes/sessions:/var/www/html/sessions
