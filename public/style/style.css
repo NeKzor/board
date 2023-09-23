@@ -104,7 +104,7 @@ a:hover, a:focus {
     float: left;
     padding: 0px 0px 0px 32px;
     position: relative;
-    min-width: 770px;
+    min-width: 780px;
 }
 #header_right {
     /*float: right;*/
