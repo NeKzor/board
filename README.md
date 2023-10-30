@@ -128,8 +128,6 @@ This is used by Dockerfile and docker-compose.yml.
 |HTTP_PORT|The unsafe HTTP port of the local host. Change it if a different port is needed e.g. [reverse proxy](#reverse-proxy-optional)|
 |HTTPS_PORT|The safe HTTPS port of the local host. Change it if a different port is needed e.g. [reverse proxy](#reverse-proxy-optional)|
 |DATABASE_PORT|The MySQL database port of the local host. NOTE: Make sure that the docker compose file does not expose the server to an unwanted address. By default it's mapped to `127.0.0.1`.|
-|PHP_VERSION|The name of the server container.|
-|DATABASE_VERSION|The name of the database container.|
 |MYSQL_ROOT_PASSWORD|The root's password of the MySQL database.|
 |APT_PACKAGES|Optional apt-packages to build the server image. The image should be kept as small as possible but sometimes it is useful to install some packages (e.g. `vim`, `htop` etc.) in order to debug problems more quickly.|
 
@@ -184,10 +182,10 @@ HTTP_PORT=8880
 HTTPS_PORT=8443
 DATABASE_PORT=3306
 
-PHP_VERSION=php81
-DATABASE_VERSION=mysql8
-
 MYSQL_ROOT_PASSWORD=root
+MYSQL_USER=board
+MYSQL_PASSWORD=board
+MYSQL_DATABASE=board
 
 APT_PACKAGES=
 ```
