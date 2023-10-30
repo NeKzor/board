@@ -7,7 +7,7 @@ services:
       args:
         SERVER_NAME: ${SERVER_NAME}
         APT_PACKAGES: ${APT_PACKAGES}
-    container_name: "${PROJECT_NAME}-${PHP_VERSION}"
+    container_name: "${PROJECT_NAME}-server"
     restart: always
     stdin_open: true
     tty: true
@@ -35,7 +35,7 @@ services:
       - ./docker/volumes/sessions:/var/www/html/sessions
   database:
     image: mysql:8
-    container_name: "${PROJECT_NAME}-${DATABASE_VERSION}"
+    container_name: "${PROJECT_NAME}-db"
     restart: unless-stopped
     ports:
       - "127.0.0.1:${DATABASE_PORT}:${DATABASE_PORT}"
