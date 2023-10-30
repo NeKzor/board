@@ -755,7 +755,7 @@ class Leaderboard
         }
 
         $whereClause .= (($param["hasDate"] == "1") ? "time_gained IS NOT NULL AND " : "");
-        $whereClause .= (($param["wr"] != "") ? "wr_gain = '{$param["wr"]}' AND " : "");
+        $whereClause .= (($param["wr"] != "") ? "post_rank = 1 AND " : "");
         $whereClause .= (($param["banned"] != "") ? "banned = '{$param["banned"]}' AND " : "");
         $whereClause .= (($param["id"] != "") ? "id = '{$param["id"]}' AND " : "");
 
