@@ -32,6 +32,7 @@ create_logs()
 }
 
 # Other mounted volumes.
+#   docker/volumes/backups  -> database dumps
 #   docker/volumes/cache    -> cache files used by the server
 #   docker/volumes/demos    -> uploaded demo files
 #   docker/volumes/sessions -> user sessions used by the server
@@ -40,7 +41,7 @@ create_volumes()
 {
     echo "[+] creating volumes in docker/volumes"
 
-    mkdir -p docker/volumes docker/volumes/cache docker/volumes/demos docker/volumes/sessions
+    mkdir -p docker/volumes docker/volumes/backups docker/volumes/cache docker/volumes/demos docker/volumes/sessions
 }
 
 # Self-signed certificate for development only.

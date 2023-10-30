@@ -47,3 +47,4 @@ services:
     volumes:
       - ./docker/initdb:/docker-entrypoint-initdb.d
       - ./docker/volumes/mysql:/var/lib/mysql
+      - ./docker/volumes/backups:/backups
