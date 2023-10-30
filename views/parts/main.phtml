@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="dark">
 
     <head>
         <meta charset="utf-8">
@@ -29,10 +29,10 @@
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
         <script>
-            localStorage.getItem('color-theme') ==='dark' && document.documentElement.classList.add('dark');
+            localStorage.getItem('color-theme') === 'light' && document.documentElement.classList.remove('dark');
 
             function toggleTheme() {
-                if (localStorage.getItem('color-theme') ==='dark') {
+                if (localStorage.getItem('color-theme') !== 'light') {
                     localStorage.setItem('color-theme', 'light');
                     document.documentElement.classList.remove('dark');
                 } else {
