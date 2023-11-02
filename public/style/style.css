@@ -1035,9 +1035,6 @@ body > #youtube #ytplayer {
 #profile .global-stats .block-container.bestworst .title{
     width: 116px;
 }
-#profile .global-stats .block-container.oldnew .title{
-    max-width: 140px;
-}
 #profile .global-stats .block-container.points {
     width: 16%;
 }
