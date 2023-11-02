@@ -7,18 +7,18 @@
     },
     "scripts": {
         "check": "vendor/bin/phpstan analyse -l 9 api classes util views",
-        "server:debug": "docker exec -ti board-server sh",
-        "server:restart": "docker container restart board-server",
-        "server:stop": "docker container stop board-server",
+        "server:debug": "docker exec -ti mel-server sh",
+        "server:restart": "docker container restart mel-server",
+        "server:stop": "docker container stop mel-server",
         "build": "docker compose build",
         "up": "docker compose up",
         "down": "docker compose down",
-        "db": "docker exec -ti board-db bash -c 'printf [client]\\\\nuser=${MYSQL_USER}\\\\npassword=${MYSQL_PASSWORD}\\\\n[clientroot]\\\\nuser=root\\\\npassword=${MYSQL_ROOT_PASSWORD}\\\\n[mysql]\\\\ndatabase=${MYSQL_DATABASE} > /etc/my.cnf' && docker exec -ti board-db mysql",
-        "db:debug": "docker exec -ti board-db bash",
-        "db:restart": "docker container restart board-db",
-        "db:stop": "docker container stop board-db",
-        "db:dump": "docker exec -ti board-db bash -c 'mysqldump --defaults-group-suffix=root --hex-blob --net-buffer-length 100K --routines --databases ${MYSQL_DATABASE} | gzip -8 > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.gz'",
-        "db:dump:raw": "docker exec -ti board-db bash -c 'mysqldump --defaults-group-suffix=root --hex-blob --net-buffer-length 100K --routines --databases ${MYSQL_DATABASE} > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql'"
+        "db": "docker exec -ti mel-db bash -c 'printf [client]\\\\nuser=${MYSQL_USER}\\\\npassword=${MYSQL_PASSWORD}\\\\n[clientroot]\\\\nuser=root\\\\npassword=${MYSQL_ROOT_PASSWORD}\\\\n[mysql]\\\\ndatabase=${MYSQL_DATABASE} > /etc/my.cnf' && docker exec -ti mel-db mysql",
+        "db:debug": "docker exec -ti mel-db bash",
+        "db:restart": "docker container restart mel-db",
+        "db:stop": "docker container stop mel-db",
+        "db:dump": "docker exec -ti mel-db bash -c 'mysqldump --defaults-group-suffix=root --hex-blob --net-buffer-length 100K --routines --databases ${MYSQL_DATABASE} | gzip -8 > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.gz'",
+        "db:dump:raw": "docker exec -ti mel-db bash -c 'mysqldump --defaults-group-suffix=root --hex-blob --net-buffer-length 100K --routines --databases ${MYSQL_DATABASE} > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql'"
     },
     "config": {
         "process-timeout": 0
