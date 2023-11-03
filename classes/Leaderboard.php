@@ -676,6 +676,126 @@ class Leaderboard
         return $board;
     }
 
+    public static function getLeaderboard(int $mapId)
+    {
+        // NOTE: Copy from function "getBoard" above (formatted but not optimized)
+        $query = Database::query(
+            "SELECT ranks.profile_number
+                  , u.avatar
+                  , IFNULL(u.boardname, u.steamname) as boardname
+                  , chapters.id as chapterid
+                  , maps.steam_id as mapid
+                  , ranks.profile_number
+                  , ranks.changelog_id
+                  , ranks.score
+                  , ranks.player_rank
+                  , ranks.score_rank
+                  , DATE_FORMAT(ranks.time_gained, '%Y-%m-%dT%TZ') as date
+                  , has_demo
+                  , youtube_id
+                  , ranks.note
+                  , ranks.submission
+                  , ranks.pending
+               FROM usersnew as u
+               JOIN (
+                   SELECT sc.changelog_id
+                        , sc.profile_number
+                        , sc.score
+                        , sc.map_id
+                        , sc.time_gained
+                        , sc.has_demo
+                        , sc.youtube_id
+                        , sc.submission
+                        , sc.note
+                        , sc.pending
+                        , IF(@prevMap <> sc.map_id
+                           , @rownum := 1
+                           , @rownum := @rownum + 1
+                        ) as rowNum
+                        , IF(@prevMap <> sc.map_id
+                           , @displayRank := 1
+                           , IF(@prevScore <> sc.score
+                              , @displayRank := @rownum
+                              , @displayRank
+                            )
+                        ) AS player_rank
+                        , IF(@prevMap <> sc.map_id
+                           , @rank := 1
+                           , IF(@prevScore <> sc.score
+                              , @rank := @rank + 1
+                              , @rank)
+                        ) AS score_rank
+                        , @prevMap := sc.map_id
+                        , @prevScore := sc.score
+                   FROM (
+                       SELECT changelog.submission
+                            , scores.changelog_id
+                            , scores.profile_number
+                            , scores.map_id
+                            , changelog.score
+                            , changelog.time_gained
+                            , changelog.youtube_id
+                            , changelog.has_demo
+                            , changelog.note
+                            , changelog.pending 
+                         FROM scores
+                   INNER JOIN changelog
+                           ON (scores.changelog_id = changelog.id)
+                        WHERE scores.profile_number IN (
+                            SELECT profile_number
+                            FROM usersnew
+                            WHERE banned = 0
+                        )
+                         AND scores.map_id = '{$mapId}'
+                         AND changelog.banned = '0'
+                         AND changelog.pending = '0'
+                   ) as sc
+                   JOIN (
+                       SELECT @rownum := NULL
+                            , @prevMap := 0
+                            , @prevScore := 0
+                    ) AS r
+                    ORDER BY sc.map_id
+                           , sc.score
+                           , sc.time_gained
+                           , sc.profile_number ASC
+               ) as ranks
+                   ON u.profile_number = ranks.profile_number
+               JOIN maps
+                   ON ranks.map_id = maps.steam_id
+               JOIN chapters
+                   ON maps.chapter_id = chapters.id
+                       AND player_rank <= " . self::numTrackedPlayerRanks . "
+               ORDER BY map_id
+                      , score
+                      , time_gained
+                      , profile_number ASC");
+
+        $board = [];
+        $idx = 0;
+
+        while ($row = $query->fetch_assoc()) {
+            $board[$idx]["scoreData"]["note"] = $row["note"] != NULL ? htmlspecialchars($row["note"]) : NULL;
+            $board[$idx]["scoreData"]["submission"] = $row["submission"];
+            $board[$idx]["scoreData"]["changelogId"] = $row["changelog_id"];
+            $board[$idx]["scoreData"]["playerRank"] = $row["player_rank"];
+            $board[$idx]["scoreData"]["scoreRank"] = $row["score_rank"];
+            $board[$idx]["scoreData"]["score"] = $row["score"];
+            $board[$idx]["scoreData"]["date"] = $row["date"];
+            $board[$idx]["scoreData"]["hasDemo"] = $row["has_demo"];
+            $board[$idx]["scoreData"]["youtubeId"] = $row["youtube_id"];
+            $board[$idx]["scoreData"]["pending"] = $row["pending"];
+            $board[$idx]["scoreData"]["mapId"] = $row["mapid"];
+            $board[$idx]["scoreData"]["chapterId"] = $row["chapterid"];
+            $board[$idx]["userData"]["boardname"] = htmlspecialchars($row["boardname"]);
+            $board[$idx]["userData"]["avatar"] = $row["avatar"];
+            $board[$idx]["userData"]["profileNumber"] = $row["profile_number"];
+            ++$idx;
+        }
+
+        return $board;
+    }
+
     public static function cacheChamberBoards($board) {
         foreach ($board as $chapter => $chapterData) {
             foreach ($chapterData as $map => $mapData) {
@@ -1515,6 +1635,44 @@ class Leaderboard
         }
         $topRow = $changelog[0];
         return $topRow;
+    }
+
+    public static function getTopScores(string $profile_number, int $mapId, int $before, $after) {
+        $leaderboard = self::getLeaderboard($mapId);
+        if (!$leaderboard) {
+            return [];
+        }
+
+        $profileIds = array_map(
+            function ($entry) {
+                return $entry["userData"]["profileNumber"];
+            },
+            $leaderboard
+        );
+
+        $pbIndex = array_search($profile_number, $profileIds);
+        if ($pbIndex === false) {
+            return [];
+        }
+
+        $scores = [];
+        $index = 0;
+        $start = max(0, $pbIndex - $before);
+        $end = $pbIndex + $after;
+
+        foreach ($leaderboard as $entry) {
+            if ($index > $end) {
+                break;
+            }
+
+            if ($index >= $start) {
+                $scores[] = $entry;
+            }
+
+            ++$index;
+        }
+
+        return $scores;
     }
 
     private static function isBest($profile_number, $map_id, $changelogId){
