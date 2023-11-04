@@ -1637,7 +1637,7 @@ class Leaderboard
         return $topRow;
     }
 
-    public static function getTopScores(string $profile_number, int $mapId, int $before, $after) {
+    public static function getTopScores(string $profile_number, int $mapId, int $before, int $after) {
         $leaderboard = self::getLeaderboard($mapId);
         if (!$leaderboard) {
             return [];
@@ -1650,29 +1650,25 @@ class Leaderboard
             $leaderboard
         );
 
+        $offset = 0;
+        $length = $before + $after + 1;
+
         $pbIndex = array_search($profile_number, $profileIds);
         if ($pbIndex === false) {
-            return [];
+            return array_slice($leaderboard, $offset, $length);
         }
 
-        $scores = [];
-        $index = 0;
-        $start = max(0, $pbIndex - $before);
-        $end = $pbIndex + $after;
+        $beforeIndex = $pbIndex - $before;
+        $afterIndex = $pbIndex + $after;
 
-        foreach ($leaderboard as $entry) {
-            if ($index > $end) {
-                break;
-            }
+        $lastIndex = count($leaderboard) - 1;
+        $offset = max(0, $beforeIndex);
 
-            if ($index >= $start) {
-                $scores[] = $entry;
-            }
-
-            ++$index;
+        if ($afterIndex > $lastIndex) {
+            $offset = max(0, $offset - ($afterIndex - $lastIndex));
         }
 
-        return $scores;
+        return array_slice($leaderboard, $offset, $length);
     }
 
     private static function isBest($profile_number, $map_id, $changelogId){
