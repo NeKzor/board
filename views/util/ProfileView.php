@@ -4,7 +4,7 @@ class ProfileView
 {
     static function getChamberHyperlink($map, $mapInfo) {
         if (array_key_exists($map, $mapInfo["maps"])) {
-            return "<a href=/chamber/" . $map . ">" . $mapInfo["maps"][$map]["mapName"] . "</a>";
+            return "<a href=/chamber/" . $map . ">" . str_replace("Advanced", "Adv.", $mapInfo["maps"][$map]["mapName"]) . "</a>";
         }
         else {
             return $map;
