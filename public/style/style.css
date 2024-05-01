@@ -309,7 +309,7 @@ a:hover, a:focus {
 #welcome .firstline {
     font-weight: bold;
 }
-#leastportals .chamber, #chambers .chamber {
+#chambers .chamber {
     display: block;
     width: 265px;
     height: 332px;
@@ -319,65 +319,41 @@ a:hover, a:focus {
     margin: 5px 0px 10px 20px;
     box-sizing: content-box;
 }
-#leastportals .chamber.leastportals {
-    height: 149px;
-}
-#leastportals .chamber.leastportals .chamberimage {
-    border-bottom: 3px solid #3096d1;
-}
-#leastportals .portalsused {
-    text-align: center;
-    margin-top: 55px;
-    color: #e1e1e1;
-    font-size: 20px;
-    font-family: Segoe UI;
-    font-weight: bold;
-    text-shadow: 0px 0px 3px #000000;
-    filter: dropshadow(color=#000000, offx=0, offy=0);
-    text-transform: uppercase;
-}
-#leastportals .portalamount {
-    display: inline-block;
-    font-size: 34px;
-    position: relative;
-    top: 3px;
-    padding-right: 5px;
-}
-#chambers .youtubeEmbedButton .fa-youtube-play, #leastportals .youtubeEmbedButton .fa-youtube-play {
+#chambers .youtubeEmbedButton .fa-youtube-play {
     color: #ac303C;
     font-size: 23px;
     margin-top: -2px;
     cursor: pointer;
 }
-#chambers .youtubeEmbedButton .fa-square, #leastportals .youtubeEmbedButton .fa-square  {
+#chambers .youtubeEmbedButton .fa-square  {
     color: #ddd;
     left: 0.5px;
     top: -2.6px;
     font-size: 16px;
     margin-left: 1px;
 }
-#chambers .youtubeEmbedButton:hover .fa-youtube-play, #leastportals .youtubeEmbedButton:hover .fa-youtube-play {
+#chambers .youtubeEmbedButton:hover .fa-youtube-play {
     color: #c73846;
 }
-#chambers .steamLink .fa-square, #leastportals .steamLink .fa-square {
+#chambers .steamLink .fa-square {
     color: #ddd;
     font-size: 18px;
     top: 1px;
     margin-right: 2px;
 }
-#chambers .steamLink .fa-steam-square, #leastportals .steamLink .fa-steam-square  {
+#chambers .steamLink .fa-steam-square  {
     color: #3d3d3d;
     font-size: 20px;
 }
-#chambers .steamLink:hover .fa-steam-square, #leastportals .steamLink:hover .fa-steam-square {
+#chambers .steamLink:hover .fa-steam-square {
     color: #4b4b4b;
 }
-#chambers .chambers, #leastportals .chambers {
+#chambers .chambers {
     margin: 30px 0px 0px 0px;
     float: left;
     clear: both;
 }
-#chambers .chamberimage, #leastportals .chamberimage {
+#chambers .chamberimage {
     border-top: 3px solid #3096d1;
     width: 100%;
     height: 149px;
@@ -385,12 +361,12 @@ a:hover, a:focus {
     position: relative;
     box-sizing: content-box;
 }
-#chambers .chambertitle, #leastportals .chambertitle {
+#chambers .chambertitle {
     height: 34px;
     float: right;
     cursor: default;
 }
-#chambers .titlebg, #leastportals .titlebg {
+#chambers .titlebg {
     background: url("/images/chamber_title_bg.jpg");
     height: 26px;
     font-family: "Aperture";
@@ -400,14 +376,14 @@ a:hover, a:focus {
     padding: 7px 10px 1px 6px;
     box-sizing: content-box;
 }
-#chambers .titlebg a, #leastportals .titlebg a {
+#chambers .titlebg a {
     color: #565656;
     text-decoration: none;
 }
-#chambers .titlebg a:hover, #leastportals .titlebg a:hover {
+#chambers .titlebg a:hover {
     text-decoration: underline;
 }
-#chambers .titlebghelper, #leastportals .titlebghelper {
+#chambers .titlebghelper {
     background: url("/images/titlebghelper.png");
     width: 20px;
     height: 34px;
@@ -507,18 +483,18 @@ a:hover, a:focus {
     margin: 2px 0px 0px 0px;
     color: #3e3e3e;
 }
-#chambers .icons, #leastportals .icons {
+#chambers .icons {
     /*margin-right: 3px;*/
 }
 #chambers .icons.fa-stack {
     vertical-align: top;
 }
-#chambers .chamber_icons_right, #leastportals .chamber_icons_right {
+#chambers .chamber_icons_right {
     position: absolute;
     top: 124px;
     right: 7px;
 }
-#chambers .chamber_icons_left, #leastportals .chamber_icons_left {
+#chambers .chamber_icons_left {
     position: absolute;
     top: 124px;
     left: 5px;
@@ -533,14 +509,14 @@ a:hover, a:focus {
     color: #3e88b3;
     text-transform: uppercase;
 }
-#chambers .chapternumber, #editProfile .title, #about .title, #chambers .chaptername, #leastportals .chaptername, h1, h2 {
+#chambers .chapternumber, #editProfile .title, #about .title, #chambers .chaptername, h1, h2 {
     font-family: "Aperture";
     font-size: 20px;
     color: #3e88b3;
     text-transform: uppercase;
     font-weight: bold;
 }
-#leastportals .chaptername, #chambers .chaptername, #editProfile .subtitle {
+#chambers .chaptername, #editProfile .subtitle {
     font-size: 40.5px;
     margin-top: -11px;
 }
@@ -578,7 +554,7 @@ a:hover, a:focus {
     color: #555;
     font-weight: 500;
 }
-#chambers .chapterinfo, #leastportals .chapterinfo {
+#chambers .chapterinfo {
     height: 45px;
     margin: 10px 0px 20px 20px;
     clear: both;

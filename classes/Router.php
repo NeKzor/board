@@ -761,17 +761,6 @@ class Router {
             }
         }
 
-        if ($location[1] == "lp") {
-            if ($location[2] == "story-mode") {
-                $view->board = Leaderboard::getLeastPortalsBoard(0);
-                View::$pageData["pageTitle"] = "Least Portals - Story Mode";
-            }
-            if ($location[2] == "advanced-mode") {
-                $view->board = Leaderboard::getLeastPortalsBoard(1);
-                View::$pageData["pageTitle"] = "Least Portals - Advanced Mode";
-            }
-        }
-
         if ($location[1] == "donators") {
             $data = Database::query("SELECT profile_number, avatar, IFNULL(boardname, steamname) as playername, donation_amount FROM users WHERE title LIKE 'Donator' ORDER BY CAST(donation_amount AS DECIMAL(9, 2)) DESC");
             $view->donators = array();

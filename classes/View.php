@@ -92,11 +92,6 @@ class View {
             "pageTitle" => "Edit profile",
             "js" => [self::clipboardJs],
         ),
-        "lp" => array(
-            "contentTemplate" => "leastportals.phtml",
-            "pageTitle" => "Least Portals",
-            "js" => array(self::youtubeEmbed)
-        ),
         "about" => array(
             "contentTemplate" => "about.phtml",
             "pageTitle" => "About"
