@@ -9,9 +9,9 @@
     print_r("start: " . $start . "\n");
     print_r("end: " . $end . "\n");
 
-    $data = Database::query("SELECT usersnew.profile_number AS player_id, IFNULL(steamname, boardname) as displayName 
-        FROM usersnew 
-        ORDER BY usersnew.profile_number
+    $data = Database::query("SELECT users.profile_number AS player_id, IFNULL(steamname, boardname) as displayName 
+        FROM users 
+        ORDER BY users.profile_number
         LIMIT " . $start . ", " .  $end);
 
 

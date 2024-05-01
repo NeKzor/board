@@ -374,7 +374,7 @@ class Router {
             }
 
             // $data = Database::query("SELECT changelog.profile_number, score, map_id, IFNULL(boardname, steamname) as displayName
-            //   FROM changelog INNER JOIN usersnew ON (changelog.profile_number = usersnew.profile_number)
+            //   FROM changelog INNER JOIN users ON (changelog.profile_number = users.profile_number)
             //   WHERE changelog.id = '" . $_GET["id"] . "'");
             // $row = $data->fetch_assoc();
             
@@ -531,13 +531,13 @@ class Router {
                     exit;
                 }
 
-                $data = Database::query("SELECT IFNULL(boardname, steamname) as displayName FROM usersnew WHERE profile_number = '{$profileNumber}'");
+                $data = Database::query("SELECT IFNULL(boardname, steamname) as displayName FROM users WHERE profile_number = '{$profileNumber}'");
                 $row = $data->fetch_assoc();
                 $oldNickname = str_replace(" ", "", $row["displayName"]);
 
                 User::updateProfileData($profileNumber);
 
-                $data2 = Database::query("SELECT IFNULL(boardname, steamname) as displayName FROM usersnew WHERE profile_number = '{$profileNumber}'");
+                $data2 = Database::query("SELECT IFNULL(boardname, steamname) as displayName FROM users WHERE profile_number = '{$profileNumber}'");
                 $row2 = $data2->fetch_assoc();
 
                 $newNickname = str_replace(" ", "", $row2["displayName"]);
@@ -773,7 +773,7 @@ class Router {
         }
 
         if ($location[1] == "donators") {
-            $data = Database::query("SELECT profile_number, avatar, IFNULL(boardname, steamname) as playername, donation_amount FROM usersnew WHERE title LIKE 'Donator' ORDER BY CAST(donation_amount AS DECIMAL(9, 2)) DESC");
+            $data = Database::query("SELECT profile_number, avatar, IFNULL(boardname, steamname) as playername, donation_amount FROM users WHERE title LIKE 'Donator' ORDER BY CAST(donation_amount AS DECIMAL(9, 2)) DESC");
             $view->donators = array();
 
             while ($row = $data->fetch_assoc()) {
@@ -788,7 +788,7 @@ class Router {
         }
 
         if ($location[1] == "wallofshame") {
-            $data = Database::query("SELECT profile_number, avatar, IFNULL(boardname, steamname) as playername FROM usersnew WHERE banned = 1 ORDER BY playername");
+            $data = Database::query("SELECT profile_number, avatar, IFNULL(boardname, steamname) as playername FROM users WHERE banned = 1 ORDER BY playername");
             $view->wallofshame = array();
 
             while ($row = $data->fetch_assoc()) {

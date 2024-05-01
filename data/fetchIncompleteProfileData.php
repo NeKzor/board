@@ -1,7 +1,7 @@
 <?php
     include(__DIR__ . "/../loader.php");
 
-    $data = Database::query("SELECT usersnew.profile_number AS player_id FROM usersnew WHERE steamname IS NULL OR steamname = ''");
+    $data = Database::query("SELECT users.profile_number AS player_id FROM users WHERE steamname IS NULL OR steamname = ''");
 
     $numRows = mysqli_num_rows($data);
     $i = 1;

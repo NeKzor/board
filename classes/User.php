@@ -38,29 +38,29 @@ class User {
     //TODO: functional decomposition
     public function saveProfile($twitch = NULL, $youtube = NULL, $boardname = NULL) {
         if ($twitch != NULL) {
-            Database::query("UPDATE usersnew SET twitch = '$twitch' WHERE profile_number = '$this->profileNumber'");
+            Database::query("UPDATE users SET twitch = '$twitch' WHERE profile_number = '$this->profileNumber'");
             $this->userData->twitch = $twitch;
         }
         else {
-            Database::query("UPDATE usersnew SET twitch = NULL WHERE profile_number = '$this->profileNumber'");
+            Database::query("UPDATE users SET twitch = NULL WHERE profile_number = '$this->profileNumber'");
             $this->userData->twitch = NULL;
         }
 
         if ($youtube != NULL) {
-            Database::query("UPDATE usersnew SET youtube = '$youtube' WHERE profile_number = '$this->profileNumber'");
+            Database::query("UPDATE users SET youtube = '$youtube' WHERE profile_number = '$this->profileNumber'");
             $this->userData->youtube = $youtube;
         }
         else {
-            Database::query("UPDATE usersnew SET youtube = NULL WHERE profile_number = '$this->profileNumber'");
+            Database::query("UPDATE users SET youtube = NULL WHERE profile_number = '$this->profileNumber'");
             $this->userData->youtube = NULL;
         }
 
         if ($boardname != NULL) {
-          Database::query("UPDATE usersnew SET boardname = '$boardname' WHERE profile_number = '$this->profileNumber'");
+          Database::query("UPDATE users SET boardname = '$boardname' WHERE profile_number = '$this->profileNumber'");
           $this->userData->boardname = $boardname;
         }
         else {
-          Database::query("UPDATE usersnew SET boardname = NULL WHERE profile_number = '$this->profileNumber'");
+          Database::query("UPDATE users SET boardname = NULL WHERE profile_number = '$this->profileNumber'");
             $this->userData->boardname = NULL;
         }
     }
@@ -78,7 +78,7 @@ class User {
 
                 //making sure valid data was received
                 if ($avatar_url != "") {
-                    Database::query("UPDATE usersnew SET avatar = '{$avatar_url}', steamname = '{$nickname}' WHERE profile_number = '{$user}'");
+                    Database::query("UPDATE users SET avatar = '{$avatar_url}', steamname = '{$nickname}' WHERE profile_number = '{$user}'");
                 }
             }
         }
@@ -101,13 +101,13 @@ class User {
             return;
         }
 
-        $data = Database::query("SELECT IFNULL(boardname, steamname) as displayName, usersnew.* FROM usersnew WHERE profile_number = '$this->profileNumber'");
+        $data = Database::query("SELECT IFNULL(boardname, steamname) as displayName, users.* FROM users WHERE profile_number = '$this->profileNumber'");
         // Creates user if profile number does not exist
         if($data->num_rows == 0) {
-            Database::query("INSERT INTO usersnew (profile_number) VALUES (" . $this->profileNumber. ")");
+            Database::query("INSERT INTO users (profile_number) VALUES (" . $this->profileNumber. ")");
             User::updateProfileData($this->profileNumber);
             // Update again data
-            $data = Database::query("SELECT IFNULL(boardname, steamname) as displayName, usersnew.* FROM usersnew WHERE profile_number = '$this->profileNumber'");
+            $data = Database::query("SELECT IFNULL(boardname, steamname) as displayName, users.* FROM users WHERE profile_number = '$this->profileNumber'");
         }
 
         while($row = $data->fetch_object()) {
@@ -123,7 +123,7 @@ class User {
     }
 
     public static function getAllUserData() {
-      $data = Database::query("SELECT avatar, profile_number, IFNULL(boardname, steamname) as displayName, boardname, steamname, banned, twitch, youtube, title FROM usersnew");
+      $data = Database::query("SELECT avatar, profile_number, IFNULL(boardname, steamname) as displayName, boardname, steamname, banned, twitch, youtube, title FROM users");
       while($row = $data->fetch_assoc()) {
           $userData[$row['profile_number']] = $row;
       }
@@ -131,7 +131,7 @@ class User {
     }
 
     public function isRegistered() {
-        if($data = Database::query("SELECT profile_number FROM usersnew WHERE profile_number = '$this->profileNumber'")) {
+        if($data = Database::query("SELECT profile_number FROM users WHERE profile_number = '$this->profileNumber'")) {
             if($data->num_rows > 0) {
                 return true;
             }

@@ -10,9 +10,9 @@
 
     function resolvePostRank($id) {
 
-        $dbData = Database::query("SELECT changelog.*, usersnew.banned as playerBanned
+        $dbData = Database::query("SELECT changelog.*, users.banned as playerBanned
                 FROM changelog 
-                INNER JOIN usersnew on changelog.profile_number = usersnew.profile_number
+                INNER JOIN users on changelog.profile_number = users.profile_number
                 WHERE id = {$id}");
         $row = $dbData->fetch_assoc();
         $affected = 0;
@@ -35,7 +35,7 @@
                         WHERE time_gained <= theDate
                         AND map_id = theMap
                         AND banned = 0
-                        AND profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+                        AND profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
                         GROUP BY profile_number
                     ) as sc
                     JOIN (SELECT @rownum := 0, @prevScore := 0) AS r
@@ -60,9 +60,9 @@
 
     function resolvePreRank($id) {
 
-        $dbData = Database::query("SELECT changelog.*, usersnew.banned as playerBanned
+        $dbData = Database::query("SELECT changelog.*, users.banned as playerBanned
                 FROM changelog 
-                INNER JOIN usersnew on changelog.profile_number = usersnew.profile_number
+                INNER JOIN users on changelog.profile_number = users.profile_number
                 WHERE id = {$id}");
         $row = $dbData->fetch_assoc();
         $affected = 0;
@@ -90,7 +90,7 @@
                             WHERE (time_gained < theDate || id = {$row["previous_id"]})
                                 AND map_id = theMap
                                 AND banned = 0
-                                AND profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+                                AND profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
                             GROUP BY profile_number
                         ) as sc
                         JOIN (SELECT @rownum := 0, @prevScore := 0) AS r
@@ -120,7 +120,7 @@
     //      WHERE time_gained IS NOT NULL AND time_gained < '2016-07-20 00:00:00'");
 
     $dbData = Database::query("SELECT * FROM changelog
-      WHERE banned = 0 AND profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+      WHERE banned = 0 AND profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
       AND time_gained IS NOT NULL  AND time_gained < '2016-07-20 00:00:00'");
 
      $numRows = mysqli_num_rows($dbData);
@@ -149,7 +149,7 @@
 //
 //
 //   $dbData = Database::query("SELECT * FROM changelog
-//     WHERE banned = 0 AND profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+//     WHERE banned = 0 AND profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
 //     AND time_gained IS NOT NULL AND time_gained <= '2016-09-03 00:00:00' AND time_gained >= '2016-07-20 00:00:00'");
 //
 //   $numRows = mysqli_num_rows($dbData);
@@ -181,7 +181,7 @@
 //                       WHERE (time_gained <= theDate OR time_gained IS NULL OR id = {$id})
 //                       AND map_id = theMap
 //                       AND banned = 0
-//                       AND profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+//                       AND profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
 //                       GROUP BY profile_number
 //                   ) as minScores on (minScores.profile_number = changelog.profile_number AND minScores.score = changelog.score)
 //                   WHERE map_id = {$row["map_id"]}
@@ -222,7 +222,7 @@
 //                           WHERE (time_gained < theDate OR time_gained IS NULL or id = {$previousId})
 //                           AND map_id = theMap
 //                           AND banned = 0
-//                           AND profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+//                           AND profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
 //                           GROUP BY profile_number
 //                       ) as minScores on (minScores.profile_number = changelog.profile_number AND minScores.score = changelog.score)
 //                       WHERE map_id = {$row["map_id"]}

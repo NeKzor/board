@@ -9,7 +9,7 @@ class DemoManager {
 
     function getDemoName($id) {
         $data = Database::query("SELECT changelog.profile_number, score, map_id
-              FROM changelog INNER JOIN usersnew ON (changelog.profile_number = usersnew.profile_number)
+              FROM changelog INNER JOIN users ON (changelog.profile_number = users.profile_number)
               WHERE changelog.id = '" . $id . "'");
         $row = $data->fetch_assoc();
         $map = str_replace(" ", "" , $GLOBALS["mapInfo"]["maps"][$row["map_id"]]["mapName"]);
@@ -18,7 +18,7 @@ class DemoManager {
 
     function getDemoDetails($id) {
         $data = Database::query("SELECT changelog.id, changelog.profile_number, map_id
-              FROM changelog INNER JOIN usersnew ON (changelog.profile_number = usersnew.profile_number)
+              FROM changelog INNER JOIN users ON (changelog.profile_number = users.profile_number)
               WHERE changelog.id = '" . $id . "'");
         $row = $data->fetch_assoc();
         return $row;

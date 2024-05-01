@@ -1,7 +1,7 @@
 <?php
     include(__DIR__ . "/../loader.php");
 
-    $data = Database::query("SELECT usersnew.profile_number AS player_id, IFNULL(steamname, boardname) as displayName FROM usersnew");
+    $data = Database::query("SELECT users.profile_number AS player_id, IFNULL(steamname, boardname) as displayName FROM users");
 
     print_r("Starting...\n");
 

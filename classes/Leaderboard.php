@@ -190,7 +190,7 @@ class Leaderboard
 
     public static function getBanList()
     {
-        $data = Database::query("SELECT profile_number FROM usersnew WHERE banned = 1");
+        $data = Database::query("SELECT profile_number FROM users WHERE banned = 1");
         $shitlist = array();
         while ($obj = $data->fetch_row()) {
             $shitlist[] = $obj[0];
@@ -478,7 +478,7 @@ class Leaderboard
 
         if (count($userInsertionRows) > 0) {
             $rows = implode(",", $userInsertionRows);
-            Database::query("INSERT INTO usersnew (profile_number) VALUES " . $rows);
+            Database::query("INSERT INTO users (profile_number) VALUES " . $rows);
         }
 
         foreach (array_keys($userInsertions) as $user) {
@@ -572,8 +572,8 @@ class Leaderboard
               SELECT scores.map_id, COUNT(scores.changelog_id) AS scorecount
               FROM scores
               INNER JOIN changelog ON (scores.changelog_id = changelog.id)
-              INNER JOIN usersnew ON scores.profile_number = usersnew.profile_number
-              WHERE (changelog.banned = '1'  OR usersnew.banned = '1')
+              INNER JOIN users ON scores.profile_number = users.profile_number
+              WHERE (changelog.banned = '1'  OR users.banned = '1')
               GROUP BY scores.map_id) as scores1
             ON scores1.map_id = maps.steam_id
             WHERE maps.is_public = 1". $whereClause);
@@ -591,7 +591,7 @@ class Leaderboard
 //                   @prevMap := map_id, @prevScore := score
 //                   FROM scores
 //                   JOIN (SELECT @rownum := NULL, @prevMap := 0, @prevScore := 0) AS r
-//                   WHERE profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+//                   WHERE profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
 //                   AND banned = '0'
 //                   ORDER BY scores.map_id, scores.score ASC
 //                ) as ranks
@@ -626,7 +626,7 @@ class Leaderboard
                 chapters.id as chapterid, maps.steam_id as mapid,
                 ranks.profile_number, ranks.changelog_id, ranks.score, ranks.player_rank, ranks.score_rank, DATE_FORMAT(ranks.time_gained, '%Y-%m-%dT%TZ') as date, has_demo, youtube_id, ranks.note,
                 ranks.submission, ranks.pending
-            FROM usersnew as u
+            FROM users as u
             JOIN (
                 SELECT sc.changelog_id, sc.profile_number, sc.score, sc.map_id, sc.time_gained, sc.has_demo, sc.youtube_id, sc.submission, sc.note, sc.pending,
                 IF( @prevMap <> sc.map_id, @rownum := 1,  @rownum := @rownum + 1 ) as rowNum,
@@ -637,7 +637,7 @@ class Leaderboard
                     SELECT changelog.submission, scores.changelog_id, scores.profile_number, scores.map_id, changelog.score, changelog.time_gained, changelog.youtube_id, changelog.has_demo, changelog.note, changelog.pending 
                     FROM scores
                     INNER JOIN changelog ON (scores.changelog_id = changelog.id)
-                    WHERE scores.profile_number IN (SELECT profile_number FROM usersnew WHERE banned = 0)
+                    WHERE scores.profile_number IN (SELECT profile_number FROM users WHERE banned = 0)
                         AND scores.map_id IN (
                           SELECT steam_id
                           FROM maps
@@ -696,7 +696,7 @@ class Leaderboard
                   , ranks.note
                   , ranks.submission
                   , ranks.pending
-               FROM usersnew as u
+               FROM users as u
                JOIN (
                    SELECT sc.changelog_id
                         , sc.profile_number
@@ -743,7 +743,7 @@ class Leaderboard
                            ON (scores.changelog_id = changelog.id)
                         WHERE scores.profile_number IN (
                             SELECT profile_number
-                            FROM usersnew
+                            FROM users
                             WHERE banned = 0
                         )
                          AND scores.map_id = '{$mapId}'
@@ -894,7 +894,7 @@ class Leaderboard
             $whereClause .= "map_id = '{$param['chamber']}' AND ";
         }
 
-        $changelog_data = Database::query("SELECT IFNULL(usersnew.boardname, usersnew.steamname) AS player_name, usersnew.avatar, ch.profile_number,
+        $changelog_data = Database::query("SELECT IFNULL(users.boardname, users.steamname) AS player_name, users.avatar, ch.profile_number,
                                             ch.score, ch.id, ch.pre_rank, ch.post_rank, ch.wr_gain, DATE_FORMAT(ch.time_gained, '%Y-%m-%dT%TZ') as time_gained, ch.has_demo as hasDemo, ch.youtube_id as youtubeID, ch.note,
                                             ch.banned, ch.submission, ch.pending,
                                             ch_previous.score as previous_score,
@@ -908,13 +908,13 @@ class Leaderboard
                                                     ORDER BY time_gained DESC, score ASC, profile_number ASC
                                                 ) as ch
                                                 LEFT JOIN changelog as ch_previous ON (ch_previous.id = ch.previous_id)
-                                                INNER JOIN usersnew ON ch.profile_number = usersnew.profile_number
+                                                INNER JOIN users ON ch.profile_number = users.profile_number
 												INNER JOIN maps ON ch.map_id = maps.steam_id
 												INNER JOIN chapters ON maps.chapter_id = chapters.id
-												WHERE  usersnew.banned = 0
+												WHERE  users.banned = 0
 												AND maps.is_coop LIKE '%{$param['type']}%'
                                                 AND chapters.id LIKE '%{$param['chapter']}%'
-                                                AND IFNULL(usersnew.boardname, usersnew.steamname) LIKE '%{$param['boardName']}%'
+                                                AND IFNULL(users.boardname, users.steamname) LIKE '%{$param['boardName']}%'
                                                 ORDER BY time_gained DESC, score ASC, profile_number ASC
 												");
 
@@ -952,11 +952,11 @@ class Leaderboard
 
     public static function getYoutubeIDs($mode) {
         $data = Database::query(
-            "SELECT changelog.profile_number as profileNumber, score, map_id as mapId, youtube_id as youtubeID, maps.chapter_id, IFNULL(usersnew.boardname, usersnew.steamname) AS player_name
+            "SELECT changelog.profile_number as profileNumber, score, map_id as mapId, youtube_id as youtubeID, maps.chapter_id, IFNULL(users.boardname, users.steamname) AS player_name
              FROM changelog
-             INNER JOIN usersnew ON changelog.profile_number = usersnew.profile_number
+             INNER JOIN users ON changelog.profile_number = users.profile_number
              INNER JOIN maps ON changelog.map_id = maps.steam_id
-             WHERE changelog.banned = 0 AND usersnew.banned = 0 AND maps.is_coop = ". $mode ."
+             WHERE changelog.banned = 0 AND users.banned = 0 AND maps.is_coop = ". $mode ."
              AND youtube_id IS NOT NULL
              ORDER BY map_id, score, time_gained, changelog.profile_number ASC");
 
@@ -1203,7 +1203,7 @@ class Leaderboard
 
     public static function cacheProfileURLData()
     {
-        $data = Database::query("SELECT IFNULL(boardname, steamname) AS nickname, profile_number FROM usersnew");
+        $data = Database::query("SELECT IFNULL(boardname, steamname) AS nickname, profile_number FROM users");
         $profileNumbers = [];
         $nicknames = [];
 
@@ -1316,7 +1316,7 @@ class Leaderboard
 
     public static function setProfileBanStatus($profileNumber, $banned) 
     {
-        Database::query("UPDATE usersnew SET banned = '{$banned}'  WHERE profile_number = '{$profileNumber}'");
+        Database::query("UPDATE users SET banned = '{$banned}'  WHERE profile_number = '{$profileNumber}'");
     }
 
     //updating score with lowest non banned changelog entry
@@ -1694,11 +1694,11 @@ class Leaderboard
 
     public static function getActiveRunners($months) {
         $data = Database::query("
-            SELECT usersnew.profile_number
-            FROM usersnew
+            SELECT users.profile_number
+            FROM users
             INNER JOIN changelog USING (profile_number)
             WHERE changelog.time_gained > NOW() - INTERVAL {$months} MONTH
-            GROUP BY usersnew.profile_number
+            GROUP BY users.profile_number
         ");
         $runners = array();
         while ($obj = $data->fetch_row()) {

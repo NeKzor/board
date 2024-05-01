@@ -53,7 +53,7 @@
 
     print_r("Skillfull profiles: " . count($skillFullProfiles) . "\n");
 
-    $data = Database::query("SELECT profile_number FROM usersnew WHERE banned = 1");
+    $data = Database::query("SELECT profile_number FROM users WHERE banned = 1");
     
     $bannedProfiles = array();
     while ($row = $data->fetch_assoc()) {

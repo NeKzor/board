@@ -124,13 +124,13 @@ CREATE TABLE `scores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `usersnew`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `usersnew`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usersnew` (
+CREATE TABLE `users` (
   `profile_number` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
   `boardname` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `steamname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
