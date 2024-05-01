@@ -9,8 +9,6 @@ util/
 .env
 .env.example
 .gitignore
-docker-compose.prod.yml
-docker-compose.yml
 Dockerfile
 README.md
 
@@ -26,3 +24,4 @@ vendor/
 .config.json
 .env
 debug.txt
+docker-compose.yml

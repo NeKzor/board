@@ -8,3 +8,4 @@ vendor/
 .config.json
 .env
 debug.txt
+docker-compose.yml
