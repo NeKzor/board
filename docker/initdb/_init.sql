@@ -44,7 +44,7 @@ CREATE TABLE `changelog` (
   KEY `profile_number` (`profile_number`),
   KEY `map_id` (`map_id`),
   KEY `previous_id` (`previous_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=254449 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +59,7 @@ CREATE TABLE `chapters` (
   `chapter_name` varchar(50) DEFAULT NULL,
   `is_multiplayer` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,50 +78,7 @@ CREATE TABLE `evidence_requirements` (
   `timestamp` datetime NOT NULL,
   `closed_timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `exceptions`
---
-
-DROP TABLE IF EXISTS `exceptions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `exceptions` (
-  `map_id` varchar(5) NOT NULL,
-  `legit_score` int NOT NULL,
-  `curl` int NOT NULL DEFAULT '18',
-  PRIMARY KEY (`map_id`,`legit_score`,`curl`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `leastportals`
---
-
-DROP TABLE IF EXISTS `leastportals`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `leastportals` (
-  `steam_id` varchar(6) NOT NULL,
-  `portals` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`steam_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `leastportals_exceptions`
---
-
-DROP TABLE IF EXISTS `leastportals_exceptions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `leastportals_exceptions` (
-  `map_id` varchar(6) NOT NULL,
-  `profile_number` varchar(50) NOT NULL,
-  PRIMARY KEY (`map_id`,`profile_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,22 +121,6 @@ CREATE TABLE `scores` (
   KEY `map_id` (`map_id`),
   KEY `profile_number` (`profile_number`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `singlesegment`
---
-
-DROP TABLE IF EXISTS `singlesegment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `singlesegment` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `updated` varchar(250) NOT NULL COMMENT 'Last updated',
-  `datatable` mediumtext NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
