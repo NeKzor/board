@@ -60,16 +60,15 @@ This is used by Dockerfile and docker-compose.yml.
 
 This is used by the server.
 
-| Key                   | Description                                                                                 |
-| --------------------- | ------------------------------------------------------------------------------------------- |
-| database_host         | Address of the database. Docker creates a link to the container under the `database` alias. |
-| database_user         | User login name for database.                                                               |
-| database_pass         | User password for database access.                                                          |
-| database_name         | The database name.                                                                          |
-| discord_webhook_id    | The webhook ID for sending wr updates to a Discord channel.                                 |
-| discord_webhook_token | The webhook token for sending wr updates to a Discord channel.                              |
-| discord_webhook_mdp   | Discord webhook URL for sending [mdp] data to a Discord channel.                            |
-| steam_api_key         | The Steam Web API Key for fetching profile data.                                            |
+| Key                 | Description                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------- |
+| database_host       | Address of the database. Docker creates a link to the container under the `database` alias. |
+| database_user       | User login name for database.                                                               |
+| database_pass       | User password for database access.                                                          |
+| database_name       | The database name.                                                                          |
+| discord_webhook_wr  | Discord webhook URL for sending world record updates to a Discord channel.                  |
+| discord_webhook_mdp | Discord webhook URL for sending [mdp] data to a Discord channel.                            |
+| steam_api_key       | The Steam Web API Key for fetching profile data.                                            |
 
 [mdp]: https://github.com/p2sr/mdp
 

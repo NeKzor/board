@@ -11,8 +11,7 @@ final class Config {
     public readonly string $database_user;
     public readonly string $database_pass;
     public readonly string $database_name;
-    public readonly string $discord_webhook_id;
-    public readonly string $discord_webhook_token;
+    public readonly string $discord_webhook_wr;
     public readonly string $discord_webhook_mdp;
     public readonly string $steam_api_key;
 
