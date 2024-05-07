@@ -109,6 +109,7 @@ class Router {
         if($location[1] == "api-v2"){
             // unauthenticated endpoints first
             if ($location[2] == "download-maps") {
+                header("Content-Type: application/json");
                 echo json_encode(array(
                     "maps" => array_values(array_map(
                         function($map) {
