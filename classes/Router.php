@@ -697,18 +697,18 @@ class Router {
                 exit;
             }
 
-            if ($location[2] === "fetchNewScores.php") {
-                Debug::initializeFileLogging();
-                Debug::$loggingToOutput = true;
+            // if ($location[2] === "fetchNewScores.php") {
+            //     Debug::initializeFileLogging();
+            //     Debug::$loggingToOutput = true;
 
-                ini_set('memory_limit', '-1');
-                ignore_user_abort(true);
-                set_time_limit(0);
+            //     ini_set('memory_limit', '-1');
+            //     ignore_user_abort(true);
+            //     set_time_limit(0);
 
-                Leaderboard::fetchNewData();
-                Leaderboard::cacheLeaderboard();
-                exit;
-            }
+            //     Leaderboard::fetchNewData();
+            //     Leaderboard::cacheLeaderboard();
+            //     exit;
+            // }
 
             echo "invalid api";
             exit;
