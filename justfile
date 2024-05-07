@@ -14,41 +14,65 @@ database=$MYSQL_DATABASE', '[\n]', "\\\\n")
 
 dump_options := '--defaults-group-suffix=root --hex-blob --net-buffer-length 100K --routines --databases $MYSQL_DATABASE'
 
+# List available recipes.
+help:
+    just -lu
+
 check:
-    vendor/bin/phpstan analyse -l 9 api classes util views
+    vendor/bin/phpstan analyse -l 9 classes util views
 
-server-debug:
-    docker exec -ti {{project}}-server sh
-
-server-restart:
-    docker container restart {{project}}-server
-
-server-stop:
-    docker container stop {{project}}-server
-
-build:
-    docker compose build
-
+# Start all containers. Accepts arguments like `-d` to start in background.
 up *args='':
-    docker compose up "$@"
+    docker compose up $@
 
+# Stop all containers.
 down:
     docker compose down
 
+# Build the server image.
+build:
+    docker compose build
+
+# Start and recreate containers.
+reload:
+    docker compose up -d --force-recreate
+
+# Refresh leaderboard cache.
+cache:
+    docker exec -u www-data -ti {{project}}-server curl -Lk localhost/api/refreshCache.php > /dev/null 2>&1
+
+# Open shell in server container.
+server-debug:
+    docker exec -ti {{project}}-server sh
+
+# Restart server container.
+server-restart:
+    docker container restart {{project}}-server
+
+# Stop server container.
+server-stop:
+    docker container stop {{project}}-server
+
+# Connect to database.
 db:
     docker exec -ti {{project}}-db bash -c 'printf {{cnf}} > /etc/my.cnf' && docker exec -ti {{project}}-db mysql
 
+# Open shell in database container.
 db-debug:
     docker exec -ti {{project}}-db bash
 
+# Restart database container.
 db-restart:
     docker container restart {{project}}-db
 
+# Stop database container.
 db-stop:
     docker container stop {{project}}-db
 
+# Dump and compress a backup of the database.
 db-dump:
     docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.gz'
 
+# Only dump a backup of the database.
 db-dump-raw:
     docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql'
