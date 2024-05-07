@@ -6,6 +6,8 @@ services:
       args:
         SERVER_NAME: ${SERVER_NAME}
         APT_PACKAGES: ${APT_PACKAGES}
+        UID: ${UID}
+        GID: ${GID}
     container_name: "${PROJECT_NAME}-server"
     restart: always
     stdin_open: true

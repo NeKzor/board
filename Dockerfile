@@ -5,12 +5,16 @@ WORKDIR /var/www/html
 ARG SERVER_NAME
 ARG APT_PACKAGES
 ARG DEBIAN_FRONTEND=noninteractive
+ARG UID
+ARG GID
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y ${APT_PACKAGES} curl php8.1-cli php8.1-curl apache2 libapache2-mod-php php-mysql composer cron
 RUN a2enmod rewrite expires headers ssl
 RUN a2dissite 000-default.conf
 RUN rm /var/www/html/index.html
+RUN groupmod -g ${GID} www-data
+RUN usermod -u ${UID} -g ${GID} www-data
 
 COPY . .
 
