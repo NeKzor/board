@@ -53,6 +53,8 @@ This is used by Dockerfile and docker-compose.yml.
 | DATABASE_PORT       | The MySQL database port of the local host. NOTE: Make sure that the docker compose file does not expose the server to an unwanted address. By default it's mapped to `127.0.0.1`.                                     |
 | MYSQL_ROOT_PASSWORD | The root's password of the MySQL database.                                                                                                                                                                            |
 | APT_PACKAGES        | Optional apt-packages to build the server image. The image should be kept as small as possible but sometimes it is useful to install some packages (e.g. `vim`, `htop` etc.) in order to debug problems more quickly. |
+| UID                 | User Identifier of host to map to `www-data` inside the container. Only relevant on Linux.                                                                                                                            |
+| GID                 | Group Identifier of host to map to `www-data` inside the container. Only relevant on Linux.                                                                                                                           |
 
 ### Overview of .config.json
 
@@ -108,6 +110,8 @@ MYSQL_PASSWORD=board
 MYSQL_DATABASE=board
 
 APT_PACKAGES=
+UID=1001
+GID=1001
 ```
 
 <details>
