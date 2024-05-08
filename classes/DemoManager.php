@@ -1,19 +1,21 @@
 <?php
 
 class DemoManager {
-    const demoFolder = "demos";
-
-    public function __construct() {
-        mkdir(ROOT_PATH . DemoManager::demoFolder);
-    }
+    const demoFolder = ROOT_PATH . "/demos";
 
     function getDemoName($id) {
-        $data = Database::query("SELECT changelog.profile_number, score, map_id
+        $data = Database::query("SELECT changelog.profile_number, score, map_id, time_gained
               FROM changelog INNER JOIN users ON (changelog.profile_number = users.profile_number)
               WHERE changelog.id = '" . $id . "'");
         $row = $data->fetch_assoc();
+
+        $dir = (new DateTime($row["time_gained"]))->format('Y/m');
         $map = str_replace(" ", "" , $GLOBALS["mapInfo"]["maps"][$row["map_id"]]["mapName"]);
-        return $map."_".$row["score"]."_".$row["profile_number"]."_".$id.".dem";
+
+        return [
+            $dir,
+            $map."_".$row["score"]."_".$row["profile_number"]."_".$id.".dem"
+        ];
     }
 
     function getDemoDetails($id) {
@@ -24,16 +26,12 @@ class DemoManager {
         return $row;
     }
 
-
-    function getDemoPath($id) {
-        return ROOT_PATH . '/' . DemoManager::demoFolder . '/' . $this->getDemoName($id);
-    }
-
     function getDemoURL($id) {
-        $name = $this->getDemoName($id);
-        $path = $this->getDemoPath($id);
+        [$dir, $name] = $this->getDemoName($id);
+        $path = DemoManager::demoFolder . "/$dir/$name";
+
         if (file_exists($path)) {
-            return '/' . DemoManager::demoFolder . '/' . $name;
+            return "/demos/$dir/$name";
         } else {
             return NULL;
         }
@@ -42,8 +40,14 @@ class DemoManager {
     function uploadDemo($data, $id) {
         Debug::log("Uploading demo for changelog $id");
 
-        $path = $this->getDemoPath($id);
+        [$dir, $name] = $this->getDemoName($id);
 
+        $demoDir = DemoManager::demoFolder . "/$dir";
+        if (!is_dir($demoDir) && !mkdir($demoDir, 0777, true)) {
+            Debug::log("Failed to create demo dir $demoDir");
+        }
+
+        $path = DemoManager::demoFolder . "/$dir/$name";
         $f = fopen($path, 'w');
         if (!$f) {
             Debug::log("Failed to open demo file $path for writing");
@@ -57,7 +61,10 @@ class DemoManager {
 
     function deleteDemo($id) {
         Debug::log("Deleting demo for changelog $id");
-        $path = $this->getDemoPath($id);
+
+        [$dir, $name] = $this->getDemoName($id);
+        $path = DemoManager::demoFolder . "/$dir/$name";
+
         if (!unlink($path)) {
             Debug::log("Could not delete demo file $path");
         }
