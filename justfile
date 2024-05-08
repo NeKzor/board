@@ -82,7 +82,7 @@ db-dump-raw:
 
 # Backup and upload database.
 backup:
-    docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_backup_latest.sql.gz'
+    docker exec {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_backup_latest.sql.gz'
     deno run --allow-env --allow-read --allow-net backup.ts {{backup_file}} \
         --filename=${MYSQL_DATABASE}_backup_latest.sql.gz \
         --user-agent=${SERVER_NAME}
