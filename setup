@@ -69,19 +69,6 @@ create_ssl_cert()
     fi
 }
 
-# Set permissions for www-data for all mounted volumes.
-
-set_permissions()
-{
-    echo "[+] setting permissions for all volumes"
-
-    sudo chown -R www-data:www-data  \
-        ./docker/logs/debug.txt \
-        ./docker/volumes/cache \
-        ./docker/volumes/demos \
-        ./docker/volumes/sessions
-}
-
 # Development server only.
 
 setup_dev()
@@ -112,6 +99,5 @@ setup_prod()
 case $1 in
 dev)    setup_dev ;;
 prod)   setup_prod ;;
-perm)    set_permissions ;;
-* )     echo "usage: ./setup <dev|prod|perm>" ;;
+* )     echo "usage: ./setup <dev|prod>" ;;
 esac
