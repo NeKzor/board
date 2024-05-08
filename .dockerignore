@@ -1,27 +1,22 @@
 .git/
-data/
 docker/
-migrations/
-util/
 
 .config.example.json
 .dockerignore
 .env
 .env.example
 .gitignore
+justfile
 Dockerfile
 README.md
+backup.ts
 
 # from .gitignore
 
 .idea/
-cache/
-demos/
-secret/
-sessions/
+.vscode/
 vendor/
 
 .config.json
 .env
-debug.txt
 docker-compose.yml
