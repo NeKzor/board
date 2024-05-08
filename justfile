@@ -3,6 +3,8 @@ set positional-arguments
 
 project := env_var('PROJECT_NAME')
 
+backup_file := justfile_directory() + '/docker/volumes/backups/${MYSQL_DATABASE}_backup_latest.sql.gz'
+
 cnf := replace_regex('[client]
 user=$MYSQL_USER
 password=$MYSQL_PASSWORD
@@ -18,6 +20,7 @@ dump_options := '--defaults-group-suffix=root --hex-blob --net-buffer-length 100
 help:
     just -lu
 
+# Analyze all .php source files.
 check:
     vendor/bin/phpstan analyse -l 9 classes util views
 
@@ -76,3 +79,10 @@ db-dump:
 # Only dump a backup of the database.
 db-dump-raw:
     docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql'
+
+# Backup and upload database.
+backup:
+    docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_backup_latest.sql.gz'
+    deno run --allow-env --allow-read --allow-net backup.ts {{backup_file}} \
+        --filename=${MYSQL_DATABASE}_backup_latest.sql.gz \
+        --user-agent=${SERVER_NAME}
