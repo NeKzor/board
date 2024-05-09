@@ -685,25 +685,14 @@ class Leaderboard
                         , sc.submission
                         , sc.note
                         , sc.pending
-                        , IF(@prevMap <> sc.map_id
-                           , @rownum := 1
-                           , @rownum := @rownum + 1
-                        ) as rowNum
-                        , IF(@prevMap <> sc.map_id
-                           , @displayRank := 1
-                           , IF(@prevScore <> sc.score
-                              , @displayRank := @rownum
-                              , @displayRank
-                            )
-                        ) AS player_rank
-                        , IF(@prevMap <> sc.map_id
-                           , @rank := 1
-                           , IF(@prevScore <> sc.score
-                              , @rank := @rank + 1
-                              , @rank)
-                        ) AS score_rank
-                        , @prevMap := sc.map_id
-                        , @prevScore := sc.score
+                        , RANK() OVER (
+                            PARTITION BY sc.map_id
+                                ORDER BY sc.score
+                        ) as player_rank
+                        , DENSE_RANK() OVER (
+                            PARTITION BY sc.map_id
+                                ORDER BY sc.score
+                        ) as score_rank
                    FROM (
                        SELECT changelog.submission
                             , scores.changelog_id
@@ -727,11 +716,6 @@ class Leaderboard
                          AND changelog.banned = '0'
                          AND changelog.pending = '0'
                    ) as sc
-                   JOIN (
-                       SELECT @rownum := NULL
-                            , @prevMap := 0
-                            , @prevScore := 0
-                    ) AS r
                     ORDER BY sc.map_id
                            , sc.score
                            , sc.time_gained
