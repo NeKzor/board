@@ -671,31 +671,31 @@ class Router {
         }
 
         if ($location[1] === "api" && in_array($_SERVER["REMOTE_ADDR"], ["127.0.0.1"])) {
-            if ($location[2] === "refreshCache.php") {
-                Debug::$loggingToOutput = true;
-                ini_set('memory_limit', '-1');
-                Leaderboard::cacheLeaderboard();
-                exit;
-            }
+            // if ($location[2] === "refreshCache.php") {
+            //     Debug::$loggingToOutput = true;
+            //     ini_set('memory_limit', '-1');
+            //     Leaderboard::cacheLeaderboard();
+            //     exit;
+            // }
 
-            if ($location[2] === "fixupScores.php") {
-                Debug::initializeFileLogging();
-                Debug::$loggingToOutput = true;
+            // if ($location[2] === "fixupScores.php") {
+            //     Debug::initializeFileLogging();
+            //     Debug::$loggingToOutput = true;
 
-                ini_set('memory_limit', '-1');
-                ignore_user_abort(true);
-                set_time_limit(0);
+            //     ini_set('memory_limit', '-1');
+            //     ignore_user_abort(true);
+            //     set_time_limit(0);
 
-                $profile_number = $_GET['profile_number'];
-                if (!$profile_number || !is_numeric($profile_number)) {
-                    echo "missing profile_number";
-                    http_response_code(400);
-                    exit;
-                }
+            //     $profile_number = $_GET['profile_number'];
+            //     if (!$profile_number || !is_numeric($profile_number)) {
+            //         echo "missing profile_number";
+            //         http_response_code(400);
+            //         exit;
+            //     }
 
-                Leaderboard::fixupScoresForUser($profile_number);
-                exit;
-            }
+            //     Leaderboard::fixupScoresForUser($profile_number);
+            //     exit;
+            // }
 
             // if ($location[2] === "fetchNewScores.php") {
             //     Debug::initializeFileLogging();
