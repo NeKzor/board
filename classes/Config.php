@@ -14,6 +14,7 @@ final class Config {
     public readonly string $discord_webhook_wr;
     public readonly string $discord_webhook_mdp;
     public readonly string $steam_api_key;
+    public readonly string $autorender_api_token;
 
     private static $_instance;
 

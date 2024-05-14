@@ -6,5 +6,6 @@
     "database_name": "board",
     "discord_webhook_wr": "",
     "discord_webhook_mdp": "",
-    "steam_api_key": ""
+    "steam_api_key": "",
+    "autorender_api_token": ""
 }

@@ -40,6 +40,7 @@ CREATE TABLE `changelog` (
   `submission` int NOT NULL DEFAULT '0',
   `note` varchar(100) DEFAULT NULL,
   `pending` tinyint(1) NOT NULL DEFAULT '0',
+  `autorender_id` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `profile_number` (`profile_number`),
   KEY `map_id` (`map_id`),
