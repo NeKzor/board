@@ -499,13 +499,13 @@ class Leaderboard
         $query = Database::query("SELECT ranks.profile_number, u.avatar, IFNULL(u.boardname, u.steamname) as boardname,
                 chapters.id as chapterid, maps.steam_id as mapid,
                 ranks.profile_number, ranks.changelog_id, ranks.score, ranks.player_rank, ranks.score_rank, DATE_FORMAT(ranks.time_gained, '%Y-%m-%dT%TZ') as date, has_demo, youtube_id, ranks.note,
-                ranks.submission, ranks.pending
+                ranks.submission, ranks.pending, ranks.autorender_id
             FROM users as u
             JOIN (
-                SELECT sc.changelog_id, sc.profile_number, sc.score, sc.map_id, sc.time_gained, sc.has_demo, sc.youtube_id, sc.submission, sc.note, sc.pending,
-                RANK() OVER (PARTITION BY sc.map_id ORDER BY sc.score) as player_rank,
-                DENSE_RANK() OVER (PARTITION BY sc.map_id ORDER BY sc.score) as score_rank,
-                sc.autorender_id
+                SELECT sc.changelog_id, sc.profile_number, sc.score, sc.map_id, sc.time_gained, sc.has_demo, sc.youtube_id, sc.submission, sc.note, sc.pending
+                     , sc.autorender_id
+                     , RANK() OVER (PARTITION BY sc.map_id ORDER BY sc.score) as player_rank
+                     , DENSE_RANK() OVER (PARTITION BY sc.map_id ORDER BY sc.score) as score_rank
                 FROM (
                     SELECT changelog.submission, scores.changelog_id, scores.profile_number, scores.map_id, changelog.score, changelog.time_gained, changelog.youtube_id, changelog.has_demo, changelog.note, changelog.pending
                          , changelog.autorender_id
@@ -542,6 +542,7 @@ class Leaderboard
             $board[$chapterId][$mapId][$profileNumber]["scoreData"]["hasDemo"] = $row["has_demo"];
             $board[$chapterId][$mapId][$profileNumber]["scoreData"]["youtubeID"] = $row["youtube_id"];
             $board[$chapterId][$mapId][$profileNumber]["scoreData"]["pending"] = $row["pending"];
+            $board[$chapterId][$mapId][$profileNumber]["scoreData"]["autorender_id"] = $row["autorender_id"];
             $board[$chapterId][$mapId][$profileNumber]["userData"]["boardname"] = htmlspecialchars($row["boardname"]);
             $board[$chapterId][$mapId][$profileNumber]["userData"]["avatar"] = $row["avatar"];
         }
@@ -569,6 +570,7 @@ class Leaderboard
                   , ranks.note
                   , ranks.submission
                   , ranks.pending
+                  , ranks.autorender_id
                FROM users as u
                JOIN (
                    SELECT sc.changelog_id
@@ -581,6 +583,7 @@ class Leaderboard
                         , sc.submission
                         , sc.note
                         , sc.pending
+                        , sc.autorender_id
                         , RANK() OVER (
                             PARTITION BY sc.map_id
                                 ORDER BY sc.score
@@ -599,7 +602,8 @@ class Leaderboard
                             , changelog.youtube_id
                             , changelog.has_demo
                             , changelog.note
-                            , changelog.pending 
+                            , changelog.pending
+                            , changelog.autorender_id
                          FROM scores
                    INNER JOIN changelog
                            ON (scores.changelog_id = changelog.id)
@@ -642,6 +646,7 @@ class Leaderboard
             $board[$idx]["scoreData"]["hasDemo"] = $row["has_demo"];
             $board[$idx]["scoreData"]["youtubeId"] = $row["youtube_id"];
             $board[$idx]["scoreData"]["pending"] = $row["pending"];
+            $board[$idx]["scoreData"]["autorenderId"] = $row["autorender_id"];
             $board[$idx]["scoreData"]["mapId"] = $row["mapid"];
             $board[$idx]["scoreData"]["chapterId"] = $row["chapterid"];
             $board[$idx]["userData"]["boardname"] = htmlspecialchars($row["boardname"]);
