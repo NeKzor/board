@@ -17,6 +17,9 @@ services:
       - "127.0.0.1:${HTTPS_PORT}:443"
     links:
       - database:database
+    networks:
+      - default
+      - board-net
     volumes:
       - ./classes:/var/www/html/classes:rw
       - ./public:/var/www/html/public:rw
@@ -50,3 +53,6 @@ services:
       - ./docker/initdb:/docker-entrypoint-initdb.d
       - ./docker/volumes/mysql:/var/lib/mysql
       - ./docker/volumes/backups:/backups
+networks:
+    board-net:
+      name: board-net
