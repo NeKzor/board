@@ -45,8 +45,11 @@ cache:
     docker exec -u www-data -ti {{project}}-server curl -Lk localhost/api/refreshCache.php > /dev/null 2>&1
 
 # Open shell in server container.
+debug: server-debug
+
+# Open shell in server container.
 server-debug:
-    docker exec -ti {{project}}-server sh
+    docker exec -ti {{project}}-server bash
 
 # Restart server container.
 server-restart:
