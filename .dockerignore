@@ -1,3 +1,4 @@
+.github/
 .git/
 docker/
 
@@ -10,6 +11,7 @@ justfile
 Dockerfile
 README.md
 backup.ts
+setup
 
 # from .gitignore
 
