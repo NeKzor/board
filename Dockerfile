@@ -2,11 +2,11 @@ FROM ubuntu:22.04
 
 WORKDIR /var/www/html
 
-ARG SERVER_NAME
+ARG SERVER_NAME=board.portal2.local
 ARG APT_PACKAGES
 ARG DEBIAN_FRONTEND=noninteractive
-ARG UID
-ARG GID
+ARG UID=1000
+ARG GID=1000
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y ${APT_PACKAGES} curl php8.1-cli php8.1-curl apache2 libapache2-mod-php php-mysql composer cron
