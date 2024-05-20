@@ -144,7 +144,8 @@ CREATE TABLE `users` (
   `admin` int NOT NULL DEFAULT '0',
   `donation_amount` varchar(11) DEFAULT NULL,
   `auth_hash` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`profile_number`)
+  PRIMARY KEY (`profile_number`),
+  UNIQUE KEY `uk_boardname` (`boardname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
