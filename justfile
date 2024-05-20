@@ -42,7 +42,7 @@ reload:
 
 # Refresh leaderboard cache.
 cache:
-    docker exec -u www-data -ti {{project}}-server curl -Lk localhost/api/refreshCache.php > /dev/null 2>&1
+    docker exec -u www-data -ti {{project}}-server php -f /var/www/html/util/refreshCache.php > /dev/null 2>&1
 
 # Open shell in server container.
 debug: server-debug
