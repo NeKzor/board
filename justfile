@@ -44,6 +44,10 @@ reload:
 cache:
     docker exec -u www-data -ti {{project}}-server php -f /var/www/html/util/refreshCache.php > /dev/null 2>&1
 
+# Update Steam profiles.
+update-profiles:
+    docker exec -u www-data -ti {{project}}-server php -f /var/www/html/util/fetchImportantProfileData.php
+
 # Open shell in server container.
 debug: server-debug
 
