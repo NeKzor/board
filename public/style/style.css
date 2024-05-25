@@ -1126,7 +1126,7 @@ html[class="dark"] #profile .userinformation .general-wrapper .banToggleButton:h
     margin: 0 10px;
 }
 #profile .column-3 .column.coop {
-    width: 420px;
+    width: 425px;
 }
 #profile .column-3 .block-content {
     /*padding: 20px;*/
@@ -1391,7 +1391,7 @@ html[class="dark"] #profile .userinformation .general-wrapper .banToggleButton:h
     width: 130px;
 }
 #profile .coop .title  {
-    width: 130px;
+    width: 135px;
 }
 #profile .sp .chamberScoreInfo > .rank, #profile .coop .chamberScoreInfo > .rank  {
     /*width: 27px;*/
