@@ -65,7 +65,7 @@ class View {
     static $sitePages = array(
         "story-mode" => array(
             "contentTemplate" => "chambers.phtml",
-            "js" => array(self::youtubeEmbed, self::d3, self::moment, self::momentTimeZone,self::date),
+            "js" => array(self::youtubeEmbed, self::d3Array, self::d3Color, self::d3Interpolate, self::d3Scale, self::moment, self::momentTimeZone,self::date),
         ),
         "advanced-mode" => array(
             "contentTemplate" => "chambers.phtml",
