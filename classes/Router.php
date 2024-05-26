@@ -1,5 +1,7 @@
 <?php
+
 class Router {
+    public $startupTimestamp;
 
     static $location;
     
@@ -33,8 +35,7 @@ class Router {
             if (isset($_SESSION["user"])) {
                 $_SESSION['user'] = $_SESSION['user']; //keep session variable alive
                 SteamSignIn::$loggedInUser = new User($_SESSION["user"]);
-            }
-            else {
+            } else {
                 //edge case: cookie still exists while session does not exist on the server
                 $this->destroySession();
             }
@@ -106,7 +107,7 @@ class Router {
 
         // TODO - NEW API SHIT
 
-        if($location[1] == "api-v2"){
+        if ($location[1] == "api-v2") {
             // unauthenticated endpoints first
             if ($location[2] == "download-maps") {
                 header("Content-Type: application/json");
@@ -126,11 +127,11 @@ class Router {
 
             if ($location[2] == "active-profiles") {
                 if (!$_POST || !isset($_POST["months"]) || !is_numeric($_POST["months"])) {
-                    echo "Missing or invalid paramters";
+                    echo "Missing or invalid parameters";
                     http_response_code(400);
                     exit;
                 }
-                $runners = Leaderboard::getActiveRunners($_POST["months"]);
+                $runners = Leaderboard::getActiveRunners(intval($_POST["months"]));
                 header("Content-Type: application/json");
                 echo json_encode(array(
                     "profiles" => $runners,
@@ -139,7 +140,7 @@ class Router {
             }
 
             if (!$_POST || !isset($_POST["auth_hash"])) {
-                echo "Missing paramters";
+                echo "Missing parameters";
                 http_response_code(400);
                 exit;
             }
@@ -177,9 +178,16 @@ class Router {
                     exit;
                 }
 
-                $comment = isset($_POST["comment"]) ? $_POST["comment"] : null;
+                $comment = isset($_POST["comment"]) ? strval($_POST["comment"]) : null;
 
-                $id = Leaderboard::submitChange($userId, $_POST["mapId"], $_POST["score"], null, $comment, true);
+                $id = Leaderboard::submitChange(
+                    $userId,
+                    strval($_POST["mapId"]),
+                    intval($_POST["score"]),
+                    null,
+                    $comment,
+                    true
+                );
 
                 if (array_key_exists("demoFile", $_FILES)) {
                     $file = $_FILES["demoFile"];
@@ -196,7 +204,7 @@ class Router {
 
             if ($location[2] == "current-pb") {
                 // Get current valid PB
-                $pb_row = Leaderboard::getLatestPb($userId, intval($_POST["mapId"]));
+                $pb_row = Leaderboard::getLatestPb($userId, strval($_POST["mapId"]));
                 header("Content-Type: application/json");
                 if (isset($pb_row)) {
                     echo json_encode($pb_row);
@@ -231,7 +239,7 @@ class Router {
 
                 echo json_encode(Leaderboard::getTopScores(
                     $userId,
-                    $_POST["mapId"],
+                    strval($_POST["mapId"]),
                     intval($_POST["before"]),
                     intval($_POST["after"]),
                 ));
@@ -321,12 +329,11 @@ class Router {
                     if (array_key_exists("demoFile", $_FILES)) {
                         $file = $_FILES["demoFile"];
                         if ($file["name"] != "") {
-                            $this->uploadDemo($file, $_POST["id"]);
+                            $this->uploadDemo($file, intval($_POST["id"]));
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -345,10 +352,9 @@ class Router {
 
                 $change = Leaderboard::getChange($_POST["id"]);
                 if (SteamSignIn::hasProfilePrivileges($change["profile_number"])) {
-                    Leaderboard::setYoutubeID($_POST["id"], $_POST["youtubeID"]);
+                    Leaderboard::setYoutubeID(intval($_POST["id"]), strval($_POST["youtubeID"]));
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -363,10 +369,9 @@ class Router {
 
                 $change = Leaderboard::getChange($_POST["id"]);
                 if (SteamSignIn::hasProfilePrivileges($change["profile_number"])) {
-                    Leaderboard::deleteYoutubeID($_POST["id"]);
+                    Leaderboard::deleteYoutubeID(intval($_POST["id"]));
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -381,10 +386,9 @@ class Router {
 
                 $change = Leaderboard::getChange($_POST["id"]);
                 if (SteamSignIn::hasProfilePrivileges($change["profile_number"])) {
-                    Leaderboard::setComment($_POST["id"], $_POST["comment"]);
+                    Leaderboard::setComment(intval($_POST["id"]), strval($_POST["comment"]));
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -399,10 +403,9 @@ class Router {
 
                 $change = Leaderboard::getChange($_POST["id"]);
                 if (SteamSignIn::hasProfilePrivileges($change["profile_number"])) {
-                    Leaderboard::deleteComment($_POST["id"]);
+                    Leaderboard::deleteComment(intval($_POST["id"]));
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -418,54 +421,29 @@ class Router {
                 $change = Leaderboard::getChange($_POST["id"]);
                 if (SteamSignIn::hasProfilePrivileges($change["profile_number"])) {
                     $demoManager = new DemoManager();
-                    $demoManager->deleteDemo($_POST["id"]);
-                    Leaderboard::setDemo($_POST["id"], 0);
+                    $demoManager->deleteDemo(intval($_POST["id"]));
+                    Leaderboard::setDemo(intval($_POST["id"]), 0);
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
         }
 
         if ($location[1] == "getDemo") {
-
             if (isset($_GET["id"])) {
                 if (!is_numeric($_GET["id"])) {
                     exit;
                 }
             }
 
-            // $data = Database::query("SELECT changelog.profile_number, score, map_id, IFNULL(boardname, steamname) as displayName
-            //   FROM changelog INNER JOIN users ON (changelog.profile_number = users.profile_number)
-            //   WHERE changelog.id = '" . $_GET["id"] . "'");
-            // $row = $data->fetch_assoc();
-            
-            // $map = str_replace(" ", "" , $GLOBALS["mapInfo"]["maps"][$row["map_id"]]["mapName"]);
-            // $score = str_replace(":", "", Leaderboard::convertToTime($row["score"]));
-            // $score = str_replace(".", "", $score);
-            // $displayName = preg_replace("/[^A-Za-z0-9]/", '', $row["displayName"]);
-            // if (!$displayName) $displayName = $row["profile_number"];
-
             $demoManager = new DemoManager();
-            $demoURL = $demoManager->getDemoURL($_GET["id"]);
+            $demoURL = $demoManager->getDemoURL(intval($_GET["id"]));
 
             if ($demoURL != NULL) {
-                // $data = file_get_contents($demoURL);
-                // header('Content-Description: File Transfer');
-                // header('Content-Type: application/octet-stream');
-                // header('Content-Disposition: attachment; filename='.$map."_".$score."_".$displayName.".dem");
-                // header('Content-Transfer-Encoding: binary');
-                // header('Expires: 0');
-                // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-                // header('Pragma: public');
-                // header("Content-length: " . strlen($data));
-                // echo $data;
-                
                 header('Location: ' . $demoURL, true, 303);
                 die();
-            } 
-            else {
+            } else {
                 echo "Demo URL cannot be resolved";
             }
 
@@ -480,10 +458,9 @@ class Router {
                 }
 
                 if (SteamSignIn::loggedInUserIsAdmin()) {
-                    Leaderboard::setScoreBanStatus($_POST["id"], $_POST["banStatus"]);
+                    Leaderboard::setScoreBanStatus(intval($_POST["id"]), intval($_POST["banStatus"]));
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -509,7 +486,14 @@ class Router {
                 }
 
                 if (SteamSignIn::hasProfilePrivileges($_POST["profileNumber"])) {
-                    $id = Leaderboard::submitChange($_POST["profileNumber"], $_POST["chamber"], $_POST["score"], $_POST["youtubeID"], $_POST["comment"], false);
+                    $id = Leaderboard::submitChange(
+                        strval($_POST["profileNumber"]),
+                        strval($_POST["chamber"]),
+                        intval($_POST["score"]),
+                        $_POST["youtubeID"],
+                        $_POST["comment"],
+                        false
+                    );
 
                     if (array_key_exists("demoFile", $_FILES)) {
                         $file = $_FILES["demoFile"];
@@ -522,8 +506,7 @@ class Router {
                     header("Content-Type: application/json");
                     echo json_encode($change);
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -538,12 +521,11 @@ class Router {
 
                 $change = Leaderboard::getChange($_POST["id"]);
                 if (SteamSignIn::hasProfilePrivileges($change["profile_number"])) {
-                    Leaderboard::deleteSubmission($_POST["id"]);
+                    Leaderboard::deleteSubmission(intval($_POST["id"]));
                     $demoManager = new DemoManager();
-                    $demoManager->deleteDemo($_POST["id"]);
+                    $demoManager->deleteDemo(intval($_POST["id"]));
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -556,10 +538,17 @@ class Router {
                 }
 
                 if (SteamSignIn::loggedInUserIsAdmin()) {
-                    Database::query("UPDATE changelog SET pending=0 WHERE changelog.id='{$_POST['id']}'");
+                    Database::query(
+                        "UPDATE changelog
+                         SET pending = 0
+                         WHERE changelog.id = ?",
+                        "i",
+                        [
+                            intval($_POST['id']),
+                        ]
+                    );
                 }
-            }
-            else {
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -619,9 +608,8 @@ class Router {
                     exit;
                 }
 
-                Leaderboard::setProfileBanStatus($_POST["profileNumber"], $_POST["banStatus"]);
-            }
-            else {
+                Leaderboard::setProfileBanStatus(strval($_POST["profileNumber"]), intval($_POST["banStatus"]));
+            } else {
                 echo "Missing post data!";
             }
             exit;
@@ -634,8 +622,7 @@ class Router {
         }
         if (!array_key_exists($location[1], View::$sitePages)) {
             $this->routeTo404();
-        }
-        else {
+        } else {
             View::$page = $location[1];
             View::$pageData = View::$sitePages[View::$page];
         }
@@ -707,26 +694,22 @@ class Router {
                 $view->times = Cache::get("SPTimeBoard");
                 View::$pageData["pageTitle"] = "Aggregated - Story Mode";
                 $view->mode = "Story Mode";
-            }
-            else if ($location[2] == "advanced-mode") {
+            } else if ($location[2] == "advanced-mode") {
                 $view->points = Cache::get("COOPPointBoard");
                 $view->times = Cache::get("COOPTimeBoard");
                 View::$pageData["pageTitle"] = "Aggregated - Advanced Mode";
                 $view->mode = "Advanced Mode";
-            }
-            else if ($location[2] == "overall") {
+            } else if ($location[2] == "overall") {
                 View::$pageData["pageTitle"] = "Aggregated - Overall";
                 $view->points = Cache::get("globalPointBoard");
                 $view->times = Cache::get("globalTimeBoard");
                 $view->mode = "Overall";
-            }
-            else if ($location[2] == "chapter") {
+            } else if ($location[2] == "chapter") {
                 View::$pageData["pageTitle"] = "Aggregated -".$GLOBALS["mapInfo"]["chapters"][$location[3]]["chapterName"];
                 $view->mode = $GLOBALS["mapInfo"]["chapters"][$location[3]]["chapterName"];
                 $view->points = Cache::get("chapterPointBoard".$location[3]);
                 $view->times = Cache::get("chapterTimeBoard".$location[3]);
-            }
-            else {
+            } else {
                 $this->routeTo404();
             }
 
@@ -741,8 +724,7 @@ class Router {
 
             if (!$_GET) {
                 $changelogParams = array("startDate" => (new DateTime('NOW - 7 day'))->format('Y-m-d'), "pending" => "2");
-            }
-            else {
+            } else {
                 $changelogParams = $_GET;
             }
 
@@ -805,7 +787,16 @@ class Router {
         }
 
         if ($location[1] == "donators") {
-            $data = Database::query("SELECT profile_number, avatar, IFNULL(boardname, steamname) as playername, donation_amount FROM users WHERE title LIKE 'Donator' ORDER BY CAST(donation_amount AS DECIMAL(9, 2)) DESC");
+            $data = Database::unsafe_raw(
+                "SELECT profile_number
+                      , avatar
+                      , IFNULL(boardname, steamname) as playername
+                      , donation_amount
+                 FROM users
+                 WHERE title LIKE 'Donator'
+                 ORDER BY CAST(donation_amount AS DECIMAL(9, 2)) DESC"
+            );
+
             $view->donators = array();
 
             while ($row = $data->fetch_assoc()) {
@@ -821,7 +812,15 @@ class Router {
         }
 
         if ($location[1] == "wallofshame") {
-            $data = Database::query("SELECT profile_number, avatar, IFNULL(boardname, steamname) as playername FROM users WHERE banned = 1 ORDER BY playername");
+            $data = Database::unsafe_raw(
+                "SELECT profile_number
+                      , avatar
+                      , IFNULL(boardname, steamname) as playername
+                 FROM users
+                 WHERE banned = 1
+                 ORDER BY playername"
+            );
+
             $view->wallofshame = array();
 
             while ($row = $data->fetch_assoc()) {
@@ -840,17 +839,13 @@ class Router {
             if (isset(SteamSignIn::$loggedInUser)) {
                 if ($_POST) {
 
-                    $mysqli = Database::getMysqli();
                     $youtube = NULL;
-                    $twitch = NULL;
+                    $twitch = $_POST["twitch"];
                     $boardname = NULL;
 
-                    if (strlen($_POST["twitch"]) != 0) {
-                        if (!preg_match("/^[A-Za-z0-9_]+$/", $_POST["twitch"])) {
+                    if (strlen($twitch) != 0) {
+                        if (!preg_match("/^[A-Za-z0-9_]+$/", $twitch)) {
                             $view->msg = "Twitch username must contain only letters, numbers, and underscores.";
-                        }
-                        else {
-                            $twitch = $mysqli->real_escape_string($_POST["twitch"]);
                         }
                     }
 
@@ -862,36 +857,29 @@ class Router {
                             || (strlen($boardname) === 17 && is_numeric($boardname))) {
                             $view->msg = "Board name must be at most 30 characters, and contain only letters, numbers, and underscores.";
                         }
-                        else {
-                            $boardname = $mysqli->real_escape_string($boardname);
-                        }
                     }
 
                     if (strlen($_POST["youtube"]) != 0) {
                         if (!preg_match("/^[A-Za-z0-9_\\-\\/:.@]+$/", $_POST["youtube"])) {
                             $view->msg = "Invalid YouTube channel id or username.";
-                        }
-                        else {
+                        } else {
                             if (strpos($_POST["youtube"], '@') !== false) {
                                 $youtubePrefix = "/@";
                                 $strComponents = explode("@", $_POST["youtube"]);
                                 $youtubeChannelID = $strComponents[count($strComponents) - 1];
-                            }
-                            else if (strpos($_POST["youtube"], '/user/') !== false) {
+                            } else if (strpos($_POST["youtube"], '/user/') !== false) {
                                 $youtubePrefix = "/user/";
                                 $strComponents = explode("/user/", $_POST["youtube"]);
                                 $youtubeChannelID = $strComponents[count($strComponents) - 1];
-                            }
-                            else if (strpos($_POST["youtube"], '/channel/') !== false) {
+                            } else if (strpos($_POST["youtube"], '/channel/') !== false) {
                                 $youtubePrefix = "/channel/";
                                 $strComponents = explode("/channel/", $_POST["youtube"]);
                                 $youtubeChannelID = $strComponents[count($strComponents) - 1];
-                            }
-                            else {
+                            } else {
                                 $youtubePrefix = "/@";
                                 $youtubeChannelID = $_POST["youtube"];
                             }
-                            $youtube = $youtubePrefix . $mysqli->real_escape_string($youtubeChannelID);
+                            $youtube = $youtubePrefix . $youtubeChannelID;
                         }
                     }
 
@@ -900,20 +888,18 @@ class Router {
                         $view->msg = $error ?? "Profile updated. Wait a minute for the changes to take effect.";
                     }
                 }
-            }
-            else {
+            } else {
                 $this->routeToDefault();
             }
         }
 
-        if ($location[1] == "regenerateAuthHash"){
-            if (isset(SteamSignIn::$loggedInUser)){
+        if ($location[1] == "regenerateAuthHash") {
+            if (isset(SteamSignIn::$loggedInUser)) {
                 if ($_POST) {
                     Auth::gen_auth_hash(SteamSignIn::$loggedInUser->profileNumber);
                 }
                 exit;
-            }
-            else {
+            } else {
                 $this->routeToDefault();
             }
         }
@@ -941,7 +927,7 @@ class Router {
 
     }
 
-    private function uploadDemo($file, $id) {
+    private function uploadDemo($file, int $id) {
         $demoManager = new DemoManager();
         if ($file["size"] < self::maxUploadBytes) {
             $data = file_get_contents($file["tmp_name"]);
@@ -957,8 +943,7 @@ class Router {
                 Debug::log($th->__toString());
             }
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -993,8 +978,7 @@ class Router {
         }
         if ($result["story-mode"] == "1" && $result["advanced-mode"] != "1") {
             $result["type"] = "0";
-        }
-        elseif ($result["story-mode"] != "1" && $result["advanced-mode"] == "1") {
+        } elseif ($result["story-mode"] != "1" && $result["advanced-mode"] == "1") {
             $result["type"] = "1";
         }
 

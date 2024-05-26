@@ -3,13 +3,22 @@
 class DemoManager {
     const demoFolder = ROOT_PATH . "/demos";
 
-    function getDemoName($id) {
-        $data = Database::query("SELECT changelog.profile_number, score, map_id, time_gained
-              FROM changelog INNER JOIN users ON (changelog.profile_number = users.profile_number)
-              WHERE changelog.id = '" . $id . "'");
-        $row = $data->fetch_assoc();
+    function getDemoName(int $id) {
+        $row = Database::findOne(
+            "SELECT changelog.profile_number
+                  , score
+                  , map_id
+             FROM changelog
+             INNER JOIN users ON changelog.profile_number = users.profile_number
+             WHERE changelog.id = ?",
+            "i",
+            [
+                $id,
+            ]
+        );
 
         $dir = (new DateTime($row["time_gained"]))->format('Y/m');
+
         $map = str_replace(" ", "" , $GLOBALS["mapInfo"]["maps"][$row["map_id"]]["mapName"]);
 
         return [
@@ -18,11 +27,20 @@ class DemoManager {
         ];
     }
 
-    function getDemoDetails($id) {
-        $data = Database::query("SELECT changelog.id, changelog.profile_number, map_id
-              FROM changelog INNER JOIN users ON (changelog.profile_number = users.profile_number)
-              WHERE changelog.id = '" . $id . "'");
-        $row = $data->fetch_assoc();
+    function getDemoDetails(int $id) {
+        $row = Database::findOne(
+            "SELECT changelog.id
+                  , changelog.profile_number
+                  , map_id
+             FROM changelog
+             INNER JOIN users ON changelog.profile_number = users.profile_number
+             WHERE changelog.id = ?",
+            "i",
+            [
+                $id,
+            ]
+        );
+
         return $row;
     }
 
@@ -37,7 +55,7 @@ class DemoManager {
         }
     }
 
-    function uploadDemo($data, $id) {
+    function uploadDemo($data, int $id) {
         Debug::log("Uploading demo for changelog $id");
 
         [$dir, $name] = $this->getDemoName($id);
@@ -59,7 +77,7 @@ class DemoManager {
         return $path;
     }
 
-    function deleteDemo($id) {
+    function deleteDemo(int $id) {
         Debug::log("Deleting demo for changelog $id");
 
         [$dir, $name] = $this->getDemoName($id);
