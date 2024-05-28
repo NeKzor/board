@@ -55,6 +55,10 @@ debug: server-debug
 server-debug:
     docker exec -ti {{project}}-server bash
 
+# Open shell in server container as root user.
+root:
+    docker exec -u root -ti {{project}}-server bash
+
 # Restart server container.
 server-restart:
     docker container restart {{project}}-server
@@ -62,6 +66,10 @@ server-restart:
 # Stop server container.
 server-stop:
     docker container stop {{project}}-server
+
+# Run server tests.
+test:
+    ./test
 
 # Connect to database.
 db:

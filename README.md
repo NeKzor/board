@@ -176,6 +176,16 @@ server {
 
 </details>
 
+### Testing
+
+Regression tests are written in TypeScript and require the
+[Deno runtime](https://deno.com). Make sure to fill out the `AUTH_HASH` and
+`COOKIE` constants.
+
+```bash
+just test
+```
+
 ## Credits
 
 - Originally developed and designed by [ncla] (2014-2015)
