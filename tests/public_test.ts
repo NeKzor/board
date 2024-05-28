@@ -14,7 +14,7 @@ Deno.test("Changelog", async () => {
 
 Deno.test("Changelog with parameters", async () => {
   const res = await fetch(
-    `${API}/changelog/json?profileNumber=${PROFILE}&startDate=2019-01-01&endDate=2019-02-01&startRank=1&endRank=10`,
+    `${API}/changelog/json?profileNumber=${PROFILE}&startDate=2024-06-01&endDate=2024-06-03&startRank=1&endRank=10`,
   );
 
   assertEquals(res.status, 200);
@@ -31,31 +31,31 @@ Deno.test("Changelog with parameters", async () => {
     "https://avatars.steamstatic.com/9a86e6554aee395b3ac37d96a808335363eb79ff_full.jpg",
   );
   assertEquals(entry.profile_number, "76561198049848090");
-  assertEquals(entry.score, 4488);
-  assertEquals(entry.id, 91096);
-  assertEquals(entry.pre_rank, 6);
-  assertEquals(entry.post_rank, 5);
-  assertEquals(entry.wr_gain, 0);
-  assertEquals(entry.time_gained, "2019-01-02T00:30:04Z");
+  assertEquals(entry.score, 2300);
+  assertEquals(entry.id, 254492);
+  assertEquals(entry.pre_rank, 1);
+  assertEquals(entry.post_rank, 1);
+  assertEquals(entry.wr_gain, 1);
+  assertEquals(entry.time_gained, "2024-06-02T21:11:23Z");
   assertEquals(entry.hasDemo, 1);
-  assertEquals(entry.youtubeID, null);
-  assertEquals(entry.note, null);
-  assertEquals(entry.banned, 0);
-  assertEquals(entry.submission, 0);
+  assertEquals(entry.youtubeID, "DM3a55hXiI0");
+  assertEquals(entry.note, "test");
+  assertEquals(entry.banned, 1);
+  assertEquals(entry.submission, 1);
   assertEquals(entry.pending, 0);
-  assertEquals(entry.previous_score, 4720);
-  assertEquals(entry.chamberName, "Repulsion Intro");
-  assertEquals(entry.chapterId, 12);
-  assertEquals(entry.mapid, "47787");
-  assertEquals(entry.improvement, 232);
-  assertEquals(entry.rank_improvement, 1);
+  assertEquals(entry.previous_score, 2300);
+  assertEquals(entry.chamberName, "Tramride");
+  assertEquals(entry.chapterId, 1);
+  assertEquals(entry.mapid, "1");
+  assertEquals(entry.improvement, 0);
+  assertEquals(entry.rank_improvement, 0);
   assertEquals(entry.pre_points, null);
   assertEquals(entry.post_point, null);
   assertEquals(entry.point_improvement, null);
 });
 
 Deno.test("Chamber", async () => {
-  const res = await fetch(`${API}/chamber/47458/json`);
+  const res = await fetch(`${API}/chamber/1/json`);
 
   assertEquals(res.status, 200);
 
@@ -96,7 +96,7 @@ Deno.test("Profile", async () => {
   );
   assertEquals(profile.userData.twitch, "NeKzor");
   assertEquals(profile.userData.youtube, "/@NeKz");
-  assertEquals(profile.userData.title, "Developer");
+  assertEquals(profile.userData.title, null);
   assertEquals(profile.userData.admin, 1);
   assertEquals(profile.userData.donation_amount, null);
 });
