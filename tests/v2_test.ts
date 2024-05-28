@@ -152,7 +152,7 @@ Deno.test("Current PB", async () => {
 
   assert(pb.time_gained && pb.time_gained.startsWith("2024-06-02T") && pb.time_gained.endsWith("Z"));
   assertEquals(pb.profile_number, "76561198049848090");
-  assertEquals(pb.score, 2300);
+  assertEquals(pb.score, "2300");
   assertEquals(pb.map_id, "1");
   assertEquals(pb.wr_gain, 1);
   assertEquals(pb.has_demo, 1);
