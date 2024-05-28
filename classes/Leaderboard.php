@@ -608,7 +608,7 @@ class Leaderboard
                   , ranks.score
                   , ranks.player_rank
                   , ranks.score_rank
-                  , DATE_FORMAT(ranks.time_gained, '%Y-%m-%dT%TZ') as date
+                  , DATE_FORMAT(CONVERT_TZ(ranks.time_gained, @@session.time_zone, '+00:00'), '%Y-%m-%dT%TZ') as date
                   , has_demo
                   , youtube_id
                   , ranks.note
@@ -946,7 +946,7 @@ class Leaderboard
                   , ch.pre_rank
                   , ch.post_rank
                   , ch.wr_gain
-                  , DATE_FORMAT(ch.time_gained, '%Y-%m-%dT%TZ') as time_gained
+                  , DATE_FORMAT(CONVERT_TZ(ch.time_gained, @@session.time_zone, '+00:00'), '%Y-%m-%dT%TZ') as time_gained
                   , ch.has_demo as hasDemo
                   , ch.youtube_id as youtubeID
                   , ch.note
