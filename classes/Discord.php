@@ -73,6 +73,9 @@ class Discord {
             'title' => $data['map'],
             'url' => 'https://mel.board.portal2.sr/chamber/'.$data['map_id'],
             'color' => 295077,
+            'thumbnail' => [
+                'url' => 'https://raw.githubusercontent.com/NeKzor/board/mel/public/images/thumbnails/'.$data['map_id'].'.jpg',
+            ],
             'fields' => [
                 [
                     'name' => 'WR',
