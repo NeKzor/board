@@ -2,7 +2,7 @@
 
 class Discord {
     private static $username = 'mel.board.portal2.sr';
-    private static $avatar = 'https://raw.githubusercontent.com/NeKzor/board/mel/public/images/portal2boards_avatar.jpg';
+    private static $avatar = 'https://raw.githubusercontent.com/NeKzor/board/mel/public/images/portal2boards_avatar.png';
     private static $embed_icon = 'https://raw.githubusercontent.com/NeKzor/board/mel/public/images/portal2boards_icon.png';
 
     public static function sendMdpWebhook($data, $demoName, $text, $err = null){
