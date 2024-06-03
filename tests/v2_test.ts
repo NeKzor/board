@@ -2,7 +2,7 @@ import { assert, assertEquals } from "jsr:@std/assert";
 
 const API = "https://board.portal2.local";
 const PROFILE = "76561198049848090";
-const AUTH_HASH = "yJMh2Q3QRa45Sc7vg9QeFjNLQTaq4u1N";
+const AUTH_HASH = "Tvnskvu3pSZia8KE7BBZdYjeHIKgzNs6";
 const COOKIE = "PHPSESSID=s3qqdj2g5d3ujpa0gdda2eb05p";
 
 Deno.test("Validate user", async () => {
@@ -96,7 +96,7 @@ Deno.test("Automatic submission", async (t) => {
     assertEquals(run.pending, 0);
     assertEquals(run.autorender_id, null);
     assertEquals(run.previous_score, null);
-    assertEquals(run.chamberName, "Tramride");
+    assertEquals(run.chamberName, "Rest Room");
     assertEquals(run.chapterId, 1);
     assertEquals(run.mapid, "1");
     assertEquals(run.improvement, null);

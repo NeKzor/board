@@ -52,7 +52,7 @@ Deno.test("Manual submission", async (t) => {
     assertEquals(run.pending, 0);
     assertEquals(run.autorender_id, null);
     assertEquals(run.previous_score, null);
-    assertEquals(run.chamberName, "Tramride");
+    assertEquals(run.chamberName, "Rest Room");
     assertEquals(run.chapterId, 1);
     assertEquals(run.mapid, "1");
     assertEquals(run.improvement, null);

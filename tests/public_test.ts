@@ -66,7 +66,7 @@ Deno.test("Profile", async () => {
   assertEquals(profile.userData.twitch, "NeKzor");
   assertEquals(profile.userData.youtube, "/@NeKz");
   assertEquals(profile.userData.title, null);
-  assertEquals(profile.userData.admin, 1);
+  assertEquals(profile.userData.admin, 0);
   assertEquals(profile.userData.donation_amount, null);
 });
 
