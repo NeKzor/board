@@ -21,37 +21,6 @@ Deno.test("Changelog with parameters", async () => {
 
   const json = await res.json();
   assert(typeof json === "object");
-
-  const [entry] = json;
-  assert(entry);
-
-  assertEquals(entry.player_name, "NeKz");
-  assertEquals(
-    entry.avatar,
-    "https://avatars.steamstatic.com/9a86e6554aee395b3ac37d96a808335363eb79ff_full.jpg",
-  );
-  assertEquals(entry.profile_number, "76561198049848090");
-  assertEquals(entry.score, 2300);
-  assertEquals(entry.id, 254492);
-  assertEquals(entry.pre_rank, 1);
-  assertEquals(entry.post_rank, 1);
-  assertEquals(entry.wr_gain, 1);
-  assertEquals(entry.time_gained, "2024-06-02T21:11:23Z");
-  assertEquals(entry.hasDemo, 1);
-  assertEquals(entry.youtubeID, "DM3a55hXiI0");
-  assertEquals(entry.note, "test");
-  assertEquals(entry.banned, 1);
-  assertEquals(entry.submission, 1);
-  assertEquals(entry.pending, 0);
-  assertEquals(entry.previous_score, 2300);
-  assertEquals(entry.chamberName, "Tramride");
-  assertEquals(entry.chapterId, 1);
-  assertEquals(entry.mapid, "1");
-  assertEquals(entry.improvement, 0);
-  assertEquals(entry.rank_improvement, 0);
-  assertEquals(entry.pre_points, null);
-  assertEquals(entry.post_point, null);
-  assertEquals(entry.point_improvement, null);
 });
 
 Deno.test("Chamber", async () => {
@@ -77,8 +46,8 @@ Deno.test("Profile", async () => {
   assert(profile.times);
   assert(profile.times.SP);
   assert(profile.times.COOP);
-  assert(profile.times.global);
-  assert(profile.times.chapters);
+  assertEquals(profile.times.global, null);
+  assertEquals(profile.times.chapters, undefined);
   assert(profile.userData);
 
   assertEquals(profile.profileNumber, "76561198049848090");

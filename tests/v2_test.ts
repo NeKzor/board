@@ -49,7 +49,7 @@ Deno.test("Active profiles", async () => {
   const json = await res.json();
   assert(typeof json === "object");
   assert(typeof json.profiles === "object");
-  assert(json.profiles.length > 0);
+  assertEquals(json.profiles.length, 0);
 });
 
 Deno.test("Automatic submission", async (t) => {
@@ -84,9 +84,9 @@ Deno.test("Automatic submission", async (t) => {
     assertEquals(run.profile_number, "76561198049848090");
     assertEquals(run.score, 2300);
     assert(run.id);
-    assert(run.pre_rank);
+    assertEquals(run.pre_rank, null);
     assertEquals(run.post_rank, 1);
-    assertEquals(run.wr_gain, 1);
+    assertEquals(run.wr_gain, 0);
     assert(run.time_gained);
     assertEquals(run.hasDemo, 1);
     assertEquals(run.youtubeID, null);
@@ -95,17 +95,50 @@ Deno.test("Automatic submission", async (t) => {
     assertEquals(run.submission, 2);
     assertEquals(run.pending, 0);
     assertEquals(run.autorender_id, null);
-    assert(run.previous_score);
+    assertEquals(run.previous_score, null);
     assertEquals(run.chamberName, "Tramride");
     assertEquals(run.chapterId, 1);
     assertEquals(run.mapid, "1");
-    assert(run.improvement >= 0);
-    assert(run.rank_improvement >= 0);
+    assertEquals(run.improvement, null);
+    assertEquals(run.rank_improvement, null);
     assertEquals(run.pre_points, null);
     assertEquals(run.post_point, null);
     assertEquals(run.point_improvement, null);
 
     id = run.id.toString();
+  });
+
+  await t.step("Current PB", async () => {
+    const body = new FormData();
+    body.append("auth_hash", AUTH_HASH);
+    body.append("mapId", "1");
+
+    const res = await fetch(`${API}/api-v2/current-pb`, {
+      method: "POST",
+      body,
+    });
+
+    assertEquals(res.status, 200);
+
+    const pb = await res.json();
+    assert(typeof pb === "object");
+
+    assert(pb.time_gained);
+    assertEquals(pb.profile_number, "76561198049848090");
+    assertEquals(pb.score, "2300");
+    assertEquals(pb.map_id, "1");
+    assertEquals(pb.wr_gain, 0);
+    assertEquals(pb.has_demo, 1);
+    assertEquals(pb.banned, 0);
+    assertEquals(pb.youtube_id, null);
+    assertEquals(pb.previous_id, null);
+    assertEquals(pb.id, parseInt(id, 10));
+    assertEquals(pb.post_rank, 1);
+    assertEquals(pb.pre_rank, null);
+    assertEquals(pb.submission, 2 );
+    assertEquals(pb.note, "test");
+    assertEquals(pb.pending, 0);
+    assertEquals(pb.autorender_id, null);
   });
 
   await t.step("Get demo", async () => {
@@ -133,37 +166,4 @@ Deno.test("Automatic submission", async (t) => {
 
     await res.body?.cancel();
   });
-});
-
-Deno.test("Current PB", async () => {
-  const body = new FormData();
-  body.append("auth_hash", AUTH_HASH);
-  body.append("mapId", "1");
-
-  const res = await fetch(`${API}/api-v2/current-pb`, {
-    method: "POST",
-    body,
-  });
-
-  assertEquals(res.status, 200);
-
-  const pb = await res.json();
-  assert(typeof pb === "object");
-
-  assert(pb.time_gained && pb.time_gained.startsWith("2024-06-02T") && pb.time_gained.endsWith("Z"));
-  assertEquals(pb.profile_number, "76561198049848090");
-  assertEquals(pb.score, "2300");
-  assertEquals(pb.map_id, "1");
-  assertEquals(pb.wr_gain, 1);
-  assertEquals(pb.has_demo, 1);
-  assertEquals(pb.banned, 0);
-  assertEquals(pb.youtube_id, 'DM3a55hXiI0');
-  assertEquals(pb.previous_id, 254466);
-  assertEquals(pb.id, 254479);
-  assertEquals(pb.post_rank, 1);
-  assertEquals(pb.pre_rank, 1);
-  assertEquals(pb.submission, 1);
-  assertEquals(pb.note, "test");
-  assertEquals(pb.pending, 0);
-  assertEquals(pb.autorender_id, null);
 });

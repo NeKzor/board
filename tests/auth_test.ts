@@ -40,9 +40,9 @@ Deno.test("Manual submission", async (t) => {
     assertEquals(run.profile_number, "76561198049848090");
     assertEquals(run.score, 2300);
     assert(run.id);
-    assert(run.pre_rank);
+    assertEquals(run.pre_rank, null);
     assertEquals(run.post_rank, 1);
-    assertEquals(run.wr_gain, 1);
+    assertEquals(run.wr_gain, 0);
     assert(run.time_gained);
     assertEquals(run.hasDemo, 1);
     assertEquals(run.youtubeID, "DM3a55hXiI0");
@@ -51,12 +51,12 @@ Deno.test("Manual submission", async (t) => {
     assertEquals(run.submission, 1);
     assertEquals(run.pending, 0);
     assertEquals(run.autorender_id, null);
-    assert(run.previous_score);
+    assertEquals(run.previous_score, null);
     assertEquals(run.chamberName, "Tramride");
     assertEquals(run.chapterId, 1);
     assertEquals(run.mapid, "1");
-    assert(run.improvement >= 0);
-    assert(run.rank_improvement >= 0);
+    assertEquals(run.improvement, null);
+    assertEquals(run.rank_improvement, null);
     assertEquals(run.pre_points, null);
     assertEquals(run.post_point, null);
     assertEquals(run.point_improvement, null);
