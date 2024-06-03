@@ -7,7 +7,11 @@
     Debug::initializeFileLogging();
     Debug::$loggingToOutput = true;
 
-    $data = Database::query("SELECT DISTINCT profile_number FROM changelog WHERE time_gained > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 DAY)");
+    $data = Database::unsafe_raw(
+        "SELECT DISTINCT profile_number
+         FROM changelog
+         WHERE time_gained > DATE_SUB(CURRENT_TIMESTAMP, INTERVAL 30 DAY)"
+    );
 
     $activeProfiles = array();
     while ($row = $data->fetch_assoc()) {
@@ -43,7 +47,7 @@
 
         $rankHandled = 0;
 
-        foreach ($board as $profileNumber => $scoreInfo) {
+        foreach ($board ?? [] as $profileNumber => $scoreInfo) {
             $skillFullProfiles[$profileNumber] = null;
             $rankHandled++;
             if ($rankHandled == 40)
@@ -53,7 +57,11 @@
 
     print_r("Skillfull profiles: " . count($skillFullProfiles) . "\n");
 
-    $data = Database::query("SELECT profile_number FROM usersnew WHERE banned = 1");
+    $data = Database::unsafe_raw(
+        "SELECT profile_number
+         FROM users
+         WHERE banned = 1"
+    );
     
     $bannedProfiles = array();
     while ($row = $data->fetch_assoc()) {
@@ -64,20 +72,24 @@
 
     $importantProfiles = $activeProfiles + $skillFullProfiles + $bannedProfiles;
 
-    print_r("Important profiles: " . count($importantProfiles) . "\n");
+    $total = count($importantProfiles);
+    print_r("Important profiles: $total\n");
+    $count = 0;
 
+    foreach (array_chunk(array_keys($importantProfiles), 100) as $chunk) {
+        [$success, $failed] = User::updateProfiles($chunk);
 
-    $j = 1;
-    foreach (array_keys($importantProfiles) as $profileNumber) {
-        User::updateProfileData($profileNumber);
+        $count += $success;
 
-        if ($j % round(count($importantProfiles) / 10) == 0)
-            print_r("Processed " . $j . "/" . count($importantProfiles) . "\n");
+        foreach ($failed as $steamId) {
+            print_r("Failed to update profile $steamId\n");
+        }
 
-    	$sleepSeconds = (0.5 + (rand(0, 500) / 1000));
-        usleep($sleepSeconds * 1000000);
-        
-        $j++;
+        print_r("Processed $count/$total\n");
     }
 
-    Leaderboard::cacheLeaderboard();
+    $failed = $total - $count;
+
+    if ($failed) { 
+        print_r("Failed to process $failed profiles\n");
+    }

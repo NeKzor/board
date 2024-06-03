@@ -1,10 +1,7 @@
 .idea/
-cache/
-demos/
-secret/
-sessions/
+.vscode/
 vendor/
 
 .config.json
 .env
-debug.txt
+docker-compose.yml

@@ -1,10 +1,10 @@
 <?php
 
 class MdpManager {
-    const mdpLocation = ROOT_PATH . "";
+    const mdpLocation = ROOT_PATH . "/util/mdp";
 
     // Executes CLI version of Mdp and dumps files into specified discord channels
-    public static function Execute($demoPath, $demoDetails){
+    public static function Execute($demoPath, $demoDetails) {
         //Debug::log("Attempting to execute mdp for $demoPath");
         $demoName = substr($demoPath, strrpos( $demoPath, '/')+1, strlen($demoPath));
         //Debug::log("Demo Name:  $demoName");
@@ -17,12 +17,11 @@ class MdpManager {
         //Debug::log("STDOUT: $stdout");
         //Debug::log("STDERR: $stderr");
 
-        if($resultCode == -1 || strlen($stderr) > 1){
+        if ($resultCode == -1 || strlen($stderr) > 1) {
             // Error has occured
             Debug::log("Error has occured with running Mdp on $demoPath");
             Discord::sendMdpWebhook($demoDetails, $demoName, $stdout, $stderr);
-        }
-        else{
+        } else {
             Discord::sendMdpWebhook($demoDetails, $demoName, $stdout);
         }
     }
@@ -31,7 +30,7 @@ class MdpManager {
         $proc = proc_open($cmd,[
             1 => ['pipe','w'],
             2 => ['pipe','w'],
-        ],$pipes);
+        ],$pipes, MdpManager::mdpLocation);
         $stdout = stream_get_contents($pipes[1]);
         fclose($pipes[1]);
         $stderr = stream_get_contents($pipes[2]);

@@ -1,49 +1,71 @@
 <?php
 
 class DemoManager {
-    const demoFolder = "demos";
+    const demoFolder = ROOT_PATH . "/demos";
 
-    public function __construct() {
-        mkdir(ROOT_PATH . DemoManager::demoFolder);
-    }
+    function getDemoName(int $id) {
+        $row = Database::findOne(
+            "SELECT changelog.profile_number
+                  , score
+                  , map_id
+             FROM changelog
+             INNER JOIN users ON changelog.profile_number = users.profile_number
+             WHERE changelog.id = ?",
+            "i",
+            [
+                $id,
+            ]
+        );
 
-    function getDemoName($id) {
-        $data = Database::query("SELECT changelog.profile_number, score, map_id
-              FROM changelog INNER JOIN usersnew ON (changelog.profile_number = usersnew.profile_number)
-              WHERE changelog.id = '" . $id . "'");
-        $row = $data->fetch_assoc();
+        $dir = (new DateTime($row["time_gained"]))->format('Y/m');
+
         $map = str_replace(" ", "" , $GLOBALS["mapInfo"]["maps"][$row["map_id"]]["mapName"]);
-        return $map."_".$row["score"]."_".$row["profile_number"]."_".$id.".dem";
+
+        return [
+            $dir,
+            $map."_".$row["score"]."_".$row["profile_number"]."_".$id.".dem"
+        ];
     }
 
-    function getDemoDetails($id) {
-        $data = Database::query("SELECT changelog.id, changelog.profile_number, map_id
-              FROM changelog INNER JOIN usersnew ON (changelog.profile_number = usersnew.profile_number)
-              WHERE changelog.id = '" . $id . "'");
-        $row = $data->fetch_assoc();
+    function getDemoDetails(int $id) {
+        $row = Database::findOne(
+            "SELECT changelog.id
+                  , changelog.profile_number
+                  , map_id
+             FROM changelog
+             INNER JOIN users ON changelog.profile_number = users.profile_number
+             WHERE changelog.id = ?",
+            "i",
+            [
+                $id,
+            ]
+        );
+
         return $row;
     }
 
-
-    function getDemoPath($id) {
-        return ROOT_PATH . '/' . DemoManager::demoFolder . '/' . $this->getDemoName($id);
-    }
-
     function getDemoURL($id) {
-        $name = $this->getDemoName($id);
-        $path = $this->getDemoPath($id);
+        [$dir, $name] = $this->getDemoName($id);
+        $path = DemoManager::demoFolder . "/$dir/$name";
+
         if (file_exists($path)) {
-            return '/' . DemoManager::demoFolder . '/' . $name;
+            return "/demos/$dir/$name";
         } else {
             return NULL;
         }
     }
 
-    function uploadDemo($data, $id) {
+    function uploadDemo($data, int $id) {
         Debug::log("Uploading demo for changelog $id");
 
-        $path = $this->getDemoPath($id);
+        [$dir, $name] = $this->getDemoName($id);
 
+        $demoDir = DemoManager::demoFolder . "/$dir";
+        if (!is_dir($demoDir) && !mkdir($demoDir, 0777, true)) {
+            Debug::log("Failed to create demo dir $demoDir");
+        }
+
+        $path = DemoManager::demoFolder . "/$dir/$name";
         $f = fopen($path, 'w');
         if (!$f) {
             Debug::log("Failed to open demo file $path for writing");
@@ -55,9 +77,12 @@ class DemoManager {
         return $path;
     }
 
-    function deleteDemo($id) {
+    function deleteDemo(int $id) {
         Debug::log("Deleting demo for changelog $id");
-        $path = $this->getDemoPath($id);
+
+        [$dir, $name] = $this->getDemoName($id);
+        $path = DemoManager::demoFolder . "/$dir/$name";
+
         if (!unlink($path)) {
             Debug::log("Could not delete demo file $path");
         }

@@ -4,17 +4,15 @@ class ProfileView
 {
     static function getChamberHyperlink($map, $mapInfo) {
         if (array_key_exists($map, $mapInfo["maps"])) {
-            return "<a href=/chamber/" . $map . ">" . $mapInfo["maps"][$map]["mapName"] . "</a>";
-        }
-        else {
+            return "<a href=/chamber/" . $map . ">" . str_replace("Advanced", "Adv.", $mapInfo["maps"][$map]["mapName"]) . "</a>";
+        } else {
             return $map;
         }
     }
     static function getChapterHyperlink($chapter, $mapInfo) {
         if (array_key_exists($chapter, $mapInfo["chapters"])) {
             return "<a href=/aggregated/chapter/" . $chapter . ">" . $mapInfo["chapters"][$chapter]["chapterName"] . "</a>";
-        }
-        else {
+        } else {
             return $chapter;
         }
     }
@@ -30,7 +28,7 @@ class ProfileView
         </div>
     <?php }
 
-    static function chamberScoreRow($user, $mapInfo, $map, $score, $autoRenderedVideoIds) { ?>
+    static function chamberScoreRow($user, $mapInfo, $map, $score) { ?>
         <div class="scoreTableEntry">
             <div class="chamberScoreInfo" date="<?=$score["date"]?>">
                 <div class="cell scoreMenuToggle" onclick="openScoreMenu(event, '<?=$map?>', '<?=$score["changelogId"]?>')">
@@ -53,15 +51,21 @@ class ProfileView
                 </div>
                 <div class="cell youtube" align="center">
                     <i <?php if ($score["youtubeID"] == NULL): ?>
-                        <?php if (in_array((int) $score["changelogId"], $autoRenderedVideoIds)) : ?>
-                            onclick="window.open('https://autorender.portal2.sr/video.html?v=<?=$score["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
-                        <?php else: ?>
-                            style="display:none"
-                        <?php endif; ?>
+                        style="display:none"
                     <?php else : ?>
                         onclick="embedOnBody('<?=$score["youtubeID"]?>', '<?=$mapInfo["maps"][$map]["mapName"]?> - #<?=$score["playerRank"]?> - <?=Leaderboard::convertToTime($score["score"])?>');" class="youtubeEmbedButton fa fa-youtube-play"
                     <?php endif; ?>
                    aria-hidden="true"></i>
+                </div>
+                <div class="cell youtube" align="center">
+                    <i <?php if ($score["autorender_id"] !== NULL): ?>
+                        onclick="window.open('https://autorender.portal2.sr/videos/<?=$score["autorender_id"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
+                    <?php elseif (SteamSignIn::loggedInUserIsAdmin() && $score["hasDemo"] === 1): ?>
+                        onclick="window.open('https://autorender.portal2.sr/render/mel/<?=$score["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-video-camera" title="Start a render"
+                    <?php else: ?>
+                        style="display:none"
+                    <?php endif; ?>
+                        aria-hidden="true"></i>
                 </div>
                 <div class="cell rank" align="right"><?=isset($score["playerRank"]) ? $score["playerRank"] : "-"?></div>
                 <a class="cell score" align="right" href="/changelog?profileNumber=<?=$user->profileNumber?>&chamber=<?=$map?>">
@@ -84,8 +88,8 @@ class ProfileView
                 <div class="cell title" align="left"><?=self::getChamberHyperlink($map, $mapInfo);?></div>
                 <div class="cell demo-url"></div>
                 <div class="cell comment"></div>
-                <div class="cell youtube">
-                </div>
+                <div class="cell youtube"></div>
+                <div class="cell youtube"></div>
                 <div class="cell rank" align="right">-</div>
                 <div class="cell score" align="right">-</div>
                 <div class="cell nr-diff" align="right">-</div>

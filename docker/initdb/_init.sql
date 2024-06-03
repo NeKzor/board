@@ -40,11 +40,12 @@ CREATE TABLE `changelog` (
   `submission` int NOT NULL DEFAULT '0',
   `note` varchar(100) DEFAULT NULL,
   `pending` tinyint(1) NOT NULL DEFAULT '0',
+  `autorender_id` varchar(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `profile_number` (`profile_number`),
   KEY `map_id` (`map_id`),
   KEY `previous_id` (`previous_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=254449 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -59,7 +60,7 @@ CREATE TABLE `chapters` (
   `chapter_name` varchar(50) DEFAULT NULL,
   `is_multiplayer` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,50 +79,7 @@ CREATE TABLE `evidence_requirements` (
   `timestamp` datetime NOT NULL,
   `closed_timestamp` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `exceptions`
---
-
-DROP TABLE IF EXISTS `exceptions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `exceptions` (
-  `map_id` varchar(5) NOT NULL,
-  `legit_score` int NOT NULL,
-  `curl` int NOT NULL DEFAULT '18',
-  PRIMARY KEY (`map_id`,`legit_score`,`curl`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `leastportals`
---
-
-DROP TABLE IF EXISTS `leastportals`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `leastportals` (
-  `steam_id` varchar(6) NOT NULL,
-  `portals` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`steam_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `leastportals_exceptions`
---
-
-DROP TABLE IF EXISTS `leastportals_exceptions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `leastportals_exceptions` (
-  `map_id` varchar(6) NOT NULL,
-  `profile_number` varchar(50) NOT NULL,
-  PRIMARY KEY (`map_id`,`profile_number`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -167,29 +125,13 @@ CREATE TABLE `scores` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `singlesegment`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `singlesegment`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `singlesegment` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `updated` varchar(250) NOT NULL COMMENT 'Last updated',
-  `datatable` mediumtext NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `usersnew`
---
-
-DROP TABLE IF EXISTS `usersnew`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usersnew` (
+CREATE TABLE `users` (
   `profile_number` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL DEFAULT '',
   `boardname` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
   `steamname` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -202,7 +144,8 @@ CREATE TABLE `usersnew` (
   `admin` int NOT NULL DEFAULT '0',
   `donation_amount` varchar(11) DEFAULT NULL,
   `auth_hash` varchar(32) DEFAULT NULL,
-  PRIMARY KEY (`profile_number`)
+  PRIMARY KEY (`profile_number`),
+  UNIQUE KEY `uk_boardname` (`boardname`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

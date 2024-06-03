@@ -238,13 +238,13 @@ a:hover, a:focus {
     margin: 0px;
 }
 #sp_icon {
-    background: url("/images/sp_noborder_gradient.jpg");
+    background: url("/images/sp_noborder_gradient.png");
 }
 #coop_icon {
-    background: url("/images/cube_noborder_gradient.jpg");
+    background: url("/images/cube_noborder_gradient.png");
 }
 #cube_icon {
-    background: url("/images/cube_noborder_gradient.jpg");
+    background: url("/images/cube_noborder_gradient.png");
     background-size: 29px 29px;
 }
 #lp_icon {
@@ -255,7 +255,7 @@ a:hover, a:focus {
     background-size: 29px 29px;
 }
 #time_icon {
-    background: url("/images/time_noborder_gradient.jpg");
+    background: url("/images/time_noborder_gradient.png");
 }
 #loginsteam {
     display: block;
@@ -309,7 +309,7 @@ a:hover, a:focus {
 #welcome .firstline {
     font-weight: bold;
 }
-#leastportals .chamber, #chambers .chamber {
+#chambers .chamber {
     display: block;
     width: 265px;
     height: 332px;
@@ -319,65 +319,41 @@ a:hover, a:focus {
     margin: 5px 0px 10px 20px;
     box-sizing: content-box;
 }
-#leastportals .chamber.leastportals {
-    height: 149px;
-}
-#leastportals .chamber.leastportals .chamberimage {
-    border-bottom: 3px solid #3096d1;
-}
-#leastportals .portalsused {
-    text-align: center;
-    margin-top: 55px;
-    color: #e1e1e1;
-    font-size: 20px;
-    font-family: Segoe UI;
-    font-weight: bold;
-    text-shadow: 0px 0px 3px #000000;
-    filter: dropshadow(color=#000000, offx=0, offy=0);
-    text-transform: uppercase;
-}
-#leastportals .portalamount {
-    display: inline-block;
-    font-size: 34px;
-    position: relative;
-    top: 3px;
-    padding-right: 5px;
-}
-#chambers .youtubeEmbedButton .fa-youtube-play, #leastportals .youtubeEmbedButton .fa-youtube-play {
+#chambers .youtubeEmbedButton .fa-youtube-play {
     color: #ac303C;
     font-size: 23px;
     margin-top: -2px;
     cursor: pointer;
 }
-#chambers .youtubeEmbedButton .fa-square, #leastportals .youtubeEmbedButton .fa-square  {
+#chambers .youtubeEmbedButton .fa-square  {
     color: #ddd;
     left: 0.5px;
     top: -2.6px;
     font-size: 16px;
     margin-left: 1px;
 }
-#chambers .youtubeEmbedButton:hover .fa-youtube-play, #leastportals .youtubeEmbedButton:hover .fa-youtube-play {
+#chambers .youtubeEmbedButton:hover .fa-youtube-play {
     color: #c73846;
 }
-#chambers .steamLink .fa-square, #leastportals .steamLink .fa-square {
+#chambers .steamLink .fa-square {
     color: #ddd;
     font-size: 18px;
     top: 1px;
     margin-right: 2px;
 }
-#chambers .steamLink .fa-steam-square, #leastportals .steamLink .fa-steam-square  {
+#chambers .steamLink .fa-steam-square  {
     color: #3d3d3d;
     font-size: 20px;
 }
-#chambers .steamLink:hover .fa-steam-square, #leastportals .steamLink:hover .fa-steam-square {
+#chambers .steamLink:hover .fa-steam-square {
     color: #4b4b4b;
 }
-#chambers .chambers, #leastportals .chambers {
+#chambers .chambers {
     margin: 30px 0px 0px 0px;
     float: left;
     clear: both;
 }
-#chambers .chamberimage, #leastportals .chamberimage {
+#chambers .chamberimage {
     border-top: 3px solid #3096d1;
     width: 100%;
     height: 149px;
@@ -385,12 +361,12 @@ a:hover, a:focus {
     position: relative;
     box-sizing: content-box;
 }
-#chambers .chambertitle, #leastportals .chambertitle {
+#chambers .chambertitle {
     height: 34px;
     float: right;
     cursor: default;
 }
-#chambers .titlebg, #leastportals .titlebg {
+#chambers .titlebg {
     background: url("/images/chamber_title_bg.jpg");
     height: 26px;
     font-family: "Aperture";
@@ -400,14 +376,14 @@ a:hover, a:focus {
     padding: 7px 10px 1px 6px;
     box-sizing: content-box;
 }
-#chambers .titlebg a, #leastportals .titlebg a {
+#chambers .titlebg a {
     color: #565656;
     text-decoration: none;
 }
-#chambers .titlebg a:hover, #leastportals .titlebg a:hover {
+#chambers .titlebg a:hover {
     text-decoration: underline;
 }
-#chambers .titlebghelper, #leastportals .titlebghelper {
+#chambers .titlebghelper {
     background: url("/images/titlebghelper.png");
     width: 20px;
     height: 34px;
@@ -449,7 +425,7 @@ a:hover, a:focus {
 }
 #chambers .chamber_scores .othernoobscores .entry {
     /*padding: 3px 0px 3px 0px;*/
-    padding: 3px 0px 3px 0px;
+    padding: 3px 0px 0px 0px;
     /*line-height: 13px;*/
     line-height: 17px;
     height: 17px;
@@ -507,18 +483,18 @@ a:hover, a:focus {
     margin: 2px 0px 0px 0px;
     color: #3e3e3e;
 }
-#chambers .icons, #leastportals .icons {
+#chambers .icons {
     /*margin-right: 3px;*/
 }
 #chambers .icons.fa-stack {
     vertical-align: top;
 }
-#chambers .chamber_icons_right, #leastportals .chamber_icons_right {
+#chambers .chamber_icons_right {
     position: absolute;
     top: 124px;
     right: 7px;
 }
-#chambers .chamber_icons_left, #leastportals .chamber_icons_left {
+#chambers .chamber_icons_left {
     position: absolute;
     top: 124px;
     left: 5px;
@@ -533,14 +509,14 @@ a:hover, a:focus {
     color: #3e88b3;
     text-transform: uppercase;
 }
-#chambers .chapternumber, #editProfile .title, #about .title, #chambers .chaptername, #leastportals .chaptername, h1, h2 {
+#chambers .chapternumber, #editProfile .title, #about .title, #chambers .chaptername, h1, h2 {
     font-family: "Aperture";
     font-size: 20px;
     color: #3e88b3;
     text-transform: uppercase;
     font-weight: bold;
 }
-#leastportals .chaptername, #chambers .chaptername, #editProfile .subtitle {
+#chambers .chaptername, #editProfile .subtitle {
     font-size: 40.5px;
     margin-top: -11px;
 }
@@ -578,7 +554,7 @@ a:hover, a:focus {
     color: #555;
     font-weight: 500;
 }
-#chambers .chapterinfo, #leastportals .chapterinfo {
+#chambers .chapterinfo {
     height: 45px;
     margin: 10px 0px 20px 20px;
     clear: both;
@@ -797,7 +773,7 @@ a:hover, a:focus {
     width: 50%;
 }
 #changelog .map {
-    width: 140px;
+    width: 170px;
 }
 #changelog .chapter {
     width: 135px;
@@ -920,6 +896,9 @@ body > #youtube #ytplayer {
     width: 960px;
     padding-bottom: 10px;
 }
+html[class="dark"] #editProfile .msg {
+    color: #ffffff;
+}
 #donate a {
     font-size: 10px;
     font-weight: bold;
@@ -929,7 +908,7 @@ body > #youtube #ytplayer {
     color: #0066cc;;
 }
 #profile {
-    width: 1257px;
+    width: 1295px;
     min-height: 300px;
     margin: 30px auto;
     padding: 10px;
@@ -972,6 +951,16 @@ body > #youtube #ytplayer {
     -webkit-transform: translateY(-50%);
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
+}
+html[class="dark"] #profile .userinformation .general-wrapper .profileBannerButton {
+    background: #202225;
+    color: #fff;
+}
+html[class="dark"] #profile .userinformation .general-wrapper .profileBannerButton:hover {
+    background: #3096d1;
+}
+html[class="dark"] #profile .userinformation .general-wrapper .banToggleButton:hover {
+    background: red;
 }
 #profile .userinformation .general .general-wrapper img {
     width: 150px;
@@ -1017,7 +1006,7 @@ body > #youtube #ytplayer {
     width: 13%;
 }
 #profile .global-stats .block-container.oldnew {
-    width: 19%;
+    width: 24%;
 }
 #profile .global-stats .block-container.oldnew .number {
     font-size:25px;
@@ -1034,9 +1023,6 @@ body > #youtube #ytplayer {
 }
 #profile .global-stats .block-container.bestworst .title{
     width: 116px;
-}
-#profile .global-stats .block-container.oldnew .title{
-    max-width: 140px;
 }
 #profile .global-stats .block-container.points {
     width: 16%;
@@ -1134,13 +1120,13 @@ body > #youtube #ytplayer {
     vertical-align: top;
 }
 #profile .column-3 .column.sp {
-    width: 410px;
+    width: 420px;
 }
 #profile .column-3 .column.mid {
     margin: 0 10px;
 }
 #profile .column-3 .column.coop {
-    width: 410px;
+    width: 425px;
 }
 #profile .column-3 .block-content {
     /*padding: 20px;*/
@@ -1266,9 +1252,6 @@ body > #youtube #ytplayer {
     padding-right: 4px;
     color: #bbb;
     box-sizing: content-box;
-}
-#profile .sp .changeEntry .youtube, #profile .coop .changeEntry .youtube {
-    padding-right: 36px;
 }
 #profile .sp .changeEntry .rank, #profile .coop .changeEntry .rank {
     width: 32px;
@@ -1408,7 +1391,7 @@ body > #youtube #ytplayer {
     width: 130px;
 }
 #profile .coop .title  {
-    width: 130px;
+    width: 135px;
 }
 #profile .sp .chamberScoreInfo > .rank, #profile .coop .chamberScoreInfo > .rank  {
     /*width: 27px;*/
@@ -1512,7 +1495,7 @@ body > #youtube #ytplayer {
     width: 52px;
 }
 #profile .timespoints {
-    width: 410px;
+    width: 420px;
 }
 #profile .timespoints .scoretable {
     padding-left: 10px;
@@ -1557,6 +1540,9 @@ body > #youtube #ytplayer {
     background-size: contain;
     /*margin: 0 3px;*/
     vertical-align: bottom;
+}
+html[class="dark"] #profile .usericons .fa-play:hover {
+    color: #aaa !important;
 }
 #profile .twitch-linked {
     background: #6441A5;
@@ -1916,15 +1902,16 @@ body > #youtube #ytplayer {
     width: 16px;
     height: 16px;
     display: inline-block;
-    margin-right: 5px;
+    margin-right: 2px;
     float: right;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 #chamber .not-public-chambers .notification, #profile .uploadInfo .notification, #announcement .notification {
     width: calc(100% - 42px);
     display: inline-block;
     margin-right: 7px;
     margin-left: 10px;
+    font-size: 1.3rem;
 }
 #chamber .not-public-chambers .close-btn {
     margin-top: 4px;
@@ -1935,6 +1922,16 @@ body > #youtube #ytplayer {
 }
 .popover-content {
     word-wrap: break-word;
+}
+html[class="dark"] .popover {
+    background-color: inherit;
+}
+html[class="dark"] .popover-content {
+    background-color: #2a2c31;
+    color: #f6f6f7;
+}
+html[class="dark"] .popover.top > .arrow:after {
+    border-top-color: #2a2c31;
 }
 @-moz-document domain(board.portal2.sr) {
     #changelog .datetime{
@@ -1981,17 +1978,19 @@ html[class="dark"] .checkbox,html[class="dark"] input[type="submit"] {
 html[class="dark"] .fa.fa-download,
 html[class="dark"] .fa.fa-gamepad,
 html[class="dark"] .fa.fa-ban,
+html[class="dark"] .fa.fa-comment,
 html[class="dark"] .fa.fa-times {
     color: #aaa !important;
 }
 
 html[class="dark"] .fa.fa-download:hover,
-html[class="dark"] .fa.fa-times:hover {
+html[class="dark"] .fa.fa-comment:hover,
+html[class="dark"] .fa.fa-times:hover,
+html[class="dark"] .fa.fa-play:hover {
     color: #4ba6db !important;
 }
 
-html[class="dark"] .fa.fa-ban:hover,
-html[class="dark"] .fa.fa-youtube-play:hover {
+html[class="dark"] .banScore .fa.fa-ban:hover {
     color: #db4b4b !important;
 }
 
@@ -2127,11 +2126,10 @@ html[class="dark"] #changelogactivity {
     background-color: #36393f;
 }
 
-html[class="dark"] #changelogActivity .morris-hover{
+html[class="dark"] .morris-hover{
     background-color: #282b30 !important;
-    color:#a0a2a4;
-    box-shadow: 0px 1px 2px #0008;
-    -webkit-box-shadow: 0px 1px 2px #0008;
+    color:#fff !important;
+    border: solid 2px transparent;
 }
 
 html[class="dark"] #changelog>#filters{
@@ -2189,11 +2187,15 @@ html[class="dark"] #chambers .firstplace{
 }
 
 html[class="dark"] #chambers .firstplace,html[class="dark"] #chambers .othernoobscores{
-    color:#c0c1c2 !important;
+    color:#fff !important;
 }
 
 html[class="dark"] #chambers .entry .youtube i{
     color: #aaa !important;
+}
+
+html[class="dark"] #chambers .entry .youtube i:hover{
+    color: #4ba6db !important;
 }
 
 html[class="dark"] #changelog .youtube i{
@@ -2201,7 +2203,7 @@ html[class="dark"] #changelog .youtube i{
 }
 
 html[class="dark"] #changelog .youtube i:hover{
-    color: red !important;
+    color: #4ba6db !important;
 }
 
 html[class="dark"] #chamber .youtube i{
@@ -2209,7 +2211,7 @@ html[class="dark"] #chamber .youtube i{
 }
 
 html[class="dark"] #chamber .youtube i:hover{
-    color: red !important;
+    color: #4ba6db !important;
 }
 
 html[class="dark"] #chambers .entry .youtube .fa-download:hover{
@@ -2217,7 +2219,7 @@ html[class="dark"] #chambers .entry .youtube .fa-download:hover{
 }
 
 html[class="dark"] #chambers .entry .youtube > .fa-youtube-play:hover{
-    color: red !important;
+    color: #4ba6db !important;
 }
 
 html[class="dark"] #chambers .chambertitle .titlebg{
@@ -2247,7 +2249,7 @@ html[class="dark"] #aggregated .entry[style*="background: #d3d3d3"],html[class="
 }
 
 html[class="dark"] #aggregated .entry>div,html[class="dark"] #chamber .entry>div,html[class="dark"] #chamber .entry>a{
-    color:#b9babc;
+    color:#fff;
 }
 
 /*PROFILE*/
@@ -2260,9 +2262,16 @@ html[class="dark"] .profile-title,html[class="dark"] .block-content.all-records,
     background:#36393e !important;
 }
 
-html[class="dark"] #profile .button:hover,html[class="dark"] #editProfile .button:hover {
+html[class="dark"] #profile .button:hover,
+html[class="dark"] #editProfile .button:hover {
     background: #3096d1;
     color: #fff;
+}
+
+html[class="dark"] .button.deleteSubmission:hover,
+html[class="dark"] .button.deleteDemo:hover,
+html[class="dark"] .button.deleteComment:hover {
+    background: red !important;
 }
 
 html[class="dark"] #profile{
@@ -2275,7 +2284,6 @@ html[class="dark"] #profile .noactivity{
 }
 
 html[class="dark"] #profile>div,html[class="dark"] #profile .column-3>div>div{
-    background:none;
     color: #fff;
 }
 

@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html class="dark">
+<html lang="en" dir="ltr" class="dark">
 
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no">
         <meta
             http-equiv="Content-Security-Policy"
             content="
                 default-src 'self';
-                script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
+                script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net;
                 style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com;
                 font-src 'self' https://cdnjs.cloudflare.com;
                 frame-src https://www.youtube.com;
@@ -17,9 +18,10 @@
         <meta name="referrer" content="no-referrer" />
 
         <title><?php echo $view->siteTitle . View::$pageData["pageTitle"]; ?></title>
+        <meta name="description" content="Portal Stories: Mel Challenge Mode Leaderboards.">
 
         <?php foreach($view->css as [$path, $hash]): ?>
-            <link rel="stylesheet" type="text/css" href="<?=$path; ?>?v=<?=$view->browserCacheVersion; ?>"<?php echo isset($hash) ? " integrity=\"$hash\" crossorigin=\"anonymous\"" : '' ?>>
+            <link rel="stylesheet" type="text/css" href="<?=$path; ?>"<?php echo isset($hash) ? " integrity=\"$hash\" crossorigin=\"anonymous\"" : '' ?>>
         <?php endforeach; ?>
 
         <?php foreach($view->js as [$path, $hash]): ?>
@@ -40,9 +42,11 @@
                     document.documentElement.classList.add('dark');
                 }
 
-                $(".rank, .preRank, .postRank").each(function() {
-                    !this.firstElementChild && drawRank($(this));
-                });
+                if (location.pathname.startsWith('/changelog') || location.pathname.startsWith('/profile/')) {
+                    $(".rank, .preRank, .postRank").each(function() {
+                        !this.firstElementChild && drawRank($(this));
+                    });
+                }
             }
         </script>
     </head>
@@ -69,7 +73,7 @@
             <?php include("message.phtml"); ?>
             <div id="content">
                 <?php
-                    if(isset(View::$pageData["contentTemplate"])) {
+                    if (isset(View::$pageData["contentTemplate"])) {
                         require_once(__DIR__."/../".View::$pageData["contentTemplate"]);
                     }
                 ?>

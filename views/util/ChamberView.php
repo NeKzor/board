@@ -3,7 +3,7 @@
 class ChamberView
 {
 
-    static function getEntry($board, $player, $page, $entry, $autoRenderedVideoIds)
+    static function getEntry($board, $player, $page, $entry)
     {
         $playerData = $board[$player]["userData"];
         $scoreData = $board[$player]["scoreData"] ?>
@@ -11,7 +11,7 @@ class ChamberView
         <?php if (SteamSignIn::isLoggedIn($player)) {
             echo "you";
         } ?>"
-        <?php if($scoreData["scoreRank"] % 2 == 0) { ?>
+        <?php if ($scoreData["scoreRank"] % 2 == 0) { ?>
             style="background: #d6d6d6"
         <?php } ?>
         >
@@ -46,12 +46,18 @@ class ChamberView
                 <?php endif; ?>
             </div>
             <div class="youtube">
+                <i <?php if ($scoreData["autorender_id"] !== NULL): ?>
+                    onclick="window.open('https://autorender.portal2.sr/videos/<?=$scoreData["autorender_id"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
+                <?php elseif (SteamSignIn::loggedInUserIsAdmin() && $scoreData["hasDemo"] === 1): ?>
+                    onclick="window.open('https://autorender.portal2.sr/render/mel/<?=$scoreData["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-video-camera" title="Start a render"
+                <?php else: ?>
+                    style="display:none"
+                <?php endif; ?>
+                    aria-hidden="true"></i>
+            </div>
+            <div class="youtube">
                 <i <?php if ($scoreData["youtubeID"] == NULL): ?>
-                    <?php if (in_array((int) $scoreData["changelogId"], $autoRenderedVideoIds)) : ?>
-                        onclick="window.open('https://autorender.portal2.sr/video.html?v=<?=$scoreData["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
-                    <?php else: ?>
-                        style="display:none"
-                    <?php endif; ?>
+                    style="display:none"
                 <?php else : ?>
                     onclick="embedOnBody('<?=$scoreData["youtubeID"]?>', '#<?=$scoreData["playerRank"]?> - <?=Leaderboard::convertToTime($scoreData["score"])?> - <?=Util::escapeQuotesHTML($playerData["boardname"])?>');" class="youtubeEmbedButton fa fa-youtube-play"
                 <?php endif; ?>

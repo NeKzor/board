@@ -5,13 +5,13 @@ class ChangelogView
     static $lastDate = NULL;
     static $oddDateEntry = false;
 
-    static function getEntry($board, $key, $page, $entry, $autoRenderedVideoIds) { ?>
+    static function getEntry($board, $key, $page, $entry) { ?>
         <?php $val = $board[$key] ?>
         <div class="entry" <?php
             if (strtotime($val["time_gained"]) != strtotime(self::$lastDate)) {
                 self::$oddDateEntry = !self::$oddDateEntry;
             }
-            if(!self::$oddDateEntry) { ?>
+            if (!self::$oddDateEntry) { ?>
                 style="background: #d6d6d6"<?php
             }
             self::$lastDate = $val["time_gained"];
@@ -56,8 +56,8 @@ class ChangelogView
                     <?php endif; ?>
             </div>
             <div class="improvement">
-                <?php if($val["rank_improvement"] != null):
-                        if($val["rank_improvement"] < 0): ?>
+                <?php if ($val["rank_improvement"] != null):
+                        if ($val["rank_improvement"] < 0): ?>
                             <div class="rankImprovement">+<?=abs($val["rank_improvement"])?></div>
                         <?php else: ?>
                             <div class="rankImprovement">-<?=abs($val["rank_improvement"]);?></div>
@@ -65,7 +65,7 @@ class ChangelogView
                     <?php else: ?>
                         <div class="rankImprovement">-</div>
                     <?php endif; ?>
-                <?php if($val["improvement"] != null): ?>
+                <?php if ($val["improvement"] != null): ?>
                     <div class="time"><?=($val["improvement"] < 0) ? "+" . Leaderboard::convertToTime($val["improvement"]) : "-" . Leaderboard::convertToTime($val["improvement"]);?></div>
                 <?php else: ?>
                     <div class="time">-</div>
@@ -74,19 +74,26 @@ class ChangelogView
             <div class="demo-url">
                 <?php if ($val["hasDemo"] == 1): ?>
                     <a href="/getDemo?id=<?=$val["id"]?>">
-                        <i class="fa fa-lg fa-download" aria-hidden="true"></i>
+                        <i class="fa fa-download" aria-hidden="true"></i>
                     </a>
                 <?php endif; ?></div>
             <div class="youtube">
                     <i <?php if ($val["youtubeID"] == NULL): ?>
-                        <?php if (in_array((int) $val["id"], $autoRenderedVideoIds)) : ?>
-                            onclick="window.open('https://autorender.portal2.sr/video.html?v=<?=$val["id"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
+                        style="display:none"
+                    <?php else : ?>
+                        onclick="embedOnBody('<?=$val["youtubeID"]?>', '<?=$val["chamberName"]?> - <?=Leaderboard::convertToTime($val["score"])?> - <?=Util::escapeQuotesHTML($val["player_name"])?>');" class="youtubeEmbedButton fa fa-youtube-play"
+                    <?php endif; ?>
+                        aria-hidden="true">
+                    </i>
+            </div>
+            <div class="youtube">
+                    <i <?php if ($val["autorender_id"] !== NULL): ?>
+                            onclick="window.open('https://autorender.portal2.sr/videos/<?=$val["autorender_id"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
+                        <?php elseif (SteamSignIn::loggedInUserIsAdmin() && $val["hasDemo"] === 1): ?>
+                            onclick="window.open('https://autorender.portal2.sr/render/mel/<?=$val["id"]?>','_blank')" class="youtubeEmbedButton fa fa-video-camera" title="Start a render"
                         <?php else: ?>
                             style="display:none"
                         <?php endif; ?>
-                    <?php else : ?>
-                        onclick="embedOnBody('<?=$val["youtubeID"]?>', '<?=$val["chamberName"]?> - <?=Leaderboard::convertToTime($val["score"])?> - <?=Util::escapeQuotesHTML($val["player_name"])?>');" class="youtubeEmbedButton fa fa-lg fa-youtube-play"
-                    <?php endif; ?>
                         aria-hidden="true">
                     </i>
             </div>
