@@ -3,7 +3,7 @@ name: Deploy
 on:
   workflow_dispatch:
     branches:
-      - 'mel'
+      - 'aptag'
 
 permissions:
   contents: write
@@ -30,4 +30,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: p2sr/mel-board:latest,p2sr/mel-board:1.0.0
+          tags: p2sr/aptag-board:latest,p2sr/aptag-board:1.0.0

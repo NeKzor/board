@@ -1,4 +1,4 @@
-# mel.board.portal2.sr
+# aptag.board.portal2.sr
 
 Challenge Mode Leaderboard for Portal 2 Mods.
 
@@ -78,7 +78,7 @@ Mostly the same as in [development](#with-docker#) but use `./setup prod`
 instead.
 
 - Open `.env` file and set `SERVER_NAME` to the server domain
-- Copy `cp docker/compose/mel.board.portal2.sr.yml docker-compose.yml`
+- Copy `cp docker/compose/aptag.board.portal2.sr.yml docker-compose.yml`
 - Finally use `docker compose up -d`
 
 ### Reverse Proxy (recommended)
@@ -97,7 +97,7 @@ will verify if the requests are coming from the reverse proxy only.
 ```bash
 ~/$ cat .env
 PROJECT_NAME=board
-SERVER_NAME=mel.board.portal2.sr
+SERVER_NAME=aptag.board.portal2.sr
 
 HTTP_PORT=8880
 HTTPS_PORT=8443
@@ -117,19 +117,19 @@ GID=1001
 <summary>View example Nginx config file</summary>
 
 ```bash
-~/$ cat /etc/nginx/sites-available/mel.board.portal2.sr
+~/$ cat /etc/nginx/sites-available/aptag.board.portal2.sr
 server {
     listen 80;
-    server_name mel.board.portal2.sr;
+    server_name aptag.board.portal2.sr;
     return 301 https://$host$request_uri;
 }
 
 server {
     listen 443 ssl http2;
-    server_name mel.board.portal2.sr;
+    server_name aptag.board.portal2.sr;
 
-    ssl_certificate /etc/letsencrypt/live/mel.board.portal2.sr/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/mel.board.portal2.sr/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/aptag.board.portal2.sr/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/aptag.board.portal2.sr/privkey.pem;
     include /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem;
 
