@@ -1,9 +1,9 @@
 <?php
 
 class Discord {
-    private static $username = 'mel.board.portal2.sr';
-    private static $avatar = 'https://raw.githubusercontent.com/NeKzor/board/mel/public/images/portal2boards_avatar.png';
-    private static $embed_icon = 'https://raw.githubusercontent.com/NeKzor/board/mel/public/images/portal2boards_icon.png';
+    private static $username = 'aptag.board.portal2.sr';
+    private static $avatar = 'https://raw.githubusercontent.com/NeKzor/board/aptag/public/images/portal2boards_avatar.png';
+    private static $embed_icon = 'https://raw.githubusercontent.com/NeKzor/board/aptag/public/images/portal2boards_icon.png';
 
     public static function sendMdpWebhook($data, $demoName, $text, $err = null) {
         try {
@@ -11,7 +11,7 @@ class Discord {
             $payload = [
                 'username' => 'Demo Parse Bot',
                 'avatar_url' => self::$avatar,
-                'content' => 'Link to change log: [Click Here](<https://mel.board.portal2.sr/changelog?id='.$data['id'].'>)'
+                'content' => 'Link to change log: [Click Here](<https://aptag.board.portal2.sr/changelog?id='.$data['id'].'>)'
             ];
             $tempFile = self::CreateTempFile($text);
             $tempErrFile = self::CreateTempFile($err);
@@ -25,7 +25,7 @@ class Discord {
             }
             //Debug::log(json_encode($payload));
             $ch = curl_init(Config::get()->discord_webhook_mdp);
-            curl_setopt($ch, CURLOPT_USERAGENT, 'mel.board.portal2.sr');
+            curl_setopt($ch, CURLOPT_USERAGENT, 'aptag.board.portal2.sr');
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
@@ -58,7 +58,7 @@ class Discord {
         ];
         Debug::log(json_encode($payload));
         $ch = curl_init(Config::get()->discord_webhook_wr);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'mel.board.portal2.sr');
+        curl_setopt($ch, CURLOPT_USERAGENT, 'aptag.board.portal2.sr');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
         curl_exec($ch);
@@ -69,10 +69,10 @@ class Discord {
     public static function buildEmbed($data) {
         $embed = [
             'title' => $data['map'],
-            'url' => 'https://mel.board.portal2.sr/chamber/'.$data['map_id'],
+            'url' => 'https://aptag.board.portal2.sr/chamber/'.$data['map_id'],
             'color' => 295077,
             'thumbnail' => [
-                'url' => 'https://raw.githubusercontent.com/NeKzor/board/mel/public/images/thumbnails/'.$data['map_id'].'.jpg',
+                'url' => 'https://raw.githubusercontent.com/NeKzor/board/aptag/public/images/thumbnails/'.$data['map_id'].'.jpg',
             ],
             'fields' => [
                 [
@@ -82,7 +82,7 @@ class Discord {
                 ],
                 [
                     'name' => 'By',
-                    'value' => '['.self::sanitiseText($data['player']).'](<https://mel.board.portal2.sr/profile/'.$data['player_id'].'>)',
+                    'value' => '['.self::sanitiseText($data['player']).'](<https://aptag.board.portal2.sr/profile/'.$data['player_id'].'>)',
                     'inline' => true
                 ],
             ]

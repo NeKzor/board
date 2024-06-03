@@ -61,7 +61,7 @@ class ProfileView
                     <i <?php if ($score["autorender_id"] !== NULL): ?>
                         onclick="window.open('https://autorender.portal2.sr/videos/<?=$score["autorender_id"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
                     <?php elseif (SteamSignIn::loggedInUserIsAdmin() && $score["hasDemo"] === 1): ?>
-                        onclick="window.open('https://autorender.portal2.sr/render/mel/<?=$score["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-video-camera" title="Start a render"
+                        onclick="window.open('https://autorender.portal2.sr/render/aptag/<?=$score["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-video-camera" title="Start a render"
                     <?php else: ?>
                         style="display:none"
                     <?php endif; ?>

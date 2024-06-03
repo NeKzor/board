@@ -49,7 +49,7 @@ class ChamberView
                 <i <?php if ($scoreData["autorender_id"] !== NULL): ?>
                     onclick="window.open('https://autorender.portal2.sr/videos/<?=$scoreData["autorender_id"]?>','_blank')" class="youtubeEmbedButton fa fa-play" title="Auto Render"
                 <?php elseif (SteamSignIn::loggedInUserIsAdmin() && $scoreData["hasDemo"] === 1): ?>
-                    onclick="window.open('https://autorender.portal2.sr/render/mel/<?=$scoreData["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-video-camera" title="Start a render"
+                    onclick="window.open('https://autorender.portal2.sr/render/aptag/<?=$scoreData["changelogId"]?>','_blank')" class="youtubeEmbedButton fa fa-video-camera" title="Start a render"
                 <?php else: ?>
                     style="display:none"
                 <?php endif; ?>
