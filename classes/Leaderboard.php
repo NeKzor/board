@@ -799,7 +799,8 @@ class Leaderboard
             $board[$idx]["scoreData"]["changelogId"] = $row["changelog_id"];
             $board[$idx]["scoreData"]["playerRank"] = $row["player_rank"];
             $board[$idx]["scoreData"]["scoreRank"] = $row["score_rank"];
-            $board[$idx]["scoreData"]["score"] = $row["score"];
+            // TODO: Remove string cast in the future.
+            $board[$idx]["scoreData"]["score"] = strval($row["score"]);
             $board[$idx]["scoreData"]["date"] = $row["date"];
             $board[$idx]["scoreData"]["hasDemo"] = $row["has_demo"];
             $board[$idx]["scoreData"]["youtubeId"] = $row["youtube_id"];
