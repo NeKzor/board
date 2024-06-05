@@ -102,6 +102,4 @@ db-dump-raw: db-conf
 # Backup and upload database.
 backup: db-conf
     docker exec {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_backup_latest.sql.gz'
-    deno run --allow-env --allow-read --allow-net backup.ts {{backup_file}} \
-        --filename=${MYSQL_DATABASE}_backup_latest.sql.gz \
-        --user-agent=${SERVER_NAME}
+    deno run --env -A backup.ts {{backup_file}} --user-agent=${SERVER_NAME}
