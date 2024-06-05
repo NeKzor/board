@@ -72,11 +72,15 @@ test:
     ./test
 
 # Connect to database.
-db:
-    docker exec -ti {{project}}-db bash -c 'printf {{cnf}} > /etc/my.cnf' && docker exec -ti {{project}}-db mysql
+db: db-conf
+    docker exec -ti {{project}}-db mysql
+
+# Configure database connection.
+db-conf:
+    docker exec -ti {{project}}-db bash -c 'printf {{cnf}} > /etc/my.cnf'
 
 # Open shell in database container.
-db-debug:
+db-debug: db-conf
     docker exec -ti {{project}}-db bash
 
 # Restart database container.
@@ -88,15 +92,15 @@ db-stop:
     docker container stop {{project}}-db
 
 # Dump and compress a backup of the database.
-db-dump:
+db-dump: db-conf
     docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.gz'
 
 # Only dump a backup of the database.
-db-dump-raw:
+db-dump-raw: db-conf
     docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql'
 
 # Backup and upload database.
-backup:
+backup: db-conf
     docker exec {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_backup_latest.sql.gz'
     deno run --allow-env --allow-read --allow-net backup.ts {{backup_file}} \
         --filename=${MYSQL_DATABASE}_backup_latest.sql.gz \
