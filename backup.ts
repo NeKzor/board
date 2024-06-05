@@ -1,4 +1,5 @@
 import { parseArgs } from "jsr:@std/cli/parse-args";
+import { format } from "jsr:@std/fmt/bytes";
 import { BackblazeClient } from "jsr:@nekz/b2";
 
 const {
@@ -41,7 +42,9 @@ try {
       embeds: [
         {
           color: 0x0480A5,
-          description: `Uploaded file \`${fileName}\` ${upload.fileId}`,
+          description: `Uploaded file \`${fileName}\` (${
+            format(upload.contentLength)
+          }) ${upload.contentMd5}`,
         },
       ],
     }),
