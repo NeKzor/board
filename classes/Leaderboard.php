@@ -938,6 +938,12 @@ class Leaderboard
             $whereClause .= "pending >= 0 AND ";
         }
 
+        if ($param["chamber"] != "") {
+            $whereClause .= "map_id = ? AND ";
+            $whereTypes .= "s";
+            $whereParams[] = $param['chamber'];
+        }
+
         $changelog_data = Database::query(
             "SELECT IFNULL(users.boardname, users.steamname) AS player_name
                   , users.avatar
@@ -963,8 +969,7 @@ class Leaderboard
                 SELECT *
                 FROM changelog
                 WHERE $whereClause
-                map_id LIKE ? 
-                AND profile_number LIKE ?
+                profile_number LIKE ?
                 AND has_demo LIKE ?
                 ORDER BY time_gained DESC, score ASC, profile_number ASC
                 ) as ch
@@ -977,10 +982,9 @@ class Leaderboard
                 AND chapters.id LIKE ?
                 AND IFNULL(users.boardname, users.steamname) LIKE ?
                 ORDER BY time_gained DESC, score ASC, profile_number ASC",
-            "{$whereTypes}ssssss",
+            "{$whereTypes}sssss",
             [
                 ...$whereParams,
-                "%{$param['chamber']}%",
                 "%{$param['profileNumber']}%",
                 "%{$param['demo']}%",
                 "%{$param['type']}%",
