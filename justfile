@@ -42,11 +42,11 @@ reload:
 
 # Refresh leaderboard cache.
 cache:
-    docker exec -u www-data -ti {{project}}-server php -f /var/www/html/util/refreshCache.php > /dev/null 2>&1
+    docker exec -u www-data {{project}}-server php -f /var/www/html/util/refreshCache.php > /dev/null 2>&1
 
 # Update Steam profiles.
 update-profiles:
-    docker exec -u www-data -ti {{project}}-server php -f /var/www/html/util/fetchImportantProfileData.php
+    docker exec -u www-data {{project}}-server php -f /var/www/html/util/fetchImportantProfileData.php
 
 # Open shell in server container.
 debug: server-debug
@@ -77,7 +77,7 @@ db: db-conf
 
 # Configure database connection.
 db-conf:
-    docker exec -ti {{project}}-db bash -c 'printf {{cnf}} > /etc/my.cnf'
+    docker exec {{project}}-db bash -c 'printf {{cnf}} > /etc/my.cnf'
 
 # Open shell in database container.
 db-debug: db-conf
@@ -93,11 +93,11 @@ db-stop:
 
 # Dump and compress a backup of the database.
 db-dump: db-conf
-    docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.gz'
+    docker exec {{project}}-db bash -c 'mysqldump {{dump_options}} | gzip -8 > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql.gz'
 
 # Only dump a backup of the database.
 db-dump-raw: db-conf
-    docker exec -ti {{project}}-db bash -c 'mysqldump {{dump_options}} > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql'
+    docker exec {{project}}-db bash -c 'mysqldump {{dump_options}} > /backups/${MYSQL_DATABASE}_dump_$(date +%Y-%m-%d-%H.%M.%S).sql'
 
 # Backup and upload database.
 backup: db-conf
