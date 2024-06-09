@@ -8,6 +8,7 @@ class DemoManager {
             "SELECT changelog.profile_number
                   , score
                   , map_id
+                  , time_gained
              FROM changelog
              INNER JOIN users ON changelog.profile_number = users.profile_number
              WHERE changelog.id = ?",
