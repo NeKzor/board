@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  server:
+    build:
+      context: .
+      args:
+        SERVER_NAME: mel.board.portal2.sr
+        UID: ${UID}
+        GID: ${GID}
+    container_name: "mel-server"
+    restart: always
+    stdin_open: true
+    tty: true
+    networks:
+      - default
+      - mel-board-net
+    volumes:
+      - /var/mel/.config.json:/var/www/html/.config.json
+      - /var/mel/docker/apache/mel.board.portal2.sr.conf:/etc/apache2/sites-available/mel.board.portal2.sr.conf
+      - /var/mel/docker/logs/error.log:/var/log/apache2/error.log
+      - /var/mel/docker/logs/access.log:/var/log/apache2/other_vhosts_access.log
+      - /var/mel/docker/logs/debug.txt:/var/www/html/debug.txt
+      - /var/mel/docker/php/board.ini:/etc/php/8.1/apache2/conf.d/board.ini
+      - /var/mel/docker/volumes/cache:/var/www/html/cache
+      - /var/mel/docker/volumes/demos:/var/www/html/demos
+      - /var/mel/docker/volumes/sessions:/var/www/html/sessions
+networks:
+    mel-board-net:
+      name: mel-board-net
