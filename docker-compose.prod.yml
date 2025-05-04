@@ -26,4 +26,4 @@ services:
       - /var/mel/docker/volumes/sessions:/var/www/html/sessions
 networks:
     mel-board-net:
-      name: mel-board-net
+      external: true
