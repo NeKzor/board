@@ -13,6 +13,7 @@ RUN apt-get install -y ${APT_PACKAGES} curl php8.1-cli php8.1-curl apache2 libap
 RUN a2enmod rewrite expires headers ssl remoteip
 RUN a2dissite 000-default.conf
 RUN rm /var/www/html/index.html
+RUN groupadd www-data
 RUN groupmod -g ${GID} www-data
 RUN usermod -u ${UID} -g ${GID} www-data
 
